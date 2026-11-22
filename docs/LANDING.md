@@ -141,7 +141,7 @@ memory-saved claim.
 - Steps:
   1. `Download the latest zip.`
   2. `Open chrome://extensions and enable Developer mode.`
-  3. `Choose Load unpacked and select .output/chrome-mv3.`
+  3. `Choose Load unpacked and select the unzipped folder.`
 - Store variant: replace steps with a single **Add to Chrome** button and `Works in Chrome, Edge, Brave, and other Chromium browsers.`
 - Small print: `Requires Chrome 120+ or another MV3 Chromium browser.`
 
@@ -258,7 +258,7 @@ Do not use a second display face. Do not set paragraphs in monospace.
 ### Install steps
 
 - Ordered list with mono numbers `01`, `02`, `03`.
-- Code fragments (`chrome://extensions`, `.output/chrome-mv3`) in `<code>` with a `raised`
+- Code fragments (`chrome://extensions`, `stow-0.1.0-chrome.zip`) in `<code>` with a `raised`
   background and 2 px padding.
 - One primary CTA repeated, no new tab.
 
