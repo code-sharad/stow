@@ -14,7 +14,7 @@
     <link rel="icon" href="assets/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=2" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stow" />
     <meta property="og:url" content="https://code-sharad.github.io/stow/" />
@@ -36,7 +36,7 @@
     <script>
       document.documentElement.classList.add('js');
     </script>
-    <script src="main.js" defer></script>
+    <script src="main.js?v=2" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -74,7 +74,7 @@
               ><span aria-hidden="true">$</span> read the source</a
             >
           </div>
-          <p class="fineprint">No account. No sync. No network.</p>
+          <p class="fineprint">Chrome 120+ · works offline after install</p>
         </div>
 
         <aside class="receipt" aria-hidden="true">
@@ -150,9 +150,8 @@
               </picture>
             </figure>
             <p class="tile-foot">
-              <kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span>
-              <span class="tile-sep">·</span>
-              <kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span>
+              <span class="shortcut"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span></span>
+              <span class="shortcut"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span></span>
             </p>
           </article>
 
@@ -297,22 +296,22 @@
               <tr>
                 <td>Tabs and stacks</td>
                 <td>IndexedDB, extension origin</td>
-                <td class="no"><span aria-hidden="true">✓</span> No</td>
+                <td class="no">No</td>
               </tr>
               <tr>
                 <td>Settings</td>
                 <td>IndexedDB + two localStorage mirrors</td>
-                <td class="no"><span aria-hidden="true">✓</span> No</td>
+                <td class="no">No</td>
               </tr>
               <tr>
                 <td>Favicons</td>
                 <td>Chromium’s local <code>_favicon</code> cache</td>
-                <td class="no"><span aria-hidden="true">✓</span> No</td>
+                <td class="no">No</td>
               </tr>
               <tr>
                 <td>Backups</td>
                 <td>Your Downloads folder, only if enabled</td>
-                <td class="no"><span aria-hidden="true">✓</span> No</td>
+                <td class="no">No</td>
               </tr>
             </tbody>
           </table>

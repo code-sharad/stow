@@ -28,7 +28,7 @@ One page, one decision: install Stow.
 │  as searchable stacks…      │ network requests       0  │    │
 │                             └ every tab written…       ┘    │
 │  [ load unpacked ]  $ read the source                        │
-│  No account. No sync. No network.                            │
+│  Chrome 120+ · works offline after install                   │
 │                                                              │
 │  ┌ library.html ───────────────────── the actual library ┐   │
 │  │ [real Library screenshot, light and dark]            │   │
@@ -72,7 +72,7 @@ Use these strings as written. Keep labels lowercase and prose sentence case.
 - Lede: `Stow saves a whole window as searchable stacks, closes every tab, and brings back exactly what you need. Local-first. No account, no sync, no network.`
 - Primary: `load unpacked`
 - Secondary: `$ read the source`
-- Note under CTA: `No account. No sync. No network.`
+- Note under CTA: `Chrome 120+ · works offline after install`
 
 ### Receipt
 
@@ -242,7 +242,7 @@ receipt.
 
 - A table, not cards.
 - Header row mono 11 px, body 14 px, 1 px row rules.
-- “No” column uses `success` text plus a small `✓`; never color alone.
+- “Leaves device” cells read `No` in `success` text.
 
 ### Install steps
 
