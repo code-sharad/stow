@@ -10,7 +10,9 @@ searchable **Stack**, closes the tabs to give memory back, and restores them whe
 them. Everything lives in your browser profile. There is no account, server, telemetry, or
 network request.
 
-Stow is an MIT-licensed open source project. Read the [landing page](https://code-sharad.github.io/stow/)
+Stow is an MIT-licensed open source project.
+
+![Stow Library showing saved stacks and tabs](landing/assets/library-dark.webp) Read the [landing page](https://code-sharad.github.io/stow/)
 for the short version.
 
 > Stow is a working name. It is not affiliated with OneTab. Import is offered as a migration path;
