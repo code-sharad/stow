@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Stow — close the tabs, keep the work</title>
+    <link rel="canonical" href="https://code-sharad.github.io/stow/" />
+    <meta
+      name="description"
+      content="A local-first tab shelf for Chrome. Stow a window into searchable stacks, close the tabs, and restore them later. No account, sync, or network."
+    />
+    <meta name="theme-color" content="#0c0c0c" />
+    <link rel="icon" href="assets/favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stow" />
+    <meta property="og:url" content="https://code-sharad.github.io/stow/" />
+    <meta property="og:title" content="Stow — close the tabs, keep the work" />
+    <meta
+      property="og:description"
+      content="A local-first tab shelf for Chrome. No account, sync, telemetry, or network."
+    />
+    <meta property="og:image" content="https://code-sharad.github.io/stow/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stow — close the tabs, keep the work" />
+    <meta
+      name="twitter:description"
+      content="A local-first tab shelf for Chrome. No account, sync, telemetry, or network."
+    />
+    <meta name="twitter:image" content="https://code-sharad.github.io/stow/assets/og.png" />
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="status" role="banner">
+      <a class="status-brand" href="#top">
+        <img src="assets/icon.svg" width="16" height="16" alt="" />
+        <span class="status-name">stow</span>
+        <span class="status-version">v0.1.0</span>
+        <span class="status-local">local-only</span>
+      </a>
+      <nav class="status-nav" aria-label="Primary">
+        <a class="status-link" href="#stack">the stack</a>
+        <a class="status-link" href="#privacy">privacy</a>
+        <a class="btn btn-primary btn-small" href="#install">load unpacked</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="kicker">❯ stow --save</p>
+          <h1 id="hero-title">Close the tabs.<br />Keep the work.</h1>
+          <p class="lede">
+            A local-first tab shelf for Chrome. Stow a window into searchable stacks, get the
+            memory back, restore when you need it.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#install">load unpacked</a>
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/code-sharad/stow"
+              target="_blank"
+              rel="noreferrer"
+              ><span aria-hidden="true">$</span> read the source</a
+            >
+          </div>
+          <p class="fineprint">No account. No sync. No network.</p>
+        </div>
+
+        <div class="terminal-wrap">
+          <div class="terminal" aria-hidden="true">
+            <div class="terminal-bar">
+              <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="terminal-title">demo</span>
+            </div>
+            <div class="terminal-body" id="terminal">
+              <p class="terminal-line" data-text="$ stow --window"><span>$</span> stow --window</p>
+              <p class="terminal-line" data-text="scanning 23 tabs…">scanning 23 tabs…</p>
+              <p class="terminal-line" data-text="saved 23 tabs → 4 stacks">
+                saved 23 tabs → 4 stacks
+              </p>
+              <p class="terminal-line" data-text="closed 23 tabs · library updated">
+                closed 23 tabs · library updated
+              </p>
+              <p class="terminal-line terminal-ok" data-text="✓ no network requests">
+                ✓ no network requests
+              </p>
+              <p class="terminal-cursor" aria-hidden="true">▌</p>
+            </div>
+          </div>
+          <pre class="sr-only">Demo transcript. Command: stow --window. Scanning 23 tabs. Saved 23 tabs into 4 stacks. Closed 23 tabs and updated the library. No network requests.</pre>
+        </div>
+      </section>
+
+      <section class="proof" aria-label="Why Stow">
+        <article class="proof-item">
+          <p class="proof-index">01</p>
+          <h2>Saved before closed</h2>
+          <p>
+            Every tab is written to IndexedDB and read back before Chrome closes a single one.
+          </p>
+        </article>
+        <article class="proof-item">
+          <p class="proof-index">02</p>
+          <h2>No network</h2>
+          <p>No account, no sync, no telemetry, no favicon service.</p>
+        </article>
+        <article class="proof-item">
+          <p class="proof-index">03</p>
+          <h2>Keyboard native</h2>
+          <p>Stow, search, restore, and rename without leaving the keys.</p>
+        </article>
+      </section>
+
+      <section class="section" id="stack" aria-labelledby="stack-title">
+        <div class="section-head reveal">
+          <p class="section-label">01 / the stack</p>
+          <h2 id="stack-title">A shelf, not a second tab bar.</h2>
+          <p class="section-lede">
+            Native groups become stacks. Names and colors carry over. Pin the work you are not done
+            with; lock the stacks you never want to lose.
+          </p>
+        </div>
+
+        <figure class="shot reveal">
+          <div class="shot-bar">
+            <span class="shot-path">library.html</span>
+            <span class="shot-mode">stacks</span>
+          </div>
+          <picture>
+            <source
+              media="(max-width: 640px) and (prefers-color-scheme: light)"
+              srcset="assets/library-mobile-light.webp"
+            />
+            <source media="(max-width: 640px)" srcset="assets/library-mobile-dark.webp" />
+            <source media="(prefers-color-scheme: light)" srcset="assets/library-light.webp" />
+            <img
+              src="assets/library-dark.webp"
+              width="1600"
+              height="1000"
+              alt="The Stow library: a dark console showing three stacks named Docs, Design, and Build, with tab rows and restore controls."
+            />
+          </picture>
+        </figure>
+
+        <div class="annotations reveal" aria-label="What the library shows">
+          <div class="annotation">
+            <p class="annotation-index">01</p>
+            <h3>Group color</h3>
+            <p>A 3 px spine carries the native tab group color into the shelf.</p>
+          </div>
+          <div class="annotation">
+            <p class="annotation-index">02</p>
+            <h3>Stack title</h3>
+            <p>Rename inline with <kbd>F2</kbd>. Counts and dates stay in monospace.</p>
+          </div>
+          <div class="annotation">
+            <p class="annotation-index">03</p>
+            <h3>Tab rows</h3>
+            <p>Open one tab, select a range, or copy a whole stack as Markdown.</p>
+          </div>
+          <div class="annotation">
+            <p class="annotation-index">04</p>
+            <h3>Restore all</h3>
+            <p>Open the stack in this window or a new one. The saved copy stays until open succeeds.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="privacy" aria-labelledby="privacy-title">
+        <div class="section-head reveal">
+          <p class="section-label">02 / the ledger</p>
+          <h2 id="privacy-title">What leaves your machine: nothing.</h2>
+          <p class="section-lede">
+            Stow has no server to send anything to. The extension requests no host permissions.
+          </p>
+        </div>
+
+        <div class="table-wrap reveal">
+          <table>
+            <caption>
+              Where Stow stores data
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Lives in</th>
+                <th scope="col">Leaves device</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tabs and stacks</td>
+                <td>IndexedDB, extension origin</td>
+                <td class="no"><span aria-hidden="true">✓</span> No</td>
+              </tr>
+              <tr>
+                <td>Settings</td>
+                <td>IndexedDB + two localStorage mirrors</td>
+                <td class="no"><span aria-hidden="true">✓</span> No</td>
+              </tr>
+              <tr>
+                <td>Favicons</td>
+                <td>Chromium’s local <code>_favicon</code> cache</td>
+                <td class="no"><span aria-hidden="true">✓</span> No</td>
+              </tr>
+              <tr>
+                <td>Backups</td>
+                <td>Your Downloads folder, only if enabled</td>
+                <td class="no"><span aria-hidden="true">✓</span> No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote reveal">
+          Uninstalling removes the data. Export a JSON backup first if you want a copy.
+        </p>
+      </section>
+
+      <section class="section section-exit" id="import" aria-labelledby="exit-title">
+        <div class="section-head reveal">
+          <p class="section-label">03 / the exit</p>
+          <h2 id="exit-title">Your tabs are not a lock-in.</h2>
+          <p class="section-lede">
+            Import OneTab text, Markdown lists, Netscape bookmarks, or a Stow JSON backup. Export
+            the same library at any time.
+          </p>
+        </div>
+        <p class="format-line reveal">
+          <span>onetab.txt</span><span>notes.md</span><span>bookmarks.html</span
+          ><span>stow-backup.json</span>
+        </p>
+      </section>
+
+      <section class="section" id="install" aria-labelledby="install-title">
+        <div class="section-head reveal">
+          <p class="section-label">04 / install</p>
+          <h2 id="install-title">Three steps. No account.</h2>
+        </div>
+
+        <div class="install-grid">
+          <ol class="install-steps reveal">
+            <li>
+              <span class="step-index">01</span>
+              <div>
+                <h3>Download the latest zip</h3>
+                <p>Build from source or use the release archive.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-index">02</span>
+              <div>
+                <h3>Open the extensions page</h3>
+                <p>Enable Developer mode at <code>chrome://extensions</code>.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-index">03</span>
+              <div>
+                <h3>Load the extension</h3>
+                <p>Choose <strong>Load unpacked</strong> and select <code>.output/chrome-mv3</code>.</p>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="install-note reveal">
+            <p class="kicker">❯ ready</p>
+            <p>
+              Works in Chrome, Edge, Brave, and other Chromium browsers with Manifest V3.
+            </p>
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/code-sharad/stow"
+              target="_blank"
+              rel="noreferrer"
+              ><span aria-hidden="true">$</span> open the repository</a
+            >
+            <p class="fineprint">Requires Chrome 120+ or another MV3 Chromium browser.</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <img src="assets/icon.svg" width="14" height="14" alt="" />
+        <span>stow</span>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#privacy">privacy</a>
+        <a href="https://github.com/code-sharad/stow" target="_blank" rel="noreferrer">source</a>
+        <a href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md" target="_blank" rel="noreferrer"
+          >changelog</a
+        >
+      </nav>
+      <p class="footer-meta">local-only · <span id="year">2026</span></p>
+    </footer>
+  </body>
+</html>

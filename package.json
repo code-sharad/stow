@@ -1,0 +1,91 @@
+{
+  "name": "stow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A quiet, local-first tab shelf for Chrome. Stow tabs into searchable stacks, close them, restore them later.",
+  "license": "MIT",
+  "author": "Sharad Bhadait",
+  "homepage": "https://code-sharad.github.io/stow/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-sharad/stow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/code-sharad/stow/issues"
+  },
+  "keywords": [
+    "chrome-extension",
+    "tabs",
+    "tab-manager",
+    "local-first",
+    "manifest-v3",
+    "privacy",
+    "productivity",
+    "typescript",
+    "react",
+    "wxt",
+    "indexeddb"
+  ],
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "postinstall": "wxt prepare",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "e2e": "playwright test",
+    "check:tokens": "tsx scripts/check-tokens.ts",
+    "check:network": "tsx scripts/check-no-network.ts",
+    "check:icons": "tsx scripts/gen-icons.ts",
+    "check:landing": "node scripts/check-landing.mjs",
+    "icons": "tsx scripts/gen-icons.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.14.27",
+    "dexie": "^4.4.7",
+    "fractional-indexing": "^4.0.0",
+    "lucide-react": "^1.77.0",
+    "minisearch": "^7.2.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "ulid": "^3.0.2",
+    "zod": "^4.6.7",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@biomejs/biome": "^2.6.8",
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@testing-library/jest-dom": "^8.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/chrome": "^0.3.7",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "@vitest/coverage-v8": "^5.1.1",
+    "@wxt-dev/module-react": "^1.2.2",
+    "fake-indexeddb": "^6.2.8",
+    "jsdom": "^31.0.1",
+    "tailwindcss": "^4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1",
+    "wxt": "^0.21.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
+  }
+}

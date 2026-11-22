@@ -1,0 +1,20 @@
+{
+  "extName": { "message": "Stow", "description": "Extension name." },
+  "extDescription": {
+    "message": "A quiet, local-first home for tabs in flight. Save a window's tabs, close them, and find them later.",
+    "description": "Extension description shown in the browser and store."
+  },
+  "actionTitle": { "message": "Stow", "description": "Toolbar button title." },
+  "cmdStowWindow": { "message": "Stow this window", "description": "Keyboard command description." },
+  "cmdStowTab": { "message": "Stow this tab", "description": "Keyboard command description." },
+  "cmdOpenLibrary": { "message": "Open the Library", "description": "Keyboard command description." },
+  "cmdStowAll": { "message": "Stow all windows", "description": "Keyboard command description." },
+  "menuStowTab": { "message": "Stow this tab", "description": "Context menu item." },
+  "menuStowWindow": { "message": "Stow this window", "description": "Context menu item." },
+  "menuStowOthers": { "message": "Stow other tabs", "description": "Context menu item." },
+  "menuStowLeft": { "message": "Stow tabs to the left", "description": "Context menu item." },
+  "menuStowRight": { "message": "Stow tabs to the right", "description": "Context menu item." },
+  "menuStowSelected": { "message": "Stow selected tabs", "description": "Context menu item." },
+  "menuStowAll": { "message": "Stow all windows", "description": "Context menu item." },
+  "menuOpenLibrary": { "message": "Open library", "description": "Context menu item." }
+}

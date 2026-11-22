@@ -1,0 +1,73 @@
+name: Bug report
+description: Something is broken in Stow. Please include enough detail to reproduce it.
+title: "[bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Stow runs entirely on your machine, so please
+        include your browser version and exact steps. Do not paste personal URLs or library data.
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 131 on macOS 15.2
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Stow version
+      description: Find it in Settings → About, or in the extension card.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open three tabs in one window.
+        2. Click "Stow this window".
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output or screenshots
+      description: Right-click the Library → Inspect → Console. Remove anything private.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: I removed private URLs, titles, and account information from this report.
+          required: true
+        - label: This is not a security vulnerability (those go to SECURITY.md).
+          required: true
