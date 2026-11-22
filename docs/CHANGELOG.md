@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — Console interface
+## 0.1.0 — 2026-11-22
 
 ### Changed
 
@@ -46,9 +46,9 @@
 - Accessibility contrast for status-bar key hints in both light and dark themes.
 - The Library no longer renders Settings twice.
 
-## 0.1.0 — 2026-11-22
+## 0.0.1 — 2026-11-22
 
-First working cut of Stow.
+Pre-release development cut of Stow.
 
 ### Added
 

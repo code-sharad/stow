@@ -1,6 +1,7 @@
 # Stow
 
 [![CI](https://github.com/code-sharad/stow/actions/workflows/ci.yml/badge.svg)](https://github.com/code-sharad/stow/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/code-sharad/stow?display_name=tag)](https://github.com/code-sharad/stow/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-1f6f4a)
 
@@ -27,6 +28,17 @@ for the short version.
 - Export JSON; copy a stack as Markdown or plain text.
 - Dark-first console interface with a warm light variant, self-hosted Inter plus monospace
   details, comfortable/compact density, keyboard operation, and a command palette (`Ctrl/Cmd+K`).
+
+## Install
+
+Stow is not in the Chrome Web Store yet. Install the current build from the
+[latest release](https://github.com/code-sharad/stow/releases/latest):
+
+1. Download `stow-0.1.0-chrome.zip` and unzip it.
+2. Open `chrome://extensions` and enable Developer mode.
+3. Choose **Load unpacked** and select the unzipped folder.
+
+Requires Chrome 120+ or another Manifest V3 Chromium browser.
 
 ## Develop
 
