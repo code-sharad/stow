@@ -427,7 +427,6 @@ Groups and the exact settings in each (labels/help text are catalog strings):
 | | `afterStow` | After stowing | Show the Library in the window, or leave the window as it is. |
 | | `openLibraryOnStartup` | Open the Library when the browser starts | |
 | | `pinLibraryTab` | Keep the Library tab pinned | |
-| | `showBadge` | Show saved-tab count on the icon | |
 | Stowing | `ignorePinnedTabs` | Leave pinned tabs open | |
 | | `preserveBrowserGroups` | Keep tab groups as separate stacks | Each group becomes a stack with the same name and color. |
 | | `ignoredSites` | Never stow these sites | One pattern per line, for example `*://mail.google.com/*`. |

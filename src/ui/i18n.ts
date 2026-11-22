@@ -107,7 +107,6 @@ const catalog: Record<string, string> = {
   afterStow: 'After stowing',
   openLibraryOnStartup: 'Open the Library when the browser starts',
   pinLibraryTab: 'Keep the Library tab pinned',
-  showBadge: 'Show saved-tab count on the icon',
   ignorePinnedTabs: 'Leave pinned tabs open',
   preserveBrowserGroups: 'Keep tab groups as separate stacks',
   ignoredSites: 'Never stow these sites',

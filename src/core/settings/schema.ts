@@ -15,7 +15,6 @@ export const settingsSchema = z.object({
   restoreGroups: z.boolean().catch(true),
   openLibraryOnStartup: z.boolean().catch(false),
   pinLibraryTab: z.boolean().catch(false),
-  showBadge: z.boolean().catch(true),
   theme: z.enum(['system', 'light', 'dark']).catch('system'),
   density: z.enum(['comfortable', 'compact']).catch('comfortable'),
   showFavicons: z.boolean().catch(true),

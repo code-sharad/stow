@@ -59,9 +59,9 @@ describe('settings store', () => {
   });
 
   it('resets to defaults', async () => {
-    await saveSettings({ showBadge: false });
+    await saveSettings({ pinLibraryTab: true });
     const next = await resetSettings();
-    expect(next.showBadge).toBe(true);
+    expect(next.pinLibraryTab).toBe(false);
   });
 
   it('notifies subscribers and unsubscribes', async () => {

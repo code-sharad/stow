@@ -309,12 +309,12 @@ Respect the action-menu top-level limit (≤ 6): we use 4. Handlers map `info.me
 
 - `commands.onCommand`: `stow-window`, `stow-tab`, `open-library`, `stow-all-windows` → same handlers as menus.
 - **Action click:** `chrome.action.onClicked` fires only if no popup is set. On every SW start and on `toolbarClick` change, apply `action.setPopup({ popup: toolbarClick==='popup' ? 'popup.html' : '' })` (idempotent). For `'library'`, the click handler opens the Library; for `'stow-window'` it calls `stow({kind:'window'})`.
-- **Startup (`runtime.onStartup` and every SW boot):** refresh badge, re-apply popup binding, ensure alarms exist (`purge` daily, `backup` per setting), run retention purge if due, optionally open Library (`openLibraryOnStartup`).
+- **Startup (`runtime.onStartup` and every SW boot):** refresh tooltip, re-apply popup binding, ensure alarms exist (`purge` daily, `backup` per setting), run retention purge if due, optionally open Library (`openLibraryOnStartup`).
 - **First install (`onInstalled` reason `install`):** create menus, seed meta, open the Library with `#/welcome`. **Update:** migrate, rebuild menus, no UI.
 
 ### 8.10 Badge (`services/badge.ts`)
 
-`refresh()`: `count = tabs.where('deletedAt').equals(0).count()` → `formatBadge(count)` (01 BADGE-01) → `action.setBadgeText`, `setBadgeBackgroundColor`, `setBadgeTextColor`, `setTitle`. `flashSuccess()`/`flashError()` set a transient `✓`/`!` and schedule a revert using `chrome.alarms` (not `setTimeout`, which a terminated SW will drop); always ends in `refresh()`.
+`refresh()`: `count = tabs.where('deletedAt').equals(0).count()` → `action.setBadgeText({ text: '' })` and `setTitle("Stow: N saved tabs")`. No count is shown on the icon. `flashSuccess()`/`flashError()` set a transient `✓`/`!` and schedule a revert using `chrome.alarms` (not `setTimeout`, which a terminated SW will drop); always ends in `refresh()`.
 
 ## 9. Messaging contract (`src/messaging/protocol.ts`)
 

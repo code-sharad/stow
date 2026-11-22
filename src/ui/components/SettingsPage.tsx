@@ -166,13 +166,6 @@ export function SettingsPage(): ReactNode {
             onChange={(value) => set('openLibraryOnStartup', value)}
           />
         </Row>
-        <Row label={t('showBadge')}>
-          <Toggle
-            checked={settings.showBadge}
-            label={t('showBadge')}
-            onChange={(value) => set('showBadge', value)}
-          />
-        </Row>
       </Section>
 
       <Section title={t('stowing')}>

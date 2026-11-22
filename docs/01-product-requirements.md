@@ -73,7 +73,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 | Remove duplicates† | STOW-06 | **Parity** (P0) | Policy-driven; merged duplicates go to Trash. |
 | Ignore pinned tabs† | STOW-04 | **Parity** (P0) | |
 | Import / export as plain-text URL list | DATA-01/03 | **Parity** (P0) | Format-compatible (02 §12.1). |
-| Badge showing saved-tab count | BADGE-01 | **Parity** (P0) | |
+| Badge showing saved-tab count | — | **Dropped** | A quiet icon: no count, only transient ✓/! feedback. |
 | Open list page on startup / pin the list tab† | SET catalog | **Parity** (P1) | |
 | Share a list as a hosted web page | n/a | **Dropped** | Needs a server; see non-goals. Alternatives: copy as Markdown/text, export HTML. |
 | Search across saved tabs | SRCH-01 | **New** (P0) | |
@@ -214,8 +214,7 @@ On first install, open the Library with a short welcome panel: what Stow does, t
 
 ### 7.12 Badge (BADGE)
 
-- **BADGE-01 (P0):** Badge text is the total live saved-tab count. Empty at 0. Compact formatting: `1–999` as is; `1.0k–9.9k` as `1.2k`; ≥10k as `12k`; ≥1M `1M+`. Background = accent token; text color for contrast. Updated on every change and re-applied on every service-worker start.
-- **BADGE-02 (P1):** Setting `showBadge` toggles it. Tooltip (`action.title`) reads "Stow: N saved tabs".
+- **BADGE-01 (P0):** The toolbar icon never shows a saved-tab count. Transient `✓`/`!` feedback is allowed. Tooltip (`action.title`) reads "Stow: N saved tabs".
 
 ## 8. Non-functional requirements
 
@@ -257,7 +256,6 @@ All keys live in `chrome.storage.local` under `settings` (02 §7). Defaults are 
 | `restoreGroups` | boolean | `true` | Recreate native tab groups. |
 | `openLibraryOnStartup` | boolean | `false` | Open the Library when the browser starts. |
 | `pinLibraryTab` | boolean | `false` | Keep the Library tab pinned. |
-| `showBadge` | boolean | `true` | Toolbar badge count. |
 | `theme` | `'system' \| 'light' \| 'dark'` | `'system'` | |
 | `density` | `'comfortable' \| 'compact'` | `'comfortable'` | |
 | `showFavicons` | boolean | `true` | |
