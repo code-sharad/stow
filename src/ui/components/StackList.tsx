@@ -9,6 +9,7 @@ import {
   Download,
   Ellipsis,
   Eraser,
+  ExternalLink,
   FileText,
   FolderInput,
   Lock,
@@ -17,6 +18,7 @@ import {
   Pin,
   PinOff,
   Trash2,
+  X,
 } from 'lucide-react';
 import { type KeyboardEvent, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import type { Id, SavedTab, Stack } from '../../core/domain/types';
@@ -122,7 +124,6 @@ function StackHeader({
   return (
     <div
       className={`stack-head${stack.pinned ? ' is-pinned' : ''}${lastStow.includes(stack.id) ? ' is-fresh' : ''}`}
-      style={{ ['--spine' as string]: stack.color ? `var(--grp-${stack.color})` : undefined }}
     >
       <CheckBox
         checked={allSelected}
@@ -265,7 +266,7 @@ function TabRow({
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      void restoreTabs([tab.id], { by: 'tab' });
+      void restoreTabs([tab.id], { by: 'tab', invertRemove: true });
     } else if (event.key === ' ') {
       event.preventDefault();
       toggleSelected(tab.id, event.shiftKey);
@@ -293,10 +294,11 @@ function TabRow({
           toggleSelected(tab.id);
           return;
         }
-        void restoreTabs([tab.id], { by: 'tab' });
+        void restoreTabs([tab.id], { by: 'tab', invertRemove: true });
       }}
       onAuxClick={(event) => {
-        if (event.button === 1) void restoreTabs([tab.id], { background: true, by: 'tab' });
+        if (event.button === 1)
+          void restoreTabs([tab.id], { background: true, by: 'tab', invertRemove: true });
       }}
       onKeyDown={onKeyDown}
       onContextMenu={(event) => {
@@ -325,14 +327,23 @@ function TabRow({
           <Copy size={13} />
         </IconButton>
         <IconButton
-          label={t('more')}
+          label={t('open')}
           onClick={(event) => {
             event.stopPropagation();
-            const rect = event.currentTarget.getBoundingClientRect();
-            onMenu({ clientX: rect.right, clientY: rect.bottom } as React.MouseEvent, stack, tab);
+            void restoreTabs([tab.id], { by: 'tab', invertRemove: true });
           }}
         >
-          <Ellipsis size={15} />
+          <ExternalLink size={13} />
+        </IconButton>
+        <IconButton
+          className="tab-delete"
+          label={t('delete')}
+          onClick={(event) => {
+            event.stopPropagation();
+            void deleteTabs([tab.id]);
+          }}
+        >
+          <X size={14} />
         </IconButton>
       </div>
     </div>
@@ -422,13 +433,19 @@ export function StackList({
         id: 'restore',
         label: tab ? t('open') : t('restoreAll'),
         icon: <ArchiveRestore size={15} />,
-        onSelect: () => void restoreTabs(ids, { by: 'tab' }),
+        onSelect: () =>
+          void restoreTabs(ids, { by: 'tab', ...(tab ? { invertRemove: true } : {}) }),
       },
       {
         id: 'restore-new',
         label: t('restoreInNewWindow'),
         icon: <ArchiveRestore size={15} />,
-        onSelect: () => void restoreTabs(ids, { by: 'tab', window: 'new' }),
+        onSelect: () =>
+          void restoreTabs(ids, {
+            by: 'tab',
+            window: 'new',
+            ...(tab ? { invertRemove: true } : {}),
+          }),
       },
     ];
     if (tab) {
@@ -542,17 +559,13 @@ export function StackList({
         {virtualizer.getVirtualItems().map((virtualRow) => {
           const row = rows[virtualRow.index];
           if (!row) return null;
-          const hasStack = row.kind !== 'gap';
           return (
             <div
               key={virtualRow.key}
-              className={`virtual-row${hasStack ? ' stack-row' : ''}`}
+              className="virtual-row"
               style={{
                 height: virtualRow.size,
                 transform: `translateY(${virtualRow.start}px)`,
-                ['--spine' as string]: hasStack
-                  ? `var(--grp-${row.stack.color ?? 'none'})`
-                  : undefined,
               }}
             >
               {row.kind === 'header' ? (

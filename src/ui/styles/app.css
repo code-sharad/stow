@@ -233,6 +233,15 @@ kbd {
 .topbar .search-shell + .spacer + .stow-split {
   margin-inline-start: auto;
 }
+@media (min-width: 900px) {
+  .search-shell {
+    position: absolute;
+    /* centered over the content column, not the whole window */
+    left: calc(50% + var(--rail-w) / 2);
+    transform: translateX(-50%);
+    margin: 0;
+  }
+}
 
 /* ---------- buttons / controls ---------- */
 .btn {
@@ -608,8 +617,7 @@ kbd {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 10px;
-  padding-bottom: 9px;
-  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
 }
 .page-title {
   margin: 0;
@@ -654,9 +662,6 @@ kbd {
   inset-inline: 0;
   top: 0;
   will-change: transform;
-}
-.stack-row {
-  border-inline-start: 2px solid var(--spine, var(--grp-none));
 }
 .stack-head {
   position: relative;
@@ -776,8 +781,9 @@ kbd {
   gap: 7px;
   height: var(--row-h);
   padding: 0 4px 0 8px;
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
-  background: transparent;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background: var(--canvas);
   color: var(--ink-2);
   cursor: default;
 }
@@ -827,6 +833,7 @@ kbd {
 .tab-domain {
   max-width: 24%;
   flex: none;
+  margin-inline-start: 8px;
   overflow: hidden;
   color: var(--ink-3);
   font: var(--font-2xs) var(--font-ui);
@@ -836,13 +843,13 @@ kbd {
 .tab-actions {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 2px;
   flex: none;
-  opacity: 0;
-}
-.tab-row:hover .tab-actions,
-.tab-row:focus-within .tab-actions {
+  margin-inline-start: 8px;
   opacity: 1;
+}
+.tab-delete:hover {
+  color: var(--danger);
 }
 .tab-row.is-focused:focus-visible {
   outline: 1px solid var(--focus);
@@ -1775,9 +1782,6 @@ kbd {
   .check input:checked + .check-box,
   .switch.on .switch-thumb {
     border: 1px solid CanvasText;
-  }
-  .stack-row {
-    border-inline-start-color: CanvasText;
   }
 }
 

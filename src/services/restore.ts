@@ -106,7 +106,7 @@ async function restoreNow(req: RestoreRequest): Promise<RestoreResult> {
     }
   }
 
-  if (opened.length > 0 && !req.invertRemove) {
+  if (opened.length > 0 && settings.removeOnRestore && !req.invertRemove) {
     const stackIds = [...new Set(opened.map((item) => item.tab.stackId))];
     await removeRestored(
       opened.map((item) => item.tab.id),
