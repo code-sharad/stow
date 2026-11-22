@@ -70,13 +70,13 @@ try {
           loaded: image.complete && image.naturalWidth > 0,
         })),
         font: getComputedStyle(document.body).fontFamily,
-        terminal: document.getElementById('terminal')?.textContent?.includes('no network') ?? false,
+        shots: document.querySelectorAll('.tile-shot img').length,
       }));
 
       if (metrics.overflow > 1)
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
       if (!metrics.h1.startsWith('Close the tabs')) failures.push(`${width}/${scheme}: missing h1`);
-      if (!metrics.terminal) failures.push(`${width}/${scheme}: terminal transcript missing`);
+      if (metrics.shots < 5) failures.push(`${width}/${scheme}: feature stills missing`);
       if (!metrics.font.includes('Inter')) failures.push(`${width}/${scheme}: Inter not active`);
       for (const image of metrics.images) {
         if (!image.loaded) failures.push(`${width}/${scheme}: image not loaded ${image.src}`);
@@ -100,7 +100,25 @@ try {
     }
   }
 
-  for (const asset of ['og.png', 'library-dark.webp', 'library-light.webp']) {
+  for (const asset of [
+    'og.png',
+    'library-dark.webp',
+    'library-light.webp',
+    'lead-dark.webp',
+    'lead-light.webp',
+    'lead-compact-dark.webp',
+    'lead-compact-light.webp',
+    'search-dark.webp',
+    'search-light.webp',
+    'undo-dark.webp',
+    'undo-light.webp',
+    'import-dark.webp',
+    'import-light.webp',
+    'groups-dark.webp',
+    'groups-light.webp',
+    'groups-compact-dark.webp',
+    'groups-compact-light.webp',
+  ]) {
     if (!existsSync(join(root, 'assets', asset))) failures.push(`missing ${asset}`);
   }
 
@@ -115,14 +133,6 @@ try {
     await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
     await page.waitForFunction(
       () =>
-        [...document.querySelectorAll('.terminal-line')]
-          .at(-1)
-          ?.textContent?.includes('no network requests') ?? false,
-      undefined,
-      { timeout: 8000 },
-    );
-    await page.waitForFunction(
-      () =>
         [...document.querySelectorAll('.reveal')].every(
           (element) => getComputedStyle(element).opacity === '1',
         ),
@@ -130,7 +140,7 @@ try {
       { timeout: 5000 },
     );
     if (errors.length > 0) failures.push(`motion: console/requests: ${errors.join(' | ')}`);
-    log(`motion/dark terminal typed, reveals visible, errors=${errors.length}`);
+    log(`motion/dark reveals visible, errors=${errors.length}`);
     await context.close();
   }
 

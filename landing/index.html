@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://code-sharad.github.io/stow/" />
     <meta
       name="description"
-      content="A local-first tab shelf for Chrome. Stow a window into searchable stacks, close the tabs, and restore them later. No account, sync, or network."
+      content="A local-first tab shelf for Chrome. Stow a window into searchable stacks, close every tab, and restore it all later. No account, sync, or network."
     />
     <meta name="theme-color" content="#0c0c0c" />
     <link rel="icon" href="assets/favicon.png" sizes="32x32" />
@@ -49,7 +49,7 @@
         <span class="status-local">local-only</span>
       </a>
       <nav class="status-nav" aria-label="Primary">
-        <a class="status-link" href="#stack">the stack</a>
+        <a class="status-link" href="#parts">features</a>
         <a class="status-link" href="#privacy">privacy</a>
         <a class="btn btn-primary btn-small" href="#install">load unpacked</a>
       </nav>
@@ -59,10 +59,10 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="kicker">❯ stow --save</p>
-          <h1 id="hero-title">Close the tabs.<br />Keep the work.</h1>
+          <h1 id="hero-title">Close the tabs.<br /> Keep the work.</h1>
           <p class="lede">
-            A local-first tab shelf for Chrome. Stow a window into searchable stacks, get the
-            memory back, restore when you need it.
+            Stow saves a whole window as searchable stacks, closes every tab, and brings back
+            exactly what you need. Local-first. No account, no sync, no network.
           </p>
           <div class="actions">
             <a class="btn btn-primary" href="#install">load unpacked</a>
@@ -77,65 +77,26 @@
           <p class="fineprint">No account. No sync. No network.</p>
         </div>
 
-        <div class="terminal-wrap">
-          <div class="terminal" aria-hidden="true">
-            <div class="terminal-bar">
-              <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="terminal-title">demo</span>
-            </div>
-            <div class="terminal-body" id="terminal">
-              <p class="terminal-line" data-text="$ stow --window"><span>$</span> stow --window</p>
-              <p class="terminal-line" data-text="scanning 23 tabs…">scanning 23 tabs…</p>
-              <p class="terminal-line" data-text="saved 23 tabs → 4 stacks">
-                saved 23 tabs → 4 stacks
-              </p>
-              <p class="terminal-line" data-text="closed 23 tabs · library updated">
-                closed 23 tabs · library updated
-              </p>
-              <p class="terminal-line terminal-ok" data-text="✓ no network requests">
-                ✓ no network requests
-              </p>
-              <p class="terminal-cursor" aria-hidden="true">▌</p>
-            </div>
+        <aside class="receipt" aria-hidden="true">
+          <div class="receipt-bar">
+            <span>stow --window</span>
+            <span>demo</span>
           </div>
-          <pre class="sr-only">Demo transcript. Command: stow --window. Scanning 23 tabs. Saved 23 tabs into 4 stacks. Closed 23 tabs and updated the library. No network requests.</pre>
-        </div>
-      </section>
+          <div class="receipt-body">
+            <p class="receipt-row"><span>tabs open</span><span>23</span></p>
+            <p class="receipt-row"><span>stacks saved</span><span>4</span></p>
+            <p class="receipt-row"><span>tabs closed</span><span>23</span></p>
+            <p class="receipt-row receipt-ok">
+              <span>network requests</span><span>0</span>
+            </p>
+          </div>
+          <p class="receipt-note">every tab written and read back before Chrome closes it</p>
+        </aside>
 
-      <section class="proof" aria-label="Why Stow">
-        <article class="proof-item">
-          <p class="proof-index">01</p>
-          <h2>Saved before closed</h2>
-          <p>
-            Every tab is written to IndexedDB and read back before Chrome closes a single one.
-          </p>
-        </article>
-        <article class="proof-item">
-          <p class="proof-index">02</p>
-          <h2>No network</h2>
-          <p>No account, no sync, no telemetry, no favicon service.</p>
-        </article>
-        <article class="proof-item">
-          <p class="proof-index">03</p>
-          <h2>Keyboard native</h2>
-          <p>Stow, search, restore, and rename without leaving the keys.</p>
-        </article>
-      </section>
-
-      <section class="section" id="stack" aria-labelledby="stack-title">
-        <div class="section-head reveal">
-          <p class="section-label">01 / the stack</p>
-          <h2 id="stack-title">A shelf, not a second tab bar.</h2>
-          <p class="section-lede">
-            Native groups become stacks. Names and colors carry over. Pin the work you are not done
-            with; lock the stacks you never want to lose.
-          </p>
-        </div>
-
-        <figure class="shot reveal">
+        <figure class="hero-shot reveal">
           <div class="shot-bar">
             <span class="shot-path">library.html</span>
-            <span class="shot-mode">stacks</span>
+            <span class="shot-mode">the actual library</span>
           </div>
           <picture>
             <source
@@ -148,41 +109,175 @@
               src="assets/library-dark.webp"
               width="1600"
               height="1000"
-              alt="The Stow library: a dark console showing three stacks named Docs, Design, and Build, with tab rows and restore controls."
+              alt="The Stow library: a dark console with three stacks named Docs, Design, and Build, each holding a list of saved tabs."
             />
           </picture>
         </figure>
+      </section>
 
-        <div class="annotations reveal" aria-label="What the library shows">
-          <div class="annotation">
-            <p class="annotation-index">01</p>
-            <h3>Group color</h3>
-            <p>A 3 px spine carries the native tab group color into the shelf.</p>
-          </div>
-          <div class="annotation">
-            <p class="annotation-index">02</p>
-            <h3>Stack title</h3>
-            <p>Rename inline with <kbd>F2</kbd>. Counts and dates stay in monospace.</p>
-          </div>
-          <div class="annotation">
-            <p class="annotation-index">03</p>
-            <h3>Tab rows</h3>
-            <p>Open one tab, select a range, or copy a whole stack as Markdown.</p>
-          </div>
-          <div class="annotation">
-            <p class="annotation-index">04</p>
-            <h3>Restore all</h3>
-            <p>Open the stack in this window or a new one. The saved copy stays until open succeeds.</p>
-          </div>
+      <section class="section" id="parts" aria-labelledby="parts-title">
+        <div class="section-head reveal">
+          <p class="section-label">01 / the parts</p>
+          <h2 id="parts-title">The tabs you close are still there.</h2>
+          <p class="section-lede">
+            Stow is one gesture and one search box. Everything else exists so nothing gets lost on
+            the way back.
+          </p>
+        </div>
+
+        <div class="bento">
+          <article class="tile tile-wide reveal">
+            <p class="tile-label">stow</p>
+            <h3>Save the whole window.</h3>
+            <p class="tile-copy">
+              One keystroke turns every tab into stacks, sorted by the groups you already made.
+              Pinned tabs stay open.
+            </p>
+            <figure class="tile-shot">
+              <picture>
+                <source
+                  media="(max-width: 639px) and (prefers-color-scheme: light)"
+                  srcset="assets/lead-compact-light.webp"
+                />
+                <source media="(max-width: 639px)" srcset="assets/lead-compact-dark.webp" />
+                <source media="(prefers-color-scheme: light)" srcset="assets/lead-light.webp" />
+                <img
+                  src="assets/lead-dark.webp"
+                  width="1440"
+                  height="600"
+                  alt="The Stow popup open over a browser window, offering to stow all nine tabs in the window."
+                />
+              </picture>
+            </figure>
+            <p class="tile-foot">
+              <kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span>
+              <span class="tile-sep">·</span>
+              <kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span>
+            </p>
+          </article>
+
+          <article class="tile tile-stat reveal">
+            <p class="tile-label">quiet by default</p>
+            <p class="stat-zero">0</p>
+            <p class="stat-unit">network requests</p>
+            <p class="tile-copy">
+              No account, sync, telemetry, or favicon service. The extension asks for no host
+              permissions.
+            </p>
+          </article>
+
+          <article class="tile reveal">
+            <p class="tile-label">find</p>
+            <h3>Half a memory is enough.</h3>
+            <p class="tile-copy">
+              Search titles, URLs, and stacks as you type. Typos are fine; <code>domain:</code>
+              narrows it down.
+            </p>
+            <figure class="tile-shot">
+              <picture>
+                <source media="(prefers-color-scheme: light)" srcset="assets/search-light.webp" />
+                <img
+                  src="assets/search-dark.webp"
+                  width="716"
+                  height="480"
+                  alt="Stow's search palette showing three invoice-related tabs found across different stacks."
+                />
+              </picture>
+            </figure>
+            <p class="tile-foot"><kbd>⌘</kbd><kbd>K</kbd><span>from anywhere</span></p>
+          </article>
+
+          <article class="tile reveal">
+            <p class="tile-label">safe</p>
+            <h3>Nothing closes until it’s saved.</h3>
+            <p class="tile-copy">
+              Every tab is written and read back first. Change your mind and Trash holds it for 30
+              days.
+            </p>
+            <figure class="tile-shot">
+              <picture>
+                <source media="(prefers-color-scheme: light)" srcset="assets/undo-light.webp" />
+                <img
+                  src="assets/undo-dark.webp"
+                  width="716"
+                  height="480"
+                  alt="The Stow trash, with a toast confirming a stack was moved there and an undo action."
+                />
+              </picture>
+            </figure>
+            <p class="tile-foot"><span>undo from the toast, or restore from Trash</span></p>
+          </article>
+
+          <article class="tile reveal">
+            <p class="tile-label">move in</p>
+            <h3>Your old shelf still works.</h3>
+            <p class="tile-copy">
+              Import OneTab, Markdown lists, bookmarks, or a Stow backup. Export the same library
+              whenever you want.
+            </p>
+            <figure class="tile-shot">
+              <picture>
+                <source media="(prefers-color-scheme: light)" srcset="assets/import-light.webp" />
+                <img
+                  src="assets/import-dark.webp"
+                  width="716"
+                  height="480"
+                  alt="Stow's import sheet listing OneTab, Markdown, bookmarks, and Stow JSON sources."
+                />
+              </picture>
+            </figure>
+            <p class="tile-foot"><span>no lock-in</span></p>
+          </article>
+
+          <article class="tile tile-wide reveal">
+            <p class="tile-label">groups</p>
+            <h3>Your tab groups come with you.</h3>
+            <p class="tile-copy">
+              Native names, colors, and pinned tabs survive the trip. Restore a stack into the shape
+              it left in.
+            </p>
+            <figure class="tile-shot">
+              <picture>
+                <source
+                  media="(max-width: 639px) and (prefers-color-scheme: light)"
+                  srcset="assets/groups-compact-light.webp"
+                />
+                <source media="(max-width: 639px)" srcset="assets/groups-compact-dark.webp" />
+                <source media="(prefers-color-scheme: light)" srcset="assets/groups-light.webp" />
+                <img
+                  src="assets/groups-dark.webp"
+                  width="1440"
+                  height="440"
+                  alt="Three Chrome tab groups — Design, Reading, and Build — mapped to three Stow stacks with the same names and colors."
+                />
+              </picture>
+            </figure>
+            <p class="tile-foot"><span>Chrome tab groups · recreated on restore</span></p>
+          </article>
+
+          <article class="tile tile-keys reveal">
+            <p class="tile-label">keyboard</p>
+            <h3>Hands stay on the keys.</h3>
+            <p class="tile-copy">
+              Stow, search, restore, and rename without reaching for the mouse.
+            </p>
+            <div class="key-list">
+              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span></p>
+              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span></p>
+              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>L</kbd><span>open library</span></p>
+              <p class="key-row"><kbd>⌘</kbd><kbd>K</kbd><span>search</span></p>
+            </div>
+          </article>
         </div>
       </section>
 
       <section class="section" id="privacy" aria-labelledby="privacy-title">
         <div class="section-head reveal">
           <p class="section-label">02 / the ledger</p>
-          <h2 id="privacy-title">What leaves your machine: nothing.</h2>
+          <h2 id="privacy-title">It never leaves this machine.</h2>
           <p class="section-lede">
-            Stow has no server to send anything to. The extension requests no host permissions.
+            There is no server to send it to. Stow requests no host permissions and makes no
+            network calls.
           </p>
         </div>
 
@@ -227,24 +322,9 @@
         </p>
       </section>
 
-      <section class="section section-exit" id="import" aria-labelledby="exit-title">
-        <div class="section-head reveal">
-          <p class="section-label">03 / the exit</p>
-          <h2 id="exit-title">Your tabs are not a lock-in.</h2>
-          <p class="section-lede">
-            Import OneTab text, Markdown lists, Netscape bookmarks, or a Stow JSON backup. Export
-            the same library at any time.
-          </p>
-        </div>
-        <p class="format-line reveal">
-          <span>onetab.txt</span><span>notes.md</span><span>bookmarks.html</span
-          ><span>stow-backup.json</span>
-        </p>
-      </section>
-
       <section class="section" id="install" aria-labelledby="install-title">
         <div class="section-head reveal">
-          <p class="section-label">04 / install</p>
+          <p class="section-label">03 / install</p>
           <h2 id="install-title">Three steps. No account.</h2>
         </div>
 
@@ -278,9 +358,7 @@
 
           <aside class="install-note reveal">
             <p class="kicker">❯ ready</p>
-            <p>
-              Works in Chrome, Edge, Brave, and other Chromium browsers with Manifest V3.
-            </p>
+            <p>Works in Chrome, Edge, Brave, and other Chromium browsers with Manifest V3.</p>
             <a
               class="btn btn-secondary"
               href="https://github.com/code-sharad/stow"
@@ -302,7 +380,10 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="#privacy">privacy</a>
         <a href="https://github.com/code-sharad/stow" target="_blank" rel="noreferrer">source</a>
-        <a href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md" target="_blank" rel="noreferrer"
+        <a
+          href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md"
+          target="_blank"
+          rel="noreferrer"
           >changelog</a
         >
       </nav>

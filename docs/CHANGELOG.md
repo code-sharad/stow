@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Rebuilt the landing page as a product tour: the real Library capture under the hero, then a
+  seven-tile feature bento covering stow, zero network requests, search, save-before-close,
+  import/export, tab groups, and keyboard control. Install moved to section 03.
+- Replaced the hero terminal demo with a static `stow --window` receipt, and dropped the separate
+  proof row and export section now that the bento says each thing once.
+- Authored the feature stills with Stageshow and added compact recompositions for phones below
+  640px instead of scaling desktop stills down.
+
+### Added
+
+- Sixteen dark/light feature stills in `landing/assets/`, with the copy deck, still provenance,
+  and responsive rules updated in `docs/LANDING.md`.
+
 ## 0.1.0 — 2026-11-22
 
 ### Changed
