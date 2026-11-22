@@ -18,7 +18,7 @@ One page, one decision: install Stow.
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
-│ ▪ stow   v0.1.0   local-only        features privacy [load]  │  44px status strip
+│ ▪ stow        01 the parts   02 the ledger   local-only [load] │  52px bar
 ├──────────────────────────────────────────────────────────────┤
 │  ❯ stow --save                                               │
 │  Close the tabs.            ┌ stow --window        demo ┐    │
@@ -61,9 +61,12 @@ Use these strings as written. Keep labels lowercase and prose sentence case.
 
 ### Status strip
 
-- Left: `▪ stow` / `v0.1.0` / `local-only`
-- Right: `features` / `privacy` / `[ load unpacked ]`
-- Mobile: brand and CTA only; hide the text links and version below 768/640.
+- Left: `[icon] stow` in a 26px outlined tile.
+- Center: `01 the parts` / `02 the ledger`; the active section gets a 2px `accent` underline.
+- Right: `local-only` with a 5px accent square, then `[ load unpacked ]`.
+- Mobile: brand and `menu`; the panel lists `01 the parts`, `02 the ledger`, `03 install`, a full-width
+  `[ load unpacked ]`, and `v0.1.0 · local-only`.
+- Footer meta: `v0.1.0 · local-only · 2026`.
 
 ### Hero
 
@@ -210,8 +213,13 @@ receipt.
 
 ### Status strip
 
-- Height `44px`, sticky at top, `sheet` background, bottom 1 px rule.
-- Brand left, version and `local-only` in mono, CTA right.
+- Height `52px` (`48px` below 768px), sticky at top. At the top of the page it is `canvas`; after 4px of
+  scroll it becomes `sheet` with a bottom 1 px rule.
+- Left: 26px outlined icon tile + `stow` wordmark. Center: numbered section links in mono; the active
+  link is `ink` with a 2px `accent` underline and `aria-current="location"`. Right: `local-only` status
+  LED + `[ load unpacked ]`.
+- Below 768px the links and CTA collapse into a `menu` disclosure. The panel is full height, `canvas`,
+  with 1 px row rules; the page scroll is locked and `main`/`footer` are inert while it is open.
 - Do not animate its height on scroll.
 
 ### Receipt
@@ -278,7 +286,9 @@ No horizontal scroll at 320 px. Test at 320, 375, 640, 768, 1440.
 - Light and dark both meet WCAG AA for text and UI.
 - One `<h1>`; sections use `<h2>`; tiles use `<h3>`.
 - Skip link to `#main`.
-- Status strip CTA is a real link.
+- Status strip CTA is a real link; the `menu` button uses `aria-expanded`/`aria-controls`, closes on
+  Escape, and returns focus to itself.
+- Section numerals are decorative; section links are named `the parts` / `the ledger`.
 - Every still has descriptive alt text. The receipt and icon images are `aria-hidden` / empty alt.
 - Keyboard focus visible on every link and button.
 - Table has `<caption>`, `<th scope="col">`, and no layout tables.

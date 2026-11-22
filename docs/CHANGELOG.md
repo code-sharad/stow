@@ -9,6 +9,8 @@
   import/export, tab groups, and keyboard control. Install moved to section 03.
 - Replaced the hero terminal demo with a static `stow --window` receipt, and dropped the separate
   proof row and export section now that the bento says each thing once.
+- Redesigned the landing navbar: an outlined brand tile, numbered section links with a scrollspy
+  underline, a live `local-only` status, and a full-height mobile menu carrying the install CTA.
 - Authored the feature stills with Stageshow and added compact recompositions for phones below
   640px instead of scaling desktop stills down.
 
