@@ -113,8 +113,7 @@ try {
 
       if (metrics.overflow > 1)
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
-      if (!metrics.h1.startsWith('Fifteen tabs.'))
-        failures.push(`${width}/${scheme}: missing h1`);
+      if (!metrics.h1.startsWith('Fifteen tabs.')) failures.push(`${width}/${scheme}: missing h1`);
       if (metrics.h1Count !== 1) failures.push(`${width}/${scheme}: h1 count ${metrics.h1Count}`);
       if (metrics.title !== 'Stow — Close the tabs. Keep the work.')
         failures.push(`${width}/${scheme}: title mismatch`);
