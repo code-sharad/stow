@@ -1,4 +1,4 @@
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve } from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
@@ -115,11 +115,11 @@ try {
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
       if (!metrics.h1.startsWith('Fifteen tabs.')) failures.push(`${width}/${scheme}: missing h1`);
       if (metrics.h1Count !== 1) failures.push(`${width}/${scheme}: h1 count ${metrics.h1Count}`);
-      if (metrics.title !== 'Stow — Close the tabs. Keep the work.')
+      if (metrics.title !== 'Stow — a local-first Chrome tab manager')
         failures.push(`${width}/${scheme}: title mismatch`);
       if (
         metrics.description !==
-        'Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync.'
+        'Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking.'
       )
         failures.push(`${width}/${scheme}: description mismatch`);
       if (metrics.canonical !== 'https://code-sharad.github.io/stow/')
@@ -182,6 +182,132 @@ try {
 
   if (!existsSync(join(root, 'sitemap.xml'))) failures.push('missing sitemap.xml');
   if (!existsSync(join(root, 'robots.txt'))) failures.push('missing robots.txt');
+
+  // Search Console serves the verification body from the file's own name; Google rejects a mismatch.
+  const verifications = readdirSync(root).filter((name) => /^google[0-9a-z]+\.html$/.test(name));
+  if (verifications.length === 0) failures.push('missing google*.html verification file');
+  for (const name of verifications) {
+    const body = readFileSync(join(root, name), 'utf8').trim();
+    if (body !== `google-site-verification: ${name}`)
+      failures.push(`search-console: ${name} body is ${JSON.stringify(body)}`);
+  }
+
+  {
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
+    const seo = await page.evaluate(() => {
+      const meta = (selector) =>
+        document.querySelector(selector)?.getAttribute('content')?.trim() ?? '';
+      const scripts = [...document.querySelectorAll('script[type="application/ld+json"]')];
+      const parseErrors = [];
+      const blocks = [];
+      for (const script of scripts) {
+        try {
+          blocks.push(JSON.parse(script.textContent));
+        } catch (error) {
+          parseErrors.push(String(error));
+        }
+      }
+      const nodes = blocks.flatMap((block) => block['@graph'] ?? [block]);
+      const faq = nodes.find((node) => node['@type'] === 'FAQPage');
+      const app = nodes.find((node) => node['@type'] === 'SoftwareApplication');
+      const levels = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].map((heading) =>
+        Number(heading.tagName[1]),
+      );
+      const ids = [...document.querySelectorAll('[id]')].map((element) => element.id);
+      return {
+        title: document.title.trim(),
+        description: meta('meta[name="description"]'),
+        canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '',
+        robots: meta('meta[name="robots"]'),
+        ogImage: meta('meta[property="og:image"]'),
+        ogImageWidth: meta('meta[property="og:image:width"]'),
+        twitterCard: meta('meta[name="twitter:card"]'),
+        parseErrors,
+        blockCount: blocks.length,
+        app: app
+          ? {
+              category: app.applicationCategory ?? '',
+              price: app.offers?.price ?? '',
+              downloadUrl: app.downloadUrl ?? '',
+            }
+          : null,
+        faqQuestions: (faq?.mainEntity ?? []).map((entry) => entry.name.trim()),
+        visibleQuestions: [...document.querySelectorAll('#questions .faq-item h3')].map((h3) =>
+          h3.textContent.trim(),
+        ),
+        levels,
+        duplicateIds: ids.filter((id, index) => ids.indexOf(id) !== index),
+        brokenAnchors: [...document.querySelectorAll('a[href^="#"]')]
+          .map((anchor) => anchor.getAttribute('href').slice(1))
+          .filter((target) => target && !document.getElementById(target)),
+      };
+    });
+
+    const canonical = 'https://code-sharad.github.io/stow/';
+    if (seo.title !== 'Stow — a local-first Chrome tab manager')
+      failures.push(`seo: title ${seo.title}`);
+    if (seo.title.length > 60) failures.push(`seo: title ${seo.title.length} chars`);
+    if (!seo.title.toLowerCase().includes('tab manager')) failures.push('seo: title keywords');
+    if (seo.description.length < 110 || seo.description.length > 165)
+      failures.push(`seo: description ${seo.description.length} chars`);
+    if (!seo.description.toLowerCase().includes('tab manager'))
+      failures.push('seo: description keywords');
+    if (seo.canonical !== canonical) failures.push(`seo: canonical ${seo.canonical}`);
+    if (!seo.robots.includes('index')) failures.push(`seo: robots ${seo.robots}`);
+    if (seo.ogImage !== `${canonical}assets/og.png`) failures.push(`seo: og:image ${seo.ogImage}`);
+    if (seo.ogImageWidth !== '1200') failures.push(`seo: og:image:width ${seo.ogImageWidth}`);
+    if (seo.twitterCard !== 'summary_large_image')
+      failures.push(`seo: twitter:card ${seo.twitterCard}`);
+    if (seo.parseErrors.length > 0)
+      failures.push(`seo: JSON-LD parse ${seo.parseErrors.join(' | ')}`);
+    if (seo.blockCount !== 2) failures.push(`seo: JSON-LD blocks ${seo.blockCount}`);
+    if (!seo.app) failures.push('seo: missing SoftwareApplication');
+    else {
+      if (seo.app.category !== 'BrowserApplication')
+        failures.push(`seo: applicationCategory ${seo.app.category}`);
+      if (String(seo.app.price) !== '0') failures.push(`seo: offers.price ${seo.app.price}`);
+      if (!seo.app.downloadUrl.startsWith('https://'))
+        failures.push(`seo: downloadUrl ${seo.app.downloadUrl}`);
+    }
+    if (seo.visibleQuestions.length < 5)
+      failures.push(`seo: question rows ${seo.visibleQuestions.length}`);
+    if (seo.faqQuestions.join('|') !== seo.visibleQuestions.join('|'))
+      failures.push('seo: FAQPage questions do not match the visible questions');
+    for (let index = 1; index < seo.levels.length; index += 1) {
+      if (seo.levels[index] > seo.levels[index - 1] + 1)
+        failures.push(`seo: heading jump h${seo.levels[index - 1]} to h${seo.levels[index]}`);
+    }
+    if (seo.duplicateIds.length > 0)
+      failures.push(`seo: duplicate ids ${seo.duplicateIds.join(', ')}`);
+    if (seo.brokenAnchors.length > 0)
+      failures.push(`seo: broken anchors ${seo.brokenAnchors.join(', ')}`);
+
+    const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+    const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    if (locations.length !== 1 || locations[0] !== canonical)
+      failures.push(`seo: sitemap locs ${locations.join(', ')}`);
+    if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap))
+      failures.push('seo: sitemap lastmod missing');
+    if (
+      !/Sitemap: https:\/\/code-sharad\.github\.io\/stow\/sitemap\.xml/.test(
+        readFileSync(join(root, 'robots.txt'), 'utf8'),
+      )
+    )
+      failures.push('seo: robots.txt sitemap line');
+    const demo = readFileSync(join(root, 'demo.html'), 'utf8');
+    if (!/<meta name="robots" content="noindex/.test(demo))
+      failures.push('seo: demo.html is not noindex');
+
+    log(
+      `seo title=${seo.title.length}ch description=${seo.description.length}ch questions=${seo.visibleQuestions.length} headings=${seo.levels.length}`,
+    );
+    await context.close();
+  }
 
   {
     const context = await browser.newContext({

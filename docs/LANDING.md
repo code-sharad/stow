@@ -25,9 +25,16 @@ hero:   Fifteen tabs. / Three lists. One click.
 how:    three rows — Stow / Find / Restore, each with a real UI capture
         A calmer browser in three steps.
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
+questions: six-question list — Stow vs Chrome, saving all tabs, tab groups, sync, uninstalling,
+        importing an OneTab list (matches the FAQPage JSON-LD word for word)
 privacy: three promises + local-only ledger table (no screenshot)
-footer: stow · local-first tab manager · source · privacy · changelog · v0.1.0
+footer: stow · local-first tab manager · source · questions · privacy · changelog · v0.1.0
 ```
+
+The ordering is deliberate: the questions section sits between features and privacy because
+people who are evaluating a tab manager ask exactly these things, and the answers are the
+factual core the page is competing on. It is a definition list, not a FAQ accordion: nothing is
+hidden behind a click, so the text is in the initial HTML for readers and crawlers alike.
 
 ## Copy deck
 
@@ -47,8 +54,11 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 - Kicker: `A local-first tab manager` — a centered square badge above the H1 (hero only; no
   dash; section eyebrows keep their left-aligned orange dash).
 - H1: `Fifteen tabs.` / `Three lists. One click.`
-- Lede: `Stow saves a crowded window as grouped, searchable lists — then restores any of them.
-  Watch fifteen tabs become three lists, a search find the Docs, and the tabs come back.`
+- Lede: `Stow is a browser extension that turns a crowded window of tabs into grouped,
+  searchable lists — then restores any of them. Watch fifteen tabs become three lists, a search
+  find the Docs, and the tabs come back.`
+- Why the lede names the product: the H1 is a slogan, so the first sentence after it has to say
+  what Stow is in the words people search with (browser extension, tabs, lists).
 - Layout: centered copy above the full-width demo; no right-column illustration and no labels
   around the animation.
 - Primary: `Add to Chrome` / `Add to Firefox`
@@ -97,8 +107,8 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 
 - Eyebrow: `Features`
 - H2: `Everything you need to put tabs away—and find them again.`
-- Lede: `A small set of tools for the whole life of a tab: capture it, organize it, search it, and put
-  it back.`
+- Lede: `A small set of tools for the whole life of a tab in Chrome and Firefox: capture it,
+  organize it, search it, and put it back.`
 
 | Label | H3 | Body |
 | --- | --- | --- |
@@ -106,7 +116,7 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 | Search | Find it from half a memory. | Search titles, URLs, domains, and list names. No account, no server round trip, no waiting. |
 | Organize | Keep related tabs together. | Shape a list around a project, then keep it out of the way. Your structure survives restarts and updates. |
 | Restore | Pick up where you left off. | Bring back one page, selected tabs, or a complete list. Choose the current window or a fresh one. |
-| Import / export | Bring your existing tabs with you. | Import an existing shelf, or export everything as a JSON backup whenever you want a copy you own. |
+| Import / export | Bring your existing tabs with you. | Import a OneTab list, bookmarks HTML, or Markdown, or export everything as a JSON backup whenever you want a copy you own. |
 | Keyboard | Keep your hands on the keys. | The library is built to be driven from the keyboard, from the first capture to the final restore. |
 
 Shortcut rows: `Alt Shift S` save window, `Alt Shift T` save this tab, `Ctrl/Cmd K` commands,
@@ -116,6 +126,28 @@ Organize capabilities: rename, pin, lock, and collapse; reorder lists and move t
 dedupe saved tabs.
 Restore capabilities: restore one tab or a selection; restore a whole list; copy links.
 Import formats: OneTab, Markdown, Bookmarks HTML, Stow JSON.
+
+### Questions
+
+- Eyebrow: `Questions`
+- H2: `Questions, answered.`
+- Lede: `Short answers to what people ask before they move forty tabs into Stow.`
+- Shape: `<div class="faq">` with `<div class="faq-item"><h3>` / `<p>` rows; one column below
+  768px, a 34%/1fr grid above it. Headings, not `<dl>`, because a `<dt>` may not contain heading
+  content and these questions need to sit in the document outline.
+
+| H3 | Answer |
+| --- | --- |
+| Is Stow a Chrome extension? | Yes. Stow is a browser extension for Chrome 120+ and Firefox 140+, and it works offline. It adds no account, no cloud sync, and no analytics to your browser. |
+| How do I save all open tabs in Chrome? | Press Alt Shift S, or open the Stow popup and save the window. Stow stores every eligible tab as one list, then closes those tabs; pinned tabs stay open. Chrome's own Ctrl Shift D bookmarks every tab but leaves them open and running. |
+| How is Stow different from Chrome tab groups? | Tab groups organize tabs that are still open. Stow closes them: each list lives in the library, survives restarts, and restores a single tab, a selection, or the whole list. |
+| Does Stow sync my tabs to another device? | No. Lists stay in your browser's own storage. There is no Stow server, so export a JSON backup and move the file yourself if you want the lists elsewhere. |
+| What happens to my lists if I uninstall Stow? | Uninstalling the extension removes its storage, including every saved list. Export a JSON backup before you uninstall if you want to keep them. |
+| Can I import tabs I saved with OneTab? | Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON backups, so an existing shelf can move over in one step. |
+
+Every answer states only what the extension already does. The same six answers are in the
+`FAQPage` JSON-LD in `landing/index.html`, so a copy edit has to change both; `pnpm check:landing`
+fails if the question sets drift apart.
 
 ### Privacy
 
@@ -140,7 +172,7 @@ Import formats: OneTab, Markdown, Bookmarks HTML, Stow JSON.
 
 ### Footer
 
-`stow` · `local-first tab manager` · `source` · `privacy` · `changelog` · `v0.1.0 · © 2026 Stow`
+`stow` · `local-first tab manager` · `source` · `questions` · `privacy` · `changelog` · `v0.1.0 · © 2026 Stow`
 
 ## Screenshots
 
@@ -179,7 +211,9 @@ sync with them. The step images remain real captures.
 ## Implementation notes
 
 - Files: `landing/index.html`, `landing/styles.css`, `landing/main.js`, `landing/hero-demo.js`,
-  `landing/hero-demo.css`, `landing/demo.html`, `landing/HERO-DEMO.md`, `landing/sitemap.xml`.
+  `landing/hero-demo.css`, `landing/demo.html`, `landing/HERO-DEMO.md`, `landing/sitemap.xml`,
+  `landing/robots.txt`, `landing/google3d833a44d7eced00.html` (Search Console verification), and
+  `scripts/subset-landing-font.sh` for the font.
 - Static HTML/CSS plus `main.js` for the mobile menu, current year, scrollspy, reveals, and the
   browser-aware store link, and the `hero-demo.js` module for the hero. All content is visible
   without JavaScript; without it the demo falls back to the library screenshot, and on small
@@ -187,7 +221,18 @@ sync with them. The step images remain real captures.
   over HTTP: from `file://` Chrome blocks external scripts and fonts, so the hero demo shows its
   library fallback plus a “serve over HTTP” note.
 - Tokens, type scale, spacing, and the one-accent rule follow the branding spec. Inter is
-  self-hosted from `landing/assets/inter-var.woff2`; mono is system UI mono.
+  self-hosted from `landing/assets/inter-var.woff2`, which is a Latin subset of
+  `public/fonts/inter-var.woff2` (65 KB instead of 351 KB, same 100–900 weight axis). Rebuild it
+  with `./scripts/subset-landing-font.sh` after changing the unicode list in that script. Mono is
+  system UI mono.
+- Search metadata is part of the page, not an afterthought: the `<title>` (`Stow — a local-first
+  Chrome tab manager`), the description, `robots`, canonical, Open Graph, Twitter card, and two
+  JSON-LD blocks (`SoftwareApplication` and `FAQPage`) all live in `<head>`. Keep the H1 a slogan
+  and put the category words in the title, description, hero lede, and questions. See
+  [`docs/SEO.md`](SEO.md) for the audit and the reasoning.
+- `landing/demo.html` is a development page for the hero animation and is `noindex`; publish-time
+  staging in `.github/workflows/pages.yml` also drops `demo.html` and `HERO-DEMO.md` from the
+  uploaded artifact, so neither is served from the live site.
 - No analytics, cookies, third-party embeds, or network calls after load.
 - Header is 56px desktop / 52px mobile and sticky. Content is capped at 1120px with 32/20px gutters.
 - Hero, step, feature, and privacy layouts collapse at 1023, 767, and 639px. The hero demo
@@ -220,6 +265,18 @@ light with reduced motion. It asserts:
 - the mobile menu opens, Escape closes it, and focus returns to the toggle
 - without JavaScript, the static nav shows, the toggle is hidden, and reveals are visible
 - reveals become visible
+- search metadata: title and description length and keywords, canonical, `robots`, `og:image`,
+  `twitter:card`, both JSON-LD blocks parse, `SoftwareApplication` keeps its category and price,
+  the `FAQPage` questions match the visible questions in order and count, the sitemap lists only
+  the canonical URL with a `lastmod`, `robots.txt` keeps its sitemap line, `demo.html` stays
+  `noindex`, the `google*.html` verification file exists and holds exactly
+  `google-site-verification: <its own file name>`, no heading level is skipped, no id is
+  duplicated, and every `#anchor` resolves
+
+The Search Console file must stay at the root of `landing/` (served at
+`/stow/google3d833a44d7eced00.html`) and must keep its exact name, because Google compares the
+body against the URL it was given. It verifies the URL-prefix property
+`https://code-sharad.github.io/stow/` only.
 
 The page is ready to deploy as-is once the captures and checks pass. Keep `docs/brand` as the
 source of truth; update this file when shipped copy or screenshots change.

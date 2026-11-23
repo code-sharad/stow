@@ -4,20 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>Stow — Close the tabs. Keep the work.</title>
+    <title>Stow — a local-first Chrome tab manager</title>
     <link rel="canonical" href="https://code-sharad.github.io/stow/" />
     <link rel="sitemap" type="application/xml" href="sitemap.xml" />
     <meta
       name="description"
-      content="Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync."
+      content="Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Sharad Bhadait" />
     <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="assets/icon.png" />
+    <link rel="apple-touch-icon" href="assets/icon.png" sizes="128x128" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=8" />
+    <link rel="stylesheet" href="styles.css?v=9" />
     <link rel="stylesheet" href="hero-demo.css?v=3" />
 
     <meta property="og:type" content="website" />
@@ -29,8 +30,10 @@
       content="A local-first tab manager for Chrome. Save the window as a searchable list. No account, no cloud, no tracking."
     />
     <meta property="og:image" content="https://code-sharad.github.io/stow/assets/og.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
     <meta
       property="og:image:alt"
       content="Stow — Close the tabs. Keep the work. A local-first tab manager for Chrome."
@@ -53,13 +56,76 @@
         "@type": "SoftwareApplication",
         "name": "Stow",
         "applicationCategory": "BrowserApplication",
+        "applicationSubCategory": "Tab manager",
         "operatingSystem": "ChromeOS, Linux, macOS, Windows",
         "browserRequirements": "Chrome 120+ or Firefox 140+",
+        "softwareVersion": "0.1.0",
         "url": "https://code-sharad.github.io/stow/",
         "downloadUrl": "https://github.com/code-sharad/stow/releases/latest",
         "license": "https://github.com/code-sharad/stow/blob/main/LICENSE",
+        "isAccessibleForFree": true,
+        "inLanguage": "en",
+        "screenshot": "https://code-sharad.github.io/stow/assets/library-dark.webp",
+        "sameAs": ["https://github.com/code-sharad/stow"],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "description": "Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync."
+        "description": "Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Stow a Chrome extension?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Stow is a browser extension for Chrome 120+ and Firefox 140+, and it works offline. It adds no account, no cloud sync, and no analytics to your browser."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I save all open tabs in Chrome?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Press Alt Shift S, or open the Stow popup and save the window. Stow stores every eligible tab as one list, then closes those tabs; pinned tabs stay open. Chrome's own Ctrl Shift D bookmarks every tab but leaves them open and running."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is Stow different from Chrome tab groups?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tab groups organize tabs that are still open. Stow closes them: each list lives in the library, survives restarts, and restores a single tab, a selection, or the whole list."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Stow sync my tabs to another device?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Lists stay in your browser's own storage. There is no Stow server, so export a JSON backup and move the file yourself if you want the lists elsewhere."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to my lists if I uninstall Stow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Uninstalling the extension removes its storage, including every saved list. Export a JSON backup before you uninstall if you want to keep them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I import tabs I saved with OneTab?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON backups, so an existing shelf can move over in one step."
+            }
+          }
+        ]
       }
     </script>
 
@@ -135,9 +201,9 @@
           <p class="eyebrow">A local-first tab manager</p>
           <h1 id="hero-title">Fifteen tabs.<br /> Three lists. One click.</h1>
           <p class="hero-lede">
-            Stow saves a crowded window as grouped, searchable lists — then restores any of
-            them. Watch fifteen tabs become three lists, a search find the Docs, and the tabs
-            come back.
+            Stow is a browser extension that turns a crowded window of tabs into grouped,
+            searchable lists — then restores any of them. Watch fifteen tabs become three lists, a
+            search find the Docs, and the tabs come back.
           </p>
           <div class="hero-actions">
             <a
@@ -329,8 +395,8 @@
           <p class="eyebrow">Features</p>
           <h2 id="features-title">Everything you need to put tabs away—and find them again.</h2>
           <p class="section-lede">
-            A small set of tools for the whole life of a tab: capture it, organize it, search it,
-            and put it back.
+            A small set of tools for the whole life of a tab in Chrome and Firefox: capture it,
+            organize it, search it, and put it back.
           </p>
         </div>
 
@@ -393,8 +459,8 @@
             <p class="feature-label">Import / export</p>
             <h3>Bring your existing tabs with you.</h3>
             <p>
-              Import an existing shelf, or export everything as a JSON backup whenever you want a
-              copy you own.
+              Import a OneTab list, bookmarks HTML, or Markdown, or export everything as a JSON
+              backup whenever you want a copy you own.
             </p>
             <ul class="format-list" aria-label="Supported import formats">
               <li>OneTab</li>
@@ -416,6 +482,64 @@
               <div><dt><kbd>Esc</kbd></dt><dd>clear search or selection</dd></div>
             </dl>
           </article>
+        </div>
+      </section>
+
+      <section class="section" id="questions" aria-labelledby="questions-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Questions</p>
+          <h2 id="questions-title">Questions, answered.</h2>
+          <p class="section-lede">
+            Short answers to what people ask before they move forty tabs into Stow.
+          </p>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item reveal">
+            <h3>Is Stow a Chrome extension?</h3>
+            <p>
+              Yes. Stow is a browser extension for Chrome 120+ and Firefox 140+, and it works
+              offline. It adds no account, no cloud sync, and no analytics to your browser.
+            </p>
+          </div>
+          <div class="faq-item reveal">
+            <h3>How do I save all open tabs in Chrome?</h3>
+            <p>
+              Press <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>S</kbd>, or open the Stow popup and
+              save the window. Stow stores every eligible tab as one list, then closes those
+              tabs; pinned tabs stay open. Chrome's own <kbd>Ctrl</kbd> <kbd>Shift</kbd>
+              <kbd>D</kbd> bookmarks every tab but leaves them open and running.
+            </p>
+          </div>
+          <div class="faq-item reveal">
+            <h3>How is Stow different from Chrome tab groups?</h3>
+            <p>
+              Tab groups organize tabs that are still open. Stow closes them: each list lives in
+              the library, survives restarts, and restores a single tab, a selection, or the
+              whole list.
+            </p>
+          </div>
+          <div class="faq-item reveal">
+            <h3>Does Stow sync my tabs to another device?</h3>
+            <p>
+              No. Lists stay in your browser's own storage. There is no Stow server, so export a
+              JSON backup and move the file yourself if you want the lists elsewhere.
+            </p>
+          </div>
+          <div class="faq-item reveal">
+            <h3>What happens to my lists if I uninstall Stow?</h3>
+            <p>
+              Uninstalling the extension removes its storage, including every saved list. Export
+              a JSON backup before you uninstall if you want to keep them.
+            </p>
+          </div>
+          <div class="faq-item reveal">
+            <h3>Can I import tabs I saved with OneTab?</h3>
+            <p>
+              Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON
+              backups, so an existing shelf can move over in one step.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -515,6 +639,7 @@
         <p class="foot-tagline">local-first tab manager</p>
         <nav class="foot-nav" aria-label="Project">
           <a href="https://github.com/code-sharad/stow">source</a>
+          <a href="#questions">questions</a>
           <a href="#privacy">privacy</a>
           <a href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md">changelog</a>
         </nav>

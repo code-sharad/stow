@@ -823,6 +823,42 @@ h1 {
   letter-spacing: 0.02em;
 }
 
+/* ---------- questions ---------- */
+
+.faq {
+  border-top: 1px solid var(--border);
+}
+
+.faq-item {
+  display: grid;
+  gap: 8px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-item h3 {
+  font-size: 17px;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.faq-item p {
+  max-width: 68ch;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .faq-item {
+    grid-template-columns: minmax(0, 34%) minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    padding: 26px 0;
+  }
+}
+
 /* ---------- privacy ---------- */
 
 .privacy-grid {
