@@ -15,6 +15,7 @@ const types = {
   '.webp': 'image/webp',
   '.woff2': 'font/woff2',
   '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
 };
 
 const server = createServer((req, res) => {
@@ -61,23 +62,73 @@ try {
 
       await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.documentElement.scrollHeight; y += 600) {
+          window.scrollTo(0, y);
+          await new Promise((done) => setTimeout(done, 60));
+        }
+        window.scrollTo(0, 0);
+      });
+      try {
+        await page.waitForFunction(
+          () => [...document.images].every((image) => image.complete),
+          undefined,
+          { timeout: 5000 },
+        );
+      } catch {
+        errors.push('images did not finish loading');
+      }
 
       const metrics = await page.evaluate(() => ({
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         h1: document.querySelector('h1')?.textContent?.trim() ?? '',
+        h1Count: document.querySelectorAll('h1').length,
+        title: document.title,
+        description:
+          document.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
+        canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '',
+        lang: document.documentElement.lang,
         images: [...document.images].map((image) => ({
           src: image.currentSrc,
           loaded: image.complete && image.naturalWidth > 0,
         })),
         font: getComputedStyle(document.body).fontFamily,
-        shots: document.querySelectorAll('.tile-shot img').length,
+        shots: document.querySelectorAll('.hero-shot img, .step-media img, .privacy-shot img')
+          .length,
+        missingAlt: [...document.images]
+          .filter((image) => image.getAttribute('alt') === null)
+          .map((image) => image.currentSrc || image.src),
+        emptyAlt: [...document.images]
+          .filter((image) => image.getAttribute('alt') === '' && image.closest('.brand') === null)
+          .map((image) => image.currentSrc || image.src),
+        missingDims: [...document.images]
+          .filter((image) => !image.getAttribute('width') || !image.getAttribute('height'))
+          .map((image) => image.currentSrc || image.src),
       }));
 
       if (metrics.overflow > 1)
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
-      if (!metrics.h1.startsWith('Close 100 tabs')) failures.push(`${width}/${scheme}: missing h1`);
-      if (metrics.shots < 5) failures.push(`${width}/${scheme}: feature stills missing`);
+      if (!metrics.h1.startsWith('Close the tabs.'))
+        failures.push(`${width}/${scheme}: missing h1`);
+      if (metrics.h1Count !== 1) failures.push(`${width}/${scheme}: h1 count ${metrics.h1Count}`);
+      if (metrics.title !== 'Stow — Close the tabs. Keep the work.')
+        failures.push(`${width}/${scheme}: title mismatch`);
+      if (
+        metrics.description !==
+        'Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync.'
+      )
+        failures.push(`${width}/${scheme}: description mismatch`);
+      if (metrics.canonical !== 'https://code-sharad.github.io/stow/')
+        failures.push(`${width}/${scheme}: canonical mismatch`);
+      if (metrics.lang !== 'en') failures.push(`${width}/${scheme}: lang ${metrics.lang}`);
+      if (metrics.shots < 5) failures.push(`${width}/${scheme}: screenshots missing`);
       if (!metrics.font.includes('Inter')) failures.push(`${width}/${scheme}: Inter not active`);
+      if (metrics.missingAlt.length > 0)
+        failures.push(`${width}/${scheme}: missing alt ${metrics.missingAlt.join(', ')}`);
+      if (metrics.emptyAlt.length > 0)
+        failures.push(`${width}/${scheme}: empty alt ${metrics.emptyAlt.join(', ')}`);
+      if (metrics.missingDims.length > 0)
+        failures.push(`${width}/${scheme}: missing dimensions ${metrics.missingDims.join(', ')}`);
       for (const image of metrics.images) {
         if (!image.loaded) failures.push(`${width}/${scheme}: image not loaded ${image.src}`);
       }
@@ -102,24 +153,75 @@ try {
 
   for (const asset of [
     'og.png',
+    'icon.png',
+    'favicon.png',
+    'inter-var.woff2',
     'library-dark.webp',
     'library-light.webp',
-    'lead-dark.webp',
-    'lead-light.webp',
-    'lead-compact-dark.webp',
-    'lead-compact-light.webp',
-    'search-dark.webp',
-    'search-light.webp',
-    'undo-dark.webp',
-    'undo-light.webp',
-    'import-dark.webp',
-    'import-light.webp',
-    'groups-dark.webp',
-    'groups-light.webp',
-    'groups-compact-dark.webp',
-    'groups-compact-light.webp',
+    'library-mobile-dark.webp',
+    'library-mobile-light.webp',
+    'popup-dark.webp',
+    'popup-light.webp',
+    'search-step-dark.webp',
+    'search-step-light.webp',
+    'search-mobile-dark.webp',
+    'search-mobile-light.webp',
+    'restore-step-dark.webp',
+    'restore-step-light.webp',
+    'restore-mobile-dark.webp',
+    'restore-mobile-light.webp',
+    'privacy-dark.webp',
+    'privacy-light.webp',
   ]) {
     if (!existsSync(join(root, 'assets', asset))) failures.push(`missing ${asset}`);
+  }
+
+  if (!existsSync(join(root, 'sitemap.xml'))) failures.push('missing sitemap.xml');
+  if (!existsSync(join(root, 'robots.txt'))) failures.push('missing robots.txt');
+
+  {
+    const context = await browser.newContext({
+      viewport: { width: 375, height: 800 },
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    const toggle = page.locator('.menu-toggle');
+    if (!(await toggle.isVisible())) failures.push('menu: toggle not visible at 375');
+    await toggle.click();
+    if ((await toggle.getAttribute('aria-expanded')) !== 'true')
+      failures.push('menu: aria-expanded not true after open');
+    if (!(await page.locator('#nav-panel').isVisible())) failures.push('menu: panel not visible');
+    await page.keyboard.press('Escape');
+    if ((await toggle.getAttribute('aria-expanded')) !== 'false')
+      failures.push('menu: aria-expanded not false after Escape');
+    if (!(await page.locator('#nav-panel').isHidden())) failures.push('menu: panel not hidden');
+    if (!(await toggle.evaluate((element) => element === document.activeElement)))
+      failures.push('menu: focus not restored to toggle');
+    log('menu: opens, Escape closes, focus restored');
+    await context.close();
+  }
+
+  {
+    const context = await browser.newContext({
+      viewport: { width: 375, height: 800 },
+      javaScriptEnabled: false,
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    const nojs = await page.evaluate(() => ({
+      menu: getComputedStyle(document.querySelector('.menu-toggle')).display,
+      nav: getComputedStyle(document.querySelector('.no-js-nav')).display,
+      links: document.querySelectorAll('.no-js-nav a').length,
+      reveal: getComputedStyle(document.querySelector('.reveal')).opacity,
+    }));
+    if (nojs.menu !== 'none') failures.push(`no-js: menu toggle ${nojs.menu}`);
+    if (nojs.nav !== 'flex') failures.push(`no-js: nav ${nojs.nav}`);
+    if (nojs.links !== 4) failures.push(`no-js: ${nojs.links} nav links`);
+    if (nojs.reveal !== '1') failures.push(`no-js: reveal opacity ${nojs.reveal}`);
+    log(`no-js: static nav, no menu toggle, reveals visible`);
+    await context.close();
   }
 
   {

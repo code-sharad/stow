@@ -4,404 +4,639 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>Stow — close the tabs, keep the work</title>
+    <title>Stow — Close the tabs. Keep the work.</title>
     <link rel="canonical" href="https://code-sharad.github.io/stow/" />
+    <link rel="sitemap" type="application/xml" href="sitemap.xml" />
     <meta
       name="description"
-      content="A local-first tab shelf for Chrome and Firefox. One click saves a window's tabs as a searchable list, then closes them. No account, no network, no tracking."
+      content="Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync."
     />
-    <meta name="theme-color" content="#0c0c0c" />
-    <link rel="icon" href="assets/favicon.png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <meta name="author" content="Sharad Bhadait" />
+    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/icon.png" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stow" />
     <meta property="og:url" content="https://code-sharad.github.io/stow/" />
-    <meta property="og:title" content="Stow — close the tabs, keep the work" />
+    <meta property="og:title" content="Stow — Close the tabs. Keep the work." />
     <meta
       property="og:description"
-      content="A local-first tab shelf for Chrome. No account, sync, telemetry, or network."
+      content="A local-first tab manager for Chrome. Save the window as a searchable list. No account, no cloud, no tracking."
     />
     <meta property="og:image" content="https://code-sharad.github.io/stow/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Stow — Close the tabs. Keep the work. A local-first tab manager for Chrome."
+    />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Stow — close the tabs, keep the work" />
+    <meta name="twitter:title" content="Stow — Close the tabs. Keep the work." />
     <meta
       name="twitter:description"
-      content="A local-first tab shelf for Chrome. No account, sync, telemetry, or network."
+      content="A local-first tab manager for Chrome. Save the window as a searchable list. No account, no cloud, no tracking."
     />
     <meta name="twitter:image" content="https://code-sharad.github.io/stow/assets/og.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Stow — Close the tabs. Keep the work. A local-first tab manager for Chrome."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Stow",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "ChromeOS, Linux, macOS, Windows",
+        "browserRequirements": "Chrome 120+ or Firefox 140+",
+        "url": "https://code-sharad.github.io/stow/",
+        "downloadUrl": "https://github.com/code-sharad/stow/releases/latest",
+        "license": "https://github.com/code-sharad/stow/blob/main/LICENSE",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Save browser tabs as searchable lists. Close the clutter, find pages later, and restore only what you need. Local-first, with no account or cloud sync."
+      }
+    </script>
+
     <script>
       document.documentElement.classList.add('js');
     </script>
-    <script src="main.js?v=3" defer></script>
+    <script src="main.js?v=4" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="status" role="banner">
-      <a class="status-brand" href="#top">
-        <span class="brand-tile"><img src="assets/icon.png" width="22" height="22" alt="" /></span>
-        <span class="status-name">stow</span>
-      </a>
-      <nav class="status-nav" aria-label="Sections">
-        <a class="status-link" href="#parts"><span class="status-num" aria-hidden="true">01</span>the parts</a>
-        <a class="status-link" href="#privacy"><span class="status-num" aria-hidden="true">02</span>the ledger</a>
-      </nav>
-      <div class="status-actions">
-        <span class="status-local">local-only</span>
-        <button class="status-menu" type="button" aria-expanded="false" aria-controls="nav-panel">
-          menu
-        </button>
-        <a class="btn btn-primary btn-small status-cta" href="#install">load unpacked</a>
+    <header class="site-head" role="banner">
+      <div class="head-inner">
+        <a class="brand" href="#top" aria-label="Stow home">
+          <span class="brand-tile"
+            ><img src="assets/icon.png" width="24" height="24" alt=""
+          /></span>
+          <span class="brand-word">stow</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Sections">
+          <a class="nav-link" href="#how">how it works</a>
+          <a class="nav-link" href="#features">features</a>
+          <a class="nav-link" href="#privacy">privacy</a>
+          <a class="nav-link" href="#install">install</a>
+        </nav>
+
+        <div class="head-actions">
+          <span class="local-pill"><span class="local-dot" aria-hidden="true"></span>local-only</span>
+          <a
+            class="btn btn-primary btn-sm head-cta"
+            href="https://github.com/code-sharad/stow/releases/latest"
+            >Download for Chrome</a
+          >
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-panel"
+          >
+            menu
+          </button>
+        </div>
       </div>
     </header>
 
-    <div class="nav-panel" id="nav-panel" hidden>
-      <nav aria-label="Sections">
-        <a href="#parts"><span aria-hidden="true">01</span>the parts</a>
-        <a href="#privacy"><span aria-hidden="true">02</span>the ledger</a>
-        <a href="#install"><span aria-hidden="true">03</span>install</a>
+    <noscript>
+      <nav class="no-js-nav" aria-label="Sections">
+        <a href="#how">how it works</a>
+        <a href="#features">features</a>
+        <a href="#privacy">privacy</a>
+        <a href="#install">install</a>
       </nav>
-      <a class="btn btn-primary nav-cta" href="#install">load unpacked</a>
+    </noscript>
+
+    <div class="nav-panel" id="nav-panel" hidden>
+      <nav aria-label="Mobile sections">
+        <a href="#how"><span aria-hidden="true">01</span>how it works</a>
+        <a href="#features"><span aria-hidden="true">02</span>features</a>
+        <a href="#privacy"><span aria-hidden="true">03</span>privacy</a>
+        <a href="#install"><span aria-hidden="true">04</span>install</a>
+      </nav>
+      <a
+        class="btn btn-primary nav-cta"
+        href="https://github.com/code-sharad/stow/releases/latest"
+        >Download for Chrome</a
+      >
       <p class="nav-meta">v0.1.0 · local-only</p>
     </div>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="kicker">❯ stow --save</p>
-          <h1 id="hero-title">Close 100 tabs.<br /> Keep every one.</h1>
-          <p class="lede">
-            Save your tabs. Clear the clutter. Pick up right where you left off. Stow turns your
-            open tabs into searchable, organized lists you can restore anytime. Private by design,
-            with everything stored locally.
-          </p>
-          <div class="actions">
-            <a class="btn btn-primary" href="#install">load unpacked</a>
-            <a
-              class="btn btn-secondary"
-              href="https://github.com/code-sharad/stow"
-              target="_blank"
-              rel="noreferrer"
-              ><span aria-hidden="true">$</span> read the source</a
-            >
-          </div>
-          <p class="fineprint">Chrome 120+ · works offline after install</p>
-        </div>
-
-        <aside class="receipt" aria-hidden="true">
-          <div class="receipt-bar">
-            <span>stow --window</span>
-            <span>demo</span>
-          </div>
-          <div class="receipt-body">
-            <p class="receipt-row"><span>tabs open</span><span>23</span></p>
-            <p class="receipt-row"><span>lists saved</span><span>4</span></p>
-            <p class="receipt-row"><span>tabs closed</span><span>23</span></p>
-            <p class="receipt-row receipt-ok">
-              <span>network requests</span><span>0</span>
+        <div class="hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">A local-first tab manager</p>
+            <h1 id="hero-title">Close the tabs.<br /> Keep the work.</h1>
+            <p class="hero-lede">
+              Stow saves your open tabs as searchable lists, so you can clear the clutter and
+              return to what matters whenever you need it.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="btn btn-primary"
+                href="https://github.com/code-sharad/stow/releases/latest"
+                >Download for Chrome</a
+              >
+              <a class="btn btn-secondary" href="https://github.com/code-sharad/stow"
+                >View source <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <p class="trust-line">
+              <span>No account</span><span class="dot" aria-hidden="true">·</span>
+              <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
+              <span>No tracking</span>
+            </p>
+            <p class="compat">
+              Chrome 120+ <span aria-hidden="true">·</span> Firefox 140+ from source
+              <span aria-hidden="true">·</span> Works offline after install
             </p>
           </div>
-          <p class="receipt-note">every tab written and read back before Chrome closes it</p>
-        </aside>
+
+          <aside class="receipt reveal" aria-label="Example Stow session">
+            <div class="receipt-bar">
+              <span class="receipt-title">stow --example</span>
+              <span class="receipt-tag">example</span>
+            </div>
+            <dl class="receipt-rows">
+              <div><dt>tabs captured</dt><dd>11</dd></div>
+              <div><dt>saved lists</dt><dd>3</dd></div>
+              <div><dt>tabs restored</dt><dd>6</dd></div>
+              <div><dt>storage</dt><dd>browser profile</dd></div>
+              <div class="is-status"><dt>network requests</dt><dd>0</dd></div>
+            </dl>
+            <p class="receipt-note">Example values. Nothing leaves this browser.</p>
+          </aside>
+        </div>
 
         <figure class="hero-shot reveal">
           <div class="shot-bar">
-            <span class="shot-path">library.html</span>
-            <span class="shot-mode">the actual library</span>
+            <span>library.html</span>
+            <span class="shot-meta">actual extension UI</span>
           </div>
           <picture>
             <source
-              media="(max-width: 640px) and (prefers-color-scheme: light)"
+              media="(max-width: 639px) and (prefers-color-scheme: light)"
               srcset="assets/library-mobile-light.webp"
             />
-            <source media="(max-width: 640px)" srcset="assets/library-mobile-dark.webp" />
+            <source media="(max-width: 639px)" srcset="assets/library-mobile-dark.webp" />
             <source media="(prefers-color-scheme: light)" srcset="assets/library-light.webp" />
             <img
               src="assets/library-dark.webp"
-              width="1600"
-              height="1000"
-              alt="The Stow library: a dark console with three lists named Docs, Design, and Build, each holding its saved tabs."
+              width="1440"
+              height="900"
+              fetchpriority="high"
+              alt="Stow's library showing saved tabs grouped into three lists: Docs, Design, and Build."
             />
           </picture>
+          <figcaption>
+            <span>Library</span> Your saved tabs, grouped into searchable lists.
+          </figcaption>
         </figure>
       </section>
 
-      <section class="section" id="parts" aria-labelledby="parts-title">
+      <section class="section" id="how" aria-labelledby="how-title">
         <div class="section-head reveal">
-          <p class="section-label">01 / the parts</p>
-          <h2 id="parts-title">The tabs you close are still there.</h2>
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">A calmer browser in three steps.</h2>
           <p class="section-lede">
-            Stow is one gesture and one search box. Everything else exists so nothing gets lost on
-            the way back.
+            Save the window. Find the page. Put it back. Stow stays out of the way in between.
           </p>
         </div>
 
-        <div class="bento">
-          <article class="tile tile-wide reveal">
-            <p class="tile-label">stow</p>
-            <h3>Save the whole window.</h3>
-            <p class="tile-copy">
-              One keystroke turns every tab into a list, sorted by the groups you already made.
-              Pinned tabs stay open.
-            </p>
-            <figure class="tile-shot">
-              <picture>
-                <source
-                  media="(max-width: 639px) and (prefers-color-scheme: light)"
-                  srcset="assets/lead-compact-light.webp"
-                />
-                <source media="(max-width: 639px)" srcset="assets/lead-compact-dark.webp" />
-                <source media="(prefers-color-scheme: light)" srcset="assets/lead-light.webp" />
-                <img
-                  src="assets/lead-dark.webp"
-                  width="1440"
-                  height="600"
-                  alt="The Stow popup open over a browser window, offering to stow all nine tabs in the window."
-                />
-              </picture>
-            </figure>
-            <p class="tile-foot">
-              <span class="shortcut"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span></span>
-              <span class="shortcut"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span></span>
-            </p>
-          </article>
-
-          <article class="tile tile-stat reveal">
-            <p class="tile-label">quiet by default</p>
-            <p class="stat-zero">0</p>
-            <p class="stat-unit">network requests</p>
-            <p class="tile-copy">
-              No account, sync, telemetry, or favicon service. The extension asks for no host
-              permissions.
-            </p>
-          </article>
-
-          <article class="tile reveal">
-            <p class="tile-label">find</p>
-            <h3>Half a memory is enough.</h3>
-            <p class="tile-copy">
-              Search titles, URLs, and lists as you type. Typos are fine; <code>domain:</code>
-              narrows it down.
-            </p>
-            <figure class="tile-shot">
-              <picture>
-                <source media="(prefers-color-scheme: light)" srcset="assets/search-light.webp" />
-                <img
-                  src="assets/search-dark.webp"
-                  width="716"
-                  height="480"
-                  alt="Stow's search palette showing three invoice-related tabs found across different lists."
-                />
-              </picture>
-            </figure>
-            <p class="tile-foot"><kbd>⌘</kbd><kbd>K</kbd><span>from anywhere</span></p>
-          </article>
-
-          <article class="tile reveal">
-            <p class="tile-label">safe</p>
-            <h3>Nothing closes until it’s saved.</h3>
-            <p class="tile-copy">
-              Every tab is written and read back first. Change your mind and Trash holds it for 30
-              days.
-            </p>
-            <figure class="tile-shot">
-              <picture>
-                <source media="(prefers-color-scheme: light)" srcset="assets/undo-light.webp" />
-                <img
-                  src="assets/undo-dark.webp"
-                  width="716"
-                  height="480"
-                  alt="The Stow trash, with a toast confirming a list was moved there and an undo action."
-                />
-              </picture>
-            </figure>
-            <p class="tile-foot"><span>undo from the toast, or restore from Trash</span></p>
-          </article>
-
-          <article class="tile reveal">
-            <p class="tile-label">move in</p>
-            <h3>Your old shelf still works.</h3>
-            <p class="tile-copy">
-              Import OneTab, Markdown lists, bookmarks, or a Stow backup. Export the same library
-              whenever you want.
-            </p>
-            <figure class="tile-shot">
-              <picture>
-                <source media="(prefers-color-scheme: light)" srcset="assets/import-light.webp" />
-                <img
-                  src="assets/import-dark.webp"
-                  width="716"
-                  height="480"
-                  alt="Stow's import sheet listing OneTab, Markdown, bookmarks, and Stow JSON sources."
-                />
-              </picture>
-            </figure>
-            <p class="tile-foot"><span>no lock-in</span></p>
-          </article>
-
-          <article class="tile tile-wide reveal">
-            <p class="tile-label">groups</p>
-            <h3>Your tab groups come with you.</h3>
-            <p class="tile-copy">
-              Native names, colors, and pinned tabs survive the trip. Restore a list into the shape
-              it left in.
-            </p>
-            <figure class="tile-shot">
-              <picture>
-                <source
-                  media="(max-width: 639px) and (prefers-color-scheme: light)"
-                  srcset="assets/groups-compact-light.webp"
-                />
-                <source media="(max-width: 639px)" srcset="assets/groups-compact-dark.webp" />
-                <source media="(prefers-color-scheme: light)" srcset="assets/groups-light.webp" />
-                <img
-                  src="assets/groups-dark.webp"
-                  width="1440"
-                  height="440"
-                  alt="Three Chrome tab groups — Design, Reading, and Build — mapped to three Stow lists with the same names and colors."
-                />
-              </picture>
-            </figure>
-            <p class="tile-foot"><span>Chrome tab groups · recreated on restore</span></p>
-          </article>
-
-          <article class="tile tile-keys reveal">
-            <p class="tile-label">keyboard</p>
-            <h3>Hands stay on the keys.</h3>
-            <p class="tile-copy">
-              Stow, search, restore, and rename without reaching for the mouse.
-            </p>
-            <div class="key-list">
-              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>S</kbd><span>stow window</span></p>
-              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd><span>stow tab</span></p>
-              <p class="key-row"><kbd>⌥</kbd><kbd>⇧</kbd><kbd>L</kbd><span>open library</span></p>
-              <p class="key-row"><kbd>⌘</kbd><kbd>K</kbd><span>search</span></p>
+        <div class="steps">
+          <article class="step reveal">
+            <p class="step-num" aria-hidden="true">01</p>
+            <div class="step-copy">
+              <p class="step-kicker">Stow</p>
+              <h3>Save the whole window.</h3>
+              <p>
+                Capture every eligible tab as one list and close the clutter. Pinned tabs stay
+                exactly where you put them.
+              </p>
+              <p class="step-shortcut">
+                <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> <span>save window</span>
+              </p>
             </div>
+            <figure class="step-media step-media--popup">
+              <div class="step-frame">
+                <div class="shot-bar">
+                  <span>popup.html</span>
+                  <span class="shot-meta">quick capture</span>
+                </div>
+                <picture>
+                  <source media="(prefers-color-scheme: light)" srcset="assets/popup-light.webp" />
+                  <img
+                    src="assets/popup-dark.webp"
+                    width="360"
+                    height="274"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Stow's popup with a button to stow the current window, a link to open the library, and recent lists."
+                  />
+                </picture>
+              </div>
+              <figcaption>One click saves the window and closes the tabs.</figcaption>
+            </figure>
+          </article>
+
+          <article class="step reveal">
+            <p class="step-num" aria-hidden="true">02</p>
+            <div class="step-copy">
+              <p class="step-kicker">Find</p>
+              <h3>Find it from half a memory.</h3>
+              <p>
+                Search titles, URLs, domains, and list names. The index lives in your browser, so
+                results arrive as you type.
+              </p>
+              <p class="step-shortcut">
+                <kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd> <span>search from anywhere</span>
+              </p>
+            </div>
+            <figure class="step-media step-media--search">
+              <div class="step-frame">
+                <div class="shot-bar">
+                  <span>library.html</span>
+                  <span class="shot-meta">search results</span>
+                </div>
+                <picture>
+                  <source
+                    media="(max-width: 639px) and (prefers-color-scheme: light)"
+                    srcset="assets/search-mobile-light.webp"
+                  />
+                  <source media="(max-width: 639px)" srcset="assets/search-mobile-dark.webp" />
+                  <source
+                    media="(prefers-color-scheme: light)"
+                    srcset="assets/search-step-light.webp"
+                  />
+                  <img
+                    src="assets/search-step-dark.webp"
+                    width="720"
+                    height="520"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Searching Stow for “web” and finding four matching tabs across the Docs and Build lists."
+                  />
+                </picture>
+              </div>
+              <figcaption>Four matches across two lists, without opening a new tab.</figcaption>
+            </figure>
+          </article>
+
+          <article class="step reveal">
+            <p class="step-num" aria-hidden="true">03</p>
+            <div class="step-copy">
+              <p class="step-kicker">Restore</p>
+              <h3>Bring back the page, or the whole list.</h3>
+              <p>
+                Restore one tab, a selection, or an entire list. Send it to the current window or
+                a new one, and remove it from Stow afterward if you like.
+              </p>
+              <p class="step-shortcut">
+                <kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd> <span>open library</span>
+              </p>
+            </div>
+            <figure class="step-media step-media--restore">
+              <div class="step-frame">
+                <div class="shot-bar">
+                  <span>library.html</span>
+                  <span class="shot-meta">restore selection</span>
+                </div>
+                <picture>
+                  <source
+                    media="(max-width: 639px) and (prefers-color-scheme: light)"
+                    srcset="assets/restore-mobile-light.webp"
+                  />
+                  <source media="(max-width: 639px)" srcset="assets/restore-mobile-dark.webp" />
+                  <source
+                    media="(prefers-color-scheme: light)"
+                    srcset="assets/restore-step-light.webp"
+                  />
+                  <img
+                    src="assets/restore-step-dark.webp"
+                    width="720"
+                    height="520"
+                    loading="lazy"
+                    decoding="async"
+                    alt="A saved tab selected in Stow's library, with the bulk bar showing Restore, Restore in new window, Move to, Group into new list, and Delete."
+                  />
+                </picture>
+              </div>
+              <figcaption>Select what you need. Restore it now, or in a new window.</figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Features</p>
+          <h2 id="features-title">Everything you need to put tabs away—and find them again.</h2>
+          <p class="section-lede">
+            A small set of tools for the whole life of a tab: capture it, organize it, search it,
+            and put it back.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <p class="feature-label">Capture</p>
+            <h3>Save the whole window.</h3>
+            <p>
+              One shortcut saves every eligible tab as a list and closes the clutter. Pinned tabs
+              stay open.
+            </p>
+            <dl class="shortcut-list">
+              <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd></dt><dd>save window</dd></div>
+              <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd></dt><dd>save this tab</dd></div>
+            </dl>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Search</p>
+            <h3>Find it from half a memory.</h3>
+            <p>
+              Search titles, URLs, domains, and list names. No account, no server round trip, no
+              waiting.
+            </p>
+            <dl class="shortcut-list">
+              <div><dt><kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd></dt><dd>commands</dd></div>
+              <div><dt><kbd>/</kbd></dt><dd>focus search</dd></div>
+            </dl>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Organize</p>
+            <h3>Keep related tabs together.</h3>
+            <p>
+              Shape a list around a project, then keep it out of the way. Your structure survives
+              restarts and updates.
+            </p>
+            <ul class="cap-list">
+              <li>Rename, pin, lock, and collapse</li>
+              <li>Reorder lists and move tabs between them</li>
+              <li>Dedupe saved tabs</li>
+            </ul>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Restore</p>
+            <h3>Pick up where you left off.</h3>
+            <p>
+              Bring back one page, selected tabs, or a complete list. Choose the current window or
+              a fresh one.
+            </p>
+            <ul class="cap-list">
+              <li>Restore one tab or a selection</li>
+              <li>Restore a whole list</li>
+              <li>Copy links anywhere</li>
+            </ul>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Import / export</p>
+            <h3>Bring your existing tabs with you.</h3>
+            <p>
+              Import an existing shelf, or export everything as a JSON backup whenever you want a
+              copy you own.
+            </p>
+            <ul class="format-list" aria-label="Supported import formats">
+              <li>OneTab</li>
+              <li>Markdown</li>
+              <li>Bookmarks HTML</li>
+              <li>Stow JSON</li>
+            </ul>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Keyboard</p>
+            <h3>Keep your hands on the keys.</h3>
+            <p>
+              The library is built to be driven from the keyboard, from the first capture to the
+              final restore.
+            </p>
+            <dl class="shortcut-list">
+              <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd></dt><dd>open library</dd></div>
+              <div><dt><kbd>Esc</kbd></dt><dd>clear search or selection</dd></div>
+            </dl>
           </article>
         </div>
       </section>
 
       <section class="section" id="privacy" aria-labelledby="privacy-title">
-        <div class="section-head reveal">
-          <p class="section-label">02 / the ledger</p>
-          <h2 id="privacy-title">It never leaves this machine.</h2>
-          <p class="section-lede">
-            There is no server to send it to. Stow requests no host permissions and makes no
-            network calls.
-          </p>
-        </div>
+        <div class="privacy-grid">
+          <div class="privacy-copy reveal">
+            <p class="eyebrow">Privacy</p>
+            <h2 id="privacy-title">Your tabs stay on your device.</h2>
+            <p class="section-lede">
+              Stow is designed to keep your browsing library local to your browser profile. It
+              does not need an account or a Stow-hosted server to save and restore your tabs.
+            </p>
 
-        <div class="table-wrap reveal">
-          <table>
-            <caption>
-              Where Stow stores data
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Data</th>
-                <th scope="col">Lives in</th>
-                <th scope="col">Leaves device</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Tabs and lists</td>
-                <td>IndexedDB, extension origin</td>
-                <td class="no">No</td>
-              </tr>
-              <tr>
-                <td>Settings</td>
-                <td>IndexedDB + two localStorage mirrors</td>
-                <td class="no">No</td>
-              </tr>
-              <tr>
-                <td>Favicons</td>
-                <td>Chromium’s local <code>_favicon</code> cache</td>
-                <td class="no">No</td>
-              </tr>
-              <tr>
-                <td>Backups</td>
-                <td>Your Downloads folder, only if enabled</td>
-                <td class="no">No</td>
-              </tr>
-            </tbody>
-          </table>
+            <div class="local-callout">
+              <span class="local-pill"><span class="local-dot" aria-hidden="true"></span>local only</span>
+              <p>No account. No server. No network requests.</p>
+            </div>
+
+            <table class="data-table">
+              <caption>What Stow stores</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Data</th>
+                  <th scope="col">Where it is stored</th>
+                  <th scope="col">Sent to Stow servers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Data">Saved tabs and lists</td>
+                  <td data-label="Where it is stored">Browser extension storage (IndexedDB)</td>
+                  <td data-label="Sent to Stow servers">No</td>
+                </tr>
+                <tr>
+                  <td data-label="Data">Preferences</td>
+                  <td data-label="Where it is stored">Browser-local storage</td>
+                  <td data-label="Sent to Stow servers">No</td>
+                </tr>
+                <tr>
+                  <td data-label="Data">Optional backup files</td>
+                  <td data-label="Where it is stored">A download location you choose</td>
+                  <td data-label="Sent to Stow servers">No</td>
+                </tr>
+                <tr>
+                  <td data-label="Data">Favicons</td>
+                  <td data-label="Where it is stored">Your browser's local favicon cache</td>
+                  <td data-label="Sent to Stow servers">No</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="footnote">
+              Uninstalling Stow removes its library. Export a JSON backup first if you want a
+              copy.
+            </p>
+          </div>
+
+          <figure class="privacy-shot reveal">
+            <div class="shot-bar">
+              <span>settings.html</span>
+              <span class="shot-meta">about</span>
+            </div>
+            <picture>
+              <source media="(prefers-color-scheme: light)" srcset="assets/privacy-light.webp" />
+              <img
+                src="assets/privacy-dark.webp"
+                width="374"
+                height="79"
+                loading="lazy"
+                decoding="async"
+                alt="Stow's About settings panel: version 0.1.0 and the line, “No accounts. No servers. Nothing leaves this device.”"
+              />
+            </picture>
+            <figcaption>
+              <span>In the product</span> The privacy promise is part of the settings, not just
+              the marketing page.
+            </figcaption>
+          </figure>
         </div>
-        <p class="footnote reveal">
-          Uninstalling removes the data. Export a JSON backup first if you want a copy.
-        </p>
       </section>
 
       <section class="section" id="install" aria-labelledby="install-title">
         <div class="section-head reveal">
-          <p class="section-label">03 / install</p>
-          <h2 id="install-title">Three steps. No account.</h2>
+          <p class="eyebrow">Install</p>
+          <h2 id="install-title">Get started in a minute.</h2>
+          <p class="section-lede">
+            Download the packaged build for Chrome, or build the Firefox package from source.
+            Both keep the same library local to that browser.
+          </p>
         </div>
 
         <div class="install-grid">
-          <ol class="install-steps reveal">
-            <li>
-              <span class="step-index">01</span>
-              <div>
-                <h3>Download the latest zip</h3>
-                <p>
-                  Grab <code>stow-0.1.0-chrome.zip</code> from the
-                  <a href="https://github.com/code-sharad/stow/releases/latest">latest release</a>.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span class="step-index">02</span>
-              <div>
-                <h3>Open the extensions page</h3>
-                <p>Enable Developer mode at <code>chrome://extensions</code>.</p>
-              </div>
-            </li>
-            <li>
-              <span class="step-index">03</span>
-              <div>
-                <h3>Load the extension</h3>
-                <p>Choose <strong>Load unpacked</strong> and select the unzipped folder.</p>
-              </div>
-            </li>
-          </ol>
+          <article class="install-card install-card--primary reveal">
+            <div class="browser-head">
+              <span>Chromium</span>
+              <span class="badge">Chrome 120+</span>
+            </div>
+            <h3>Download for Chrome</h3>
+            <p>
+              The packaged build is the fastest path. It works in Chrome and other Chromium
+              browsers that can load unpacked extensions.
+            </p>
+            <ol class="install-steps">
+              <li>
+                <span class="step-index" aria-hidden="true">01</span>
+                <div>
+                  <strong>Download the latest release.</strong>
+                  <p>Grab <code>stow-0.1.0-chrome.zip</code> and unzip it.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-index" aria-hidden="true">02</span>
+                <div>
+                  <strong>Open your extensions page.</strong>
+                  <p>Go to <code>chrome://extensions</code> and turn on Developer mode.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-index" aria-hidden="true">03</span>
+                <div>
+                  <strong>Load the folder.</strong>
+                  <p>Choose <strong>Load unpacked</strong> and select the unzipped folder.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-index" aria-hidden="true">04</span>
+                <div>
+                  <strong>Pin Stow and save a window.</strong>
+                  <p>
+                    Press <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> to stow your first set of
+                    tabs.
+                  </p>
+                </div>
+              </li>
+            </ol>
+            <div class="install-actions">
+              <a
+                class="btn btn-primary"
+                href="https://github.com/code-sharad/stow/releases/latest"
+                >Download for Chrome</a
+              >
+              <span class="install-meta">v0.1.0 · Chrome 120+</span>
+            </div>
+          </article>
 
-          <aside class="install-note reveal">
-            <p class="kicker">❯ ready</p>
-            <p>Works in Chrome, Edge, Brave, and other Chromium browsers with Manifest V3.</p>
-            <a
-              class="btn btn-secondary"
-              href="https://github.com/code-sharad/stow"
-              target="_blank"
-              rel="noreferrer"
-              ><span aria-hidden="true">$</span> open the repository</a
-            >
-            <p class="fineprint">Requires Chrome 120+ or another MV3 Chromium browser.</p>
-          </aside>
+          <article class="install-card reveal">
+            <div class="browser-head">
+              <span>Firefox</span>
+              <span class="badge">from source</span>
+            </div>
+            <h3>Build the Firefox package.</h3>
+            <p>
+              Firefox isn't in the add-on store yet. Build the MV3 package, then load it as a
+              temporary add-on for Firefox 140 or newer.
+            </p>
+            <pre><code>pnpm install
+pnpm zip:firefox</code></pre>
+            <ol class="install-steps">
+              <li>
+                <span class="step-index" aria-hidden="true">01</span>
+                <div>
+                  <strong>Run the commands above.</strong>
+                  <p>The build lands in <code>.output/firefox-mv3</code>.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-index" aria-hidden="true">02</span>
+                <div>
+                  <strong>Open the debugging page.</strong>
+                  <p>Go to <code>about:debugging#/runtime/this-firefox</code>.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-index" aria-hidden="true">03</span>
+                <div>
+                  <strong>Load the temporary add-on.</strong>
+                  <p>Choose <strong>Load Temporary Add-on</strong> and open the manifest.</p>
+                </div>
+              </li>
+            </ol>
+            <div class="install-actions">
+              <a class="btn btn-secondary" href="https://github.com/code-sharad/stow#install"
+                >Build instructions <span aria-hidden="true">↗</span></a
+              >
+              <span class="install-meta">Firefox 140+ · temporary add-on</span>
+            </div>
+          </article>
         </div>
+
+        <p class="install-note">
+          Both builds store everything locally. Nothing syncs between browsers—or anywhere else.
+        </p>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="footer-brand">
-        <img src="assets/icon.png" width="18" height="18" alt="" />
-        <span>stow</span>
+    <footer class="site-foot">
+      <div class="foot-inner">
+        <a class="brand brand--foot" href="#top" aria-label="Stow home">
+          <span class="brand-tile"
+            ><img src="assets/icon.png" width="20" height="20" alt=""
+          /></span>
+          <span class="brand-word">stow</span>
+        </a>
+        <p class="foot-tagline">local-first tab manager</p>
+        <nav class="foot-nav" aria-label="Project">
+          <a href="https://github.com/code-sharad/stow">source</a>
+          <a href="#privacy">privacy</a>
+          <a href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md">changelog</a>
+        </nav>
+        <p class="foot-meta">v0.1.0 · © <span id="year">2026</span> Stow</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#privacy">privacy</a>
-        <a href="https://github.com/code-sharad/stow" target="_blank" rel="noreferrer">source</a>
-        <a
-          href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md"
-          target="_blank"
-          rel="noreferrer"
-          >changelog</a
-        >
-      </nav>
-      <p class="footer-meta">v0.1.0 · local-only · <span id="year">2026</span></p>
     </footer>
   </body>
 </html>

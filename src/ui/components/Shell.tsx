@@ -270,7 +270,9 @@ export function StatusBar({
       <span className="status-mode">local</span>
       <span className="status-item">~/{view}</span>
       <span className="status-sep">·</span>
-      <span className="status-item">{stackCount} stacks</span>
+      <span className="status-item">
+        {stackCount} {t('stackUnits')}
+      </span>
       <span className="status-item">{tabTotal} tabs</span>
       {selected > 0 ? (
         <span className="status-item status-selected">{selected} selected</span>

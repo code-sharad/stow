@@ -111,7 +111,7 @@ The social image is generated from `landing/assets/og.svg`:
 rsvg-convert -w 1200 -h 630 landing/assets/og.svg -o landing/assets/og.png
 ```
 
-See [docs/LANDING.md](docs/LANDING.md) for the copy deck and design spec.
+See [docs/LANDING.md](docs/LANDING.md) for the shipped copy, screenshots, and landing-page checks.
 
 ## Architecture
 
@@ -137,8 +137,8 @@ applies deltas and resynchronizes on a revision gap or when the tab becomes visi
 - Optional scheduled backups request the `downloads` permission at runtime and write JSON files
   to your Downloads folder. Manual export needs no permission.
 
-See [docs/PRIVACY.md](docs/PRIVACY.md). Brand assets and the landing page specification live in
-[docs/BRAND.md](docs/BRAND.md) and [docs/LANDING.md](docs/LANDING.md).
+See [docs/PRIVACY.md](docs/PRIVACY.md). Brand assets live in [docs/BRAND.md](docs/BRAND.md);
+the landing page implementation and copy are documented in [docs/LANDING.md](docs/LANDING.md).
 
 ## Permissions
 

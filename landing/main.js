@@ -4,8 +4,8 @@
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  const header = document.querySelector('.status');
-  const links = [...document.querySelectorAll('.status-link')];
+  const header = document.querySelector('.site-head');
+  const links = [...document.querySelectorAll('.nav-link')];
   const sections = [...document.querySelectorAll('main section[id]')];
 
   if (header) {
@@ -40,7 +40,7 @@
     sync();
   }
 
-  const menuButton = document.querySelector('.status-menu');
+  const menuButton = document.querySelector('.menu-toggle');
   const panel = document.getElementById('nav-panel');
   const wide = window.matchMedia('(min-width: 768px)');
 

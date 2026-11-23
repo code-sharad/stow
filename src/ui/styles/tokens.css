@@ -35,16 +35,16 @@
   --selected: #2c2932;
   --focus: #a5a0b6;
 
+  /* Outline action: the quiet stow split in the Library topbar. */
+  --action-outline-bg: #111111;
+  --action-outline-line: #393939;
+  --action-outline-ink: #d0d0d0;
+  --action-outline-hover: #1a1a1a;
+  --action-outline-press: #202020;
+
   --inverse-bg: #eeeeee;
   --inverse-ink: #1b1b1b;
   --inverse-accent: #5c5a72;
-
-  /* Neutral CTA: the stow action inverts the canvas instead of borrowing the
-     lavender accent, which stays reserved for selection and focus. */
-  --cta: var(--inverse-bg);
-  --cta-hover: color-mix(in srgb, var(--inverse-bg) 86%, var(--inverse-ink));
-  --cta-press: color-mix(in srgb, var(--inverse-bg) 74%, var(--inverse-ink));
-  --ink-on-cta: var(--inverse-ink);
 
   --grp-none: #6c686c;
   --grp-grey: #8a8a8a;
@@ -199,6 +199,12 @@
   --selected: #e5e1e9;
   --focus: #5b566e;
 
+  --action-outline-bg: #faf9f6;
+  --action-outline-line: #b9b3a9;
+  --action-outline-ink: #1e1d1b;
+  --action-outline-hover: #ffffff;
+  --action-outline-press: #f3f1ec;
+
   --inverse-bg: #1e1d1b;
   --inverse-ink: #f3f1ec;
   --inverse-accent: #d7d2e0;
@@ -250,6 +256,11 @@
     --press: rgb(30 29 27 / 0.09);
     --selected: #e5e1e9;
     --focus: #5b566e;
+    --action-outline-bg: #faf9f6;
+    --action-outline-line: #b9b3a9;
+    --action-outline-ink: #1e1d1b;
+    --action-outline-hover: #ffffff;
+    --action-outline-press: #f3f1ec;
     --inverse-bg: #1e1d1b;
     --inverse-ink: #f3f1ec;
     --inverse-accent: #d7d2e0;

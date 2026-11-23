@@ -93,4 +93,4 @@ one, so the same file works on both without a plate.
 - `assets/icon.png` — raster master
 - `docs/brand/icon-preview.html` — size and toolbar preview
 - `scripts/gen-icons.ts` — PNG export
-- `docs/LANDING.md` — landing page specification
+- `docs/LANDING.md` — landing page implementation, copy, and checks

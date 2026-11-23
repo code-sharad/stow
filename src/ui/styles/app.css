@@ -239,24 +239,22 @@ kbd {
 .topbar .stow-split {
   margin-inline-end: 12px;
 }
-/* Neutral primary: invert the canvas so the stow action leads without adding a
-   second colour to the console. */
+/* Quiet outline action: the stow split stays visible without competing with
+   the search field or the library content. */
 .topbar .btn-primary {
-  border-color: var(--cta);
-  background: var(--cta);
-  color: var(--ink-on-cta);
+  border-color: var(--action-outline-line);
+  border-radius: 2px;
+  background: var(--action-outline-bg);
+  color: var(--action-outline-ink);
 }
 .topbar .btn-primary:hover {
-  border-color: var(--cta-hover);
-  background: var(--cta-hover);
-  color: var(--ink-on-cta);
+  border-color: var(--action-outline-line);
+  background: var(--action-outline-hover);
+  color: var(--action-outline-ink);
 }
 .topbar .btn-primary:active {
-  border-color: var(--cta-press);
-  background: var(--cta-press);
-}
-.topbar .split-arrow {
-  border-inline-start-color: color-mix(in srgb, var(--ink-on-cta) 28%, transparent);
+  border-color: var(--action-outline-line);
+  background: var(--action-outline-press);
 }
 /* The search takes the free space up to its max; the spacer only carries the
    auto margin that pins stow to the right edge. */
@@ -265,17 +263,31 @@ kbd {
 }
 .topbar .stow-split .btn {
   height: var(--topbar-control-h);
-  padding: 0 16px;
+  padding: 0 14px;
   gap: 8px;
-  font-size: var(--topbar-font);
+  font-size: 13px;
+  font-weight: 500;
 }
 .topbar .stow-split .btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
+  color: var(--ink-3);
+}
+.topbar .stow-split .btn-primary:first-child {
+  border-start-start-radius: 2px;
+  border-end-start-radius: 2px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end: 0;
 }
 .topbar .split-arrow {
   width: var(--topbar-control-h);
   padding: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: 2px;
+  border-end-end-radius: 2px;
+  border-inline-start: 1px solid var(--action-outline-line);
 }
 .topbar .search-shell + .spacer + .stow-split {
   margin-inline-start: auto;
@@ -425,10 +437,6 @@ kbd {
 .stow-split {
   display: inline-flex;
   flex: none;
-}
-.stow-split .btn-primary:first-child {
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
 }
 .split-arrow {
   width: var(--control-h);
