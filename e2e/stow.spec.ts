@@ -84,7 +84,7 @@ async function stow(page: Page): Promise<void> {
   await expect(page.locator('.tab-row')).toHaveCount(3);
 }
 
-test('stows a window, shows the stack, and restores it', async () => {
+test('stows a window, shows the list, and restores it', async () => {
   const page = await library();
   await makeTabs();
   await stow(page);
@@ -136,7 +136,7 @@ test('rebinds the toolbar popup as soon as the click setting changes', async () 
   await page.close();
 });
 
-test('moves a stack to Trash and restores it', async () => {
+test('moves a list to Trash and restores it', async () => {
   const page = await library();
   await makeTabs();
   await stow(page);
@@ -145,7 +145,7 @@ test('moves a stack to Trash and restores it', async () => {
     .locator('.stack-head')
     .getByRole('button', { name: /more actions/i })
     .click();
-  await page.getByRole('menuitem', { name: /delete stack/i }).click();
+  await page.getByRole('menuitem', { name: /delete list/i }).click();
   await expect(page.locator('.stack-head')).toHaveCount(0);
 
   await page.getByRole('button', { name: /^trash/i }).click();
