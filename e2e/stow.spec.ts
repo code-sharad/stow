@@ -121,6 +121,21 @@ test('searches tabs and persists appearance settings', async () => {
   await page.close();
 });
 
+test('rebinds the toolbar popup as soon as the click setting changes', async () => {
+  const page = await library();
+  await page.goto(`chrome-extension://${extensionId}/library.html#/settings`);
+  const toolbar = page.locator('#toolbar');
+
+  await toolbar.selectOption('popup');
+  await expect
+    .poll(() => worker.evaluate(() => chrome.action.getPopup({})))
+    .toMatch(/\/popup\.html$/);
+
+  await toolbar.selectOption('stow-window');
+  await expect.poll(() => worker.evaluate(() => chrome.action.getPopup({}))).toBe('');
+  await page.close();
+});
+
 test('moves a stack to Trash and restores it', async () => {
   const page = await library();
   await makeTabs();

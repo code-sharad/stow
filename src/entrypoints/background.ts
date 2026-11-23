@@ -1,6 +1,7 @@
 import { getMeta, log, purgeExpired, setMeta } from '../core/db/repo';
 import { db } from '../core/db/schema';
-import { getSettings } from '../core/settings/store';
+import type { Settings } from '../core/settings/schema';
+import { getSettings, subscribeSettings } from '../core/settings/store';
 import { handleMessage } from '../messaging/protocol';
 import { focusOrCreate } from '../platform/windows';
 import { BACKUP_ALARM, backupNow, syncBackupAlarm } from '../services/backup';
@@ -9,11 +10,13 @@ import { createMenus, onMenuClicked } from '../services/menus';
 import { stow } from '../services/stow';
 import { SCHEMA_VERSION } from '../shared/constants';
 
+function popupPathFor(toolbarClick: Settings['toolbarClick']): string {
+  return toolbarClick === 'popup' ? 'popup.html' : '';
+}
+
 async function applyPopupBinding(): Promise<void> {
   const settings = await getSettings();
-  await chrome.action.setPopup({
-    popup: settings.toolbarClick === 'popup' ? 'popup.html' : '',
-  });
+  await chrome.action.setPopup({ popup: popupPathFor(settings.toolbarClick) });
 }
 
 async function runPurgeIfDue(): Promise<void> {
@@ -39,6 +42,14 @@ async function boot(): Promise<void> {
 }
 
 export default defineBackground(() => {
+  subscribeSettings((settings) => {
+    void chrome.action
+      .setPopup({ popup: popupPathFor(settings.toolbarClick) })
+      .catch((error: unknown) => {
+        void log('error', 'popup-binding-failed', error instanceof Error ? error.name : 'unknown');
+      });
+  });
+
   chrome.runtime.onInstalled.addListener((details) => {
     void (async () => {
       try {
