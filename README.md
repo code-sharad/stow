@@ -5,14 +5,16 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-1f6f4a)
 
-A quiet, local-first home for tabs in flight. Stow saves every eligible tab in a window as a
-searchable **Stack**, closes the tabs to give memory back, and restores them whenever you need
-them. Everything lives in your browser profile. There is no account, server, telemetry, or
-network request.
+Too many tabs open? Click once. Stow saves every eligible tab in the window as a searchable
+**list**, closes the tabs, and gives the memory back. Restore one tab, or the whole list,
+whenever you need it.
+
+A local-first tab shelf for Chrome and Firefox. Everything lives in your browser profile. There
+is no account, server, telemetry, or network request.
 
 Stow is an MIT-licensed open source project.
 
-![Stow Library showing saved stacks and tabs](landing/assets/library-dark.webp) Read the [landing page](https://code-sharad.github.io/stow/)
+![The Stow library showing saved lists and tabs](landing/assets/library-dark.webp) Read the [landing page](https://code-sharad.github.io/stow/)
 for the short version.
 
 > Stow is a working name. It is not affiliated with OneTab. Import is offered as a migration path;
@@ -21,13 +23,13 @@ for the short version.
 ## What it does
 
 - **Stow** a window, a tab, other tabs, tabs to the left/right, highlighted tabs, or every window.
-- Native browser tab groups become stacks; group names and colors are preserved.
-- Search by title, URL, domain, or stack name, including `domain:github.com`.
-- Restore one tab, a selection, or a whole stack into the current or a new window.
-- Rename, pin, lock, collapse, reorder, move, merge, and deduplicate stacks.
+- Native browser tab groups become their own lists; group names and colors are preserved.
+- Search by title, URL, domain, or list name, including `domain:github.com`.
+- Restore one tab, a selection, or a whole list into the current or a new window.
+- Rename, pin, lock, collapse, reorder, move, merge, and deduplicate lists.
 - Trash with Undo, retention (7/30/90 days or never), and explicit permanent delete.
 - Import OneTab text, Stow JSON, Markdown lists, and Netscape bookmarks HTML.
-- Export JSON; copy a stack as Markdown or plain text.
+- Export JSON; copy a list as Markdown or plain text.
 - Dark-first console interface with a warm light variant, self-hosted Inter plus monospace
   details, comfortable/compact density, keyboard operation, and a command palette (`Ctrl/Cmd+K`).
 
@@ -143,7 +145,7 @@ See [docs/PRIVACY.md](docs/PRIVACY.md). Brand assets and the landing page specif
 | Permission | Why |
 | --- | --- |
 | `tabs` | Read titles/URLs and close or reopen tabs you ask Stow to save. |
-| `tabGroups` | Preserve native groups as stacks. |
+| `tabGroups` | Preserve native groups as separate lists. |
 | `storage` | Persist settings and library metadata. |
 | `unlimitedStorage` | Keep large libraries from being evicted. |
 | `contextMenus` | Right-click Stow actions. |
@@ -162,7 +164,7 @@ No host permissions are requested, and the extension makes no network requests.
 | `Alt+Shift+L` | Open Library |
 | `Ctrl/Cmd+K` | Command palette |
 | `/` | Focus search |
-| `F2` | Rename focused stack |
+| `F2` | Rename focused list |
 | `Enter` / `Space` | Open tab / select |
 | `Escape` | Clear search or selection |
 

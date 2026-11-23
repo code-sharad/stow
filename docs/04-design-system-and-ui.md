@@ -526,7 +526,7 @@ Heading: "Close the clutter. Keep the tabs." · Body: "Click the Stow icon in yo
 ## 14. Brand and assets
 
 - **Wordmark:** "stow" in Inter 700, 16 px in the top bar, preceded by the 20 px mark.
-- **Mark:** the `layered-archive` raster master (`assets/icon.png`) — a dark tile holding a cream layered archive over an amber base. The rail and popup use `public/icon/128.png`; the toolbar uses the generated 16/32/48/128 family. `scripts/gen-icons.ts` downscales the master for the manifest; see `docs/BRAND.md`.
+- **Mark:** the `layered-archive` raster master (`assets/icon.png`) — a white, dark-outlined card holding a layered archive on a solid orange base, on a transparent surround. The rail and popup use `public/icon/128.png`; the toolbar uses the generated 16/32/48/128 family. `scripts/gen-icons.ts` downscales the master for the manifest; see `docs/BRAND.md`.
 - **Badge:** background `#1B6B52`, text white (`ink-on-accent` light value; set explicitly via `action.setBadgeBackgroundColor/TextColor` because action APIs don't read CSS variables). Transient success `✓`, error `!` (error background `#B3261E`).
 - **Store assets:** screenshots 1280×800 ×5 (Library light with several stacks and a spine in two colors; Library dark during a drag; search with highlights; popup; import preview), small promo tile 440×280, marquee 1400×560, all showing real-looking but fictional content, no third-party logos or trademarks. Listing copy follows §13 voice.
 

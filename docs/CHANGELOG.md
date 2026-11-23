@@ -4,13 +4,22 @@
 
 ### Changed
 
+- Replaced the icon mark with the new master (`assets/icon.png`): a white, dark-outlined card
+  holding the layered archive on a solid orange base, on a transparent surround. `pnpm icons` now
+  trims the master to its ink and centres it in each square export, and it writes the two landing
+  copies (`landing/assets/icon.png`, `landing/assets/favicon.png`) alongside the five manifest
+  sizes, so one command updates the toolbar, the in-app brand, and the site header.
+- Added the 64 px icon. The manifest family is now 16/32/48/64/128 in both `icons` and
+  `action.default_icon`, covering the 32/64/128 set the store submission asks for.
+- Regenerated `landing/assets/og.svg` and `og.png` from the new mark (the card embeds a 96 px
+  copy), and rewrote the hero lede to `Save your tabs. Clear the clutter. Pick up right where you
+  left off…`.
 - Renamed the public noun for a saved set of tabs from "stacks" to "lists" in every
   user-facing string (`src/ui/i18n.ts`), the landing page, the copy deck, and the store
   description. `Stack` remains the term in code, tests, routes (`#/stack/<id>`), and the data
   model, so nothing in the domain layer moved.
-- Rewrote the landing hero to state the function: `Close 100 tabs.` / `Keep every one.`, with
-  a lede that names the mechanic ("saves every tab in the window as a searchable list, then
-  closes them") before the promises. The old H1 named a mood, not an action.
+- Rewrote the landing hero to state the function: `Close 100 tabs.` / `Keep every one.` The old
+  H1 named a mood, not an action.
 - Rebuilt the landing page as a product tour: the real Library capture under the hero, then a
   seven-tile feature bento covering stow, zero network requests, search, save-before-close,
   import/export, tab groups, and keyboard control. Install moved to section 03.

@@ -72,7 +72,7 @@ Use these strings as written. Keep labels lowercase and prose sentence case.
 
 - Kicker: `❯ stow --save`
 - H1: `Close 100 tabs.` / `Keep every one.`
-- Lede: `One click saves every tab in the window as a searchable list, then closes them. Search the list later and restore just the tabs you need. No account, no sync, no server, and no host permissions.`
+- Lede: `Save your tabs. Clear the clutter. Pick up right where you left off. Stow turns your open tabs into searchable, organized lists you can restore anytime. Private by design, with everything stored locally.`
 - Primary: `load unpacked`
 - Secondary: `$ read the source`
 - Note under CTA: `Chrome 120+ · works offline after install`
