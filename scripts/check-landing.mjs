@@ -99,7 +99,12 @@ try {
           .filter((image) => image.getAttribute('alt') === null)
           .map((image) => image.currentSrc || image.src),
         emptyAlt: [...document.images]
-          .filter((image) => image.getAttribute('alt') === '' && image.closest('.brand') === null)
+          .filter(
+            (image) =>
+              image.getAttribute('alt') === '' &&
+              image.closest('.brand') === null &&
+              image.closest('[aria-hidden="true"]') === null,
+          )
           .map((image) => image.currentSrc || image.src),
         missingDims: [...document.images]
           .filter((image) => !image.getAttribute('width') || !image.getAttribute('height'))
@@ -108,7 +113,7 @@ try {
 
       if (metrics.overflow > 1)
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
-      if (!metrics.h1.startsWith('Close the tabs.'))
+      if (!metrics.h1.startsWith('Fifteen tabs.'))
         failures.push(`${width}/${scheme}: missing h1`);
       if (metrics.h1Count !== 1) failures.push(`${width}/${scheme}: h1 count ${metrics.h1Count}`);
       if (metrics.title !== 'Stow — Close the tabs. Keep the work.')
@@ -218,7 +223,7 @@ try {
     }));
     if (nojs.menu !== 'none') failures.push(`no-js: menu toggle ${nojs.menu}`);
     if (nojs.nav !== 'flex') failures.push(`no-js: nav ${nojs.nav}`);
-    if (nojs.links !== 4) failures.push(`no-js: ${nojs.links} nav links`);
+    if (nojs.links !== 3) failures.push(`no-js: ${nojs.links} nav links`);
     if (nojs.reveal !== '1') failures.push(`no-js: reveal opacity ${nojs.reveal}`);
     log(`no-js: static nav, no menu toggle, reveals visible`);
     await context.close();

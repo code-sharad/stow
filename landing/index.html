@@ -17,7 +17,8 @@
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="assets/icon.png" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=8" />
+    <link rel="stylesheet" href="hero-demo.css?v=3" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stow" />
@@ -64,8 +65,10 @@
 
     <script>
       document.documentElement.classList.add('js');
+      if (location.protocol === 'file:') document.documentElement.classList.add('is-file');
     </script>
-    <script src="main.js?v=4" defer></script>
+    <script type="module" src="hero-demo.js?v=2"></script>
+    <script src="main.js?v=5" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -83,15 +86,14 @@
           <a class="nav-link" href="#how">how it works</a>
           <a class="nav-link" href="#features">features</a>
           <a class="nav-link" href="#privacy">privacy</a>
-          <a class="nav-link" href="#install">install</a>
         </nav>
 
         <div class="head-actions">
-          <span class="local-pill"><span class="local-dot" aria-hidden="true"></span>local-only</span>
           <a
             class="btn btn-primary btn-sm head-cta"
-            href="https://github.com/code-sharad/stow/releases/latest"
-            >Download for Chrome</a
+            data-store-link
+            href="https://chromewebstore.google.com/search/stow"
+            >Add to Chrome</a
           >
           <button
             class="menu-toggle"
@@ -110,7 +112,6 @@
         <a href="#how">how it works</a>
         <a href="#features">features</a>
         <a href="#privacy">privacy</a>
-        <a href="#install">install</a>
       </nav>
     </noscript>
 
@@ -119,86 +120,73 @@
         <a href="#how"><span aria-hidden="true">01</span>how it works</a>
         <a href="#features"><span aria-hidden="true">02</span>features</a>
         <a href="#privacy"><span aria-hidden="true">03</span>privacy</a>
-        <a href="#install"><span aria-hidden="true">04</span>install</a>
       </nav>
       <a
         class="btn btn-primary nav-cta"
-        href="https://github.com/code-sharad/stow/releases/latest"
-        >Download for Chrome</a
+        data-store-link
+        href="https://chromewebstore.google.com/search/stow"
+        >Add to Chrome</a
       >
-      <p class="nav-meta">v0.1.0 · local-only</p>
     </div>
 
     <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">A local-first tab manager</p>
-            <h1 id="hero-title">Close the tabs.<br /> Keep the work.</h1>
-            <p class="hero-lede">
-              Stow saves your open tabs as searchable lists, so you can clear the clutter and
-              return to what matters whenever you need it.
-            </p>
-            <div class="hero-actions">
-              <a
-                class="btn btn-primary"
-                href="https://github.com/code-sharad/stow/releases/latest"
-                >Download for Chrome</a
-              >
-              <a class="btn btn-secondary" href="https://github.com/code-sharad/stow"
-                >View source <span aria-hidden="true">↗</span></a
-              >
-            </div>
-            <p class="trust-line">
-              <span>No account</span><span class="dot" aria-hidden="true">·</span>
-              <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
-              <span>No tracking</span>
-            </p>
-            <p class="compat">
-              Chrome 120+ <span aria-hidden="true">·</span> Firefox 140+ from source
-              <span aria-hidden="true">·</span> Works offline after install
-            </p>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">A local-first tab manager</p>
+          <h1 id="hero-title">Fifteen tabs.<br /> Three lists. One click.</h1>
+          <p class="hero-lede">
+            Stow saves a crowded window as grouped, searchable lists — then restores any of
+            them. Watch fifteen tabs become three lists, a search find the Docs, and the tabs
+            come back.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              data-store-link
+              href="https://chromewebstore.google.com/search/stow"
+              >Add to Chrome</a
+            >
+            <a class="btn btn-secondary" href="https://github.com/code-sharad/stow"
+              >View source <span aria-hidden="true">↗</span></a
+            >
           </div>
-
-          <aside class="receipt reveal" aria-label="Example Stow session">
-            <div class="receipt-bar">
-              <span class="receipt-title">stow --example</span>
-              <span class="receipt-tag">example</span>
-            </div>
-            <dl class="receipt-rows">
-              <div><dt>tabs captured</dt><dd>11</dd></div>
-              <div><dt>saved lists</dt><dd>3</dd></div>
-              <div><dt>tabs restored</dt><dd>6</dd></div>
-              <div><dt>storage</dt><dd>browser profile</dd></div>
-              <div class="is-status"><dt>network requests</dt><dd>0</dd></div>
-            </dl>
-            <p class="receipt-note">Example values. Nothing leaves this browser.</p>
-          </aside>
+          <p class="trust-line">
+            <span>No account</span><span class="dot" aria-hidden="true">·</span>
+            <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
+            <span>No tracking</span>
+          </p>
+          <p class="compat">
+            Chrome 120+ <span aria-hidden="true">·</span> Firefox 140+
+            <span aria-hidden="true">·</span> Works offline
+          </p>
         </div>
 
-        <figure class="hero-shot reveal">
-          <div class="shot-bar">
-            <span>library.html</span>
-            <span class="shot-meta">actual extension UI</span>
+        <figure class="hero-shot hero-shot--demo reveal">
+          <div
+            class="hero-demo"
+            data-stow-demo
+            role="img"
+            aria-label="A browser with fifteen crowded tabs. The Stow icon saves the window into grouped lists, the library opens, a search finds two lists, and the Docs list restores into a clean browser."
+          >
+            <picture class="hero-demo__fallback">
+              <source
+                media="(max-width: 639px) and (prefers-color-scheme: light)"
+                srcset="assets/library-mobile-light.webp"
+              />
+              <source media="(max-width: 639px)" srcset="assets/library-mobile-dark.webp" />
+              <source media="(prefers-color-scheme: light)" srcset="assets/library-light.webp" />
+              <img
+                src="assets/library-dark.webp"
+                width="1440"
+                height="900"
+                alt="Stow's library showing saved tabs grouped into three lists: Docs, Design, and Build."
+              />
+            </picture>
+            <p class="hero-demo__notice">
+              Serve this page over HTTP to play the live demo — Chrome blocks modules from
+              <code>file://</code>.
+            </p>
           </div>
-          <picture>
-            <source
-              media="(max-width: 639px) and (prefers-color-scheme: light)"
-              srcset="assets/library-mobile-light.webp"
-            />
-            <source media="(max-width: 639px)" srcset="assets/library-mobile-dark.webp" />
-            <source media="(prefers-color-scheme: light)" srcset="assets/library-light.webp" />
-            <img
-              src="assets/library-dark.webp"
-              width="1440"
-              height="900"
-              fetchpriority="high"
-              alt="Stow's library showing saved tabs grouped into three lists: Docs, Design, and Build."
-            />
-          </picture>
-          <figcaption>
-            <span>Library</span> Your saved tabs, grouped into searchable lists.
-          </figcaption>
         </figure>
       </section>
 
@@ -207,7 +195,8 @@
           <p class="eyebrow">How it works</p>
           <h2 id="how-title">A calmer browser in three steps.</h2>
           <p class="section-lede">
-            Save the window. Find the page. Put it back. Stow stays out of the way in between.
+            Stow saves every tab in the window as one list you can search. Find any of them later,
+            then restore one tab or the whole list.
           </p>
         </div>
 
@@ -216,10 +205,10 @@
             <p class="step-num" aria-hidden="true">01</p>
             <div class="step-copy">
               <p class="step-kicker">Stow</p>
-              <h3>Save the whole window.</h3>
+              <h3>Save every tab in the window.</h3>
               <p>
-                Capture every eligible tab as one list and close the clutter. Pinned tabs stay
-                exactly where you put them.
+                Every eligible tab is saved into Stow as one list, and the window closes. Pinned
+                tabs stay exactly where you put them.
               </p>
               <p class="step-shortcut">
                 <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> <span>save window</span>
@@ -251,10 +240,10 @@
             <p class="step-num" aria-hidden="true">02</p>
             <div class="step-copy">
               <p class="step-kicker">Find</p>
-              <h3>Find it from half a memory.</h3>
+              <h3>Find any tab you saved.</h3>
               <p>
-                Search titles, URLs, domains, and list names. The index lives in your browser, so
-                results arrive as you type.
+                All the tabs you save live in Stow, searchable by title, URL, domain, or list
+                name. The index stays in your browser, so results appear as you type.
               </p>
               <p class="step-shortcut">
                 <kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd> <span>search from anywhere</span>
@@ -294,10 +283,10 @@
             <p class="step-num" aria-hidden="true">03</p>
             <div class="step-copy">
               <p class="step-kicker">Restore</p>
-              <h3>Bring back the page, or the whole list.</h3>
+              <h3>Bring back one tab, or the whole list.</h3>
               <p>
-                Restore one tab, a selection, or an entire list. Send it to the current window or
-                a new one, and remove it from Stow afterward if you like.
+                Restore a single tab, a selection, or an entire list to the current window or a
+                new one. Remove it from Stow afterward if you like.
               </p>
               <p class="step-shortcut">
                 <kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd> <span>open library</span>
@@ -431,18 +420,47 @@
       </section>
 
       <section class="section" id="privacy" aria-labelledby="privacy-title">
-        <div class="privacy-grid">
-          <div class="privacy-copy reveal">
-            <p class="eyebrow">Privacy</p>
-            <h2 id="privacy-title">Your tabs stay on your device.</h2>
-            <p class="section-lede">
-              Stow is designed to keep your browsing library local to your browser profile. It
-              does not need an account or a Stow-hosted server to save and restore your tabs.
-            </p>
+        <div class="section-head reveal">
+          <p class="eyebrow">Privacy</p>
+          <h2 id="privacy-title">Your tabs stay on your device.</h2>
+          <p class="section-lede">
+            Stow keeps your library inside your browser. There is no Stow account, no cloud
+            sync, and no analytics. The ledger below is the whole story.
+          </p>
+        </div>
 
-            <div class="local-callout">
+        <div class="privacy-grid">
+          <div class="privacy-promises reveal">
+            <article class="privacy-promise">
+              <span class="privacy-promise__index" aria-hidden="true">01</span>
+              <h3>No account.</h3>
+              <p>
+                There is nothing to sign up for. Install Stow, save a window, and your library
+                is there.
+              </p>
+            </article>
+            <article class="privacy-promise">
+              <span class="privacy-promise__index" aria-hidden="true">02</span>
+              <h3>No cloud.</h3>
+              <p>
+                Lists live in your browser's own storage, not on a Stow server. Backups are
+                files you choose to export.
+              </p>
+            </article>
+            <article class="privacy-promise">
+              <span class="privacy-promise__index" aria-hidden="true">03</span>
+              <h3>No tracking.</h3>
+              <p>
+                No analytics, no telemetry. The extension contains no network code, so there is
+                nothing to send.
+              </p>
+            </article>
+          </div>
+
+          <div class="privacy-data reveal">
+            <div class="privacy-data__head">
               <span class="local-pill"><span class="local-dot" aria-hidden="true"></span>local only</span>
-              <p>No account. No server. No network requests.</p>
+              <p>Nothing in this table leaves your browser.</p>
             </div>
 
             <table class="data-table">
@@ -482,142 +500,7 @@
               copy.
             </p>
           </div>
-
-          <figure class="privacy-shot reveal">
-            <div class="shot-bar">
-              <span>settings.html</span>
-              <span class="shot-meta">about</span>
-            </div>
-            <picture>
-              <source media="(prefers-color-scheme: light)" srcset="assets/privacy-light.webp" />
-              <img
-                src="assets/privacy-dark.webp"
-                width="374"
-                height="79"
-                loading="lazy"
-                decoding="async"
-                alt="Stow's About settings panel: version 0.1.0 and the line, “No accounts. No servers. Nothing leaves this device.”"
-              />
-            </picture>
-            <figcaption>
-              <span>In the product</span> The privacy promise is part of the settings, not just
-              the marketing page.
-            </figcaption>
-          </figure>
         </div>
-      </section>
-
-      <section class="section" id="install" aria-labelledby="install-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">Install</p>
-          <h2 id="install-title">Get started in a minute.</h2>
-          <p class="section-lede">
-            Download the packaged build for Chrome, or build the Firefox package from source.
-            Both keep the same library local to that browser.
-          </p>
-        </div>
-
-        <div class="install-grid">
-          <article class="install-card install-card--primary reveal">
-            <div class="browser-head">
-              <span>Chromium</span>
-              <span class="badge">Chrome 120+</span>
-            </div>
-            <h3>Download for Chrome</h3>
-            <p>
-              The packaged build is the fastest path. It works in Chrome and other Chromium
-              browsers that can load unpacked extensions.
-            </p>
-            <ol class="install-steps">
-              <li>
-                <span class="step-index" aria-hidden="true">01</span>
-                <div>
-                  <strong>Download the latest release.</strong>
-                  <p>Grab <code>stow-0.1.0-chrome.zip</code> and unzip it.</p>
-                </div>
-              </li>
-              <li>
-                <span class="step-index" aria-hidden="true">02</span>
-                <div>
-                  <strong>Open your extensions page.</strong>
-                  <p>Go to <code>chrome://extensions</code> and turn on Developer mode.</p>
-                </div>
-              </li>
-              <li>
-                <span class="step-index" aria-hidden="true">03</span>
-                <div>
-                  <strong>Load the folder.</strong>
-                  <p>Choose <strong>Load unpacked</strong> and select the unzipped folder.</p>
-                </div>
-              </li>
-              <li>
-                <span class="step-index" aria-hidden="true">04</span>
-                <div>
-                  <strong>Pin Stow and save a window.</strong>
-                  <p>
-                    Press <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> to stow your first set of
-                    tabs.
-                  </p>
-                </div>
-              </li>
-            </ol>
-            <div class="install-actions">
-              <a
-                class="btn btn-primary"
-                href="https://github.com/code-sharad/stow/releases/latest"
-                >Download for Chrome</a
-              >
-              <span class="install-meta">v0.1.0 · Chrome 120+</span>
-            </div>
-          </article>
-
-          <article class="install-card reveal">
-            <div class="browser-head">
-              <span>Firefox</span>
-              <span class="badge">from source</span>
-            </div>
-            <h3>Build the Firefox package.</h3>
-            <p>
-              Firefox isn't in the add-on store yet. Build the MV3 package, then load it as a
-              temporary add-on for Firefox 140 or newer.
-            </p>
-            <pre><code>pnpm install
-pnpm zip:firefox</code></pre>
-            <ol class="install-steps">
-              <li>
-                <span class="step-index" aria-hidden="true">01</span>
-                <div>
-                  <strong>Run the commands above.</strong>
-                  <p>The build lands in <code>.output/firefox-mv3</code>.</p>
-                </div>
-              </li>
-              <li>
-                <span class="step-index" aria-hidden="true">02</span>
-                <div>
-                  <strong>Open the debugging page.</strong>
-                  <p>Go to <code>about:debugging#/runtime/this-firefox</code>.</p>
-                </div>
-              </li>
-              <li>
-                <span class="step-index" aria-hidden="true">03</span>
-                <div>
-                  <strong>Load the temporary add-on.</strong>
-                  <p>Choose <strong>Load Temporary Add-on</strong> and open the manifest.</p>
-                </div>
-              </li>
-            </ol>
-            <div class="install-actions">
-              <a class="btn btn-secondary" href="https://github.com/code-sharad/stow#install"
-                >Build instructions <span aria-hidden="true">↗</span></a
-              >
-              <span class="install-meta">Firefox 140+ · temporary add-on</span>
-            </div>
-          </article>
-        </div>
-
-        <p class="install-note">
-          Both builds store everything locally. Nothing syncs between browsers—or anywhere else.
-        </p>
       </section>
     </main>
 

@@ -4,6 +4,24 @@
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
 
+  // The extension is not in the stores yet. These are store search links;
+  // swap them for the published listing URLs when they exist.
+  const stores = {
+    chrome: {
+      label: 'Add to Chrome',
+      href: 'https://chromewebstore.google.com/search/stow',
+    },
+    firefox: {
+      label: 'Add to Firefox',
+      href: 'https://addons.mozilla.org/firefox/search/?q=stow',
+    },
+  };
+  const store = /Firefox\//.test(navigator.userAgent) ? stores.firefox : stores.chrome;
+  for (const link of document.querySelectorAll('[data-store-link]')) {
+    link.href = store.href;
+    link.textContent = store.label;
+  }
+
   const header = document.querySelector('.site-head');
   const links = [...document.querySelectorAll('.nav-link')];
   const sections = [...document.querySelectorAll('main section[id]')];
