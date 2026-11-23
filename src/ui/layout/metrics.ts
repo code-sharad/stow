@@ -3,7 +3,7 @@ export const METRICS = {
     row: 38,
     stackHead: 42,
     stackGap: 16,
-    topBar: 48,
+    topBar: 60,
     control: 30,
     rail: 240,
     status: 28,
@@ -12,7 +12,7 @@ export const METRICS = {
     row: 32,
     stackHead: 36,
     stackGap: 10,
-    topBar: 44,
+    topBar: 54,
     control: 27,
     rail: 210,
     status: 26,
@@ -23,7 +23,6 @@ export type Density = keyof typeof METRICS;
 
 export const RAIL_WIDTH = 220;
 export const RAIL_WIDTH_NARROW = 190;
-export const CONTENT_MAX = 860;
 export const SPINE_WIDTH = 3;
 export const POPUP_WIDTH = 360;
 

@@ -36,9 +36,7 @@ export function PopupApp(): ReactNode {
   return (
     <div className="popup">
       <div className="popup-head">
-        <span className="brand-glyph" aria-hidden="true">
-          ▪
-        </span>
+        <img className="brand-mark" src="/icon/128.png" alt="" width={20} height={20} />
         <strong>stow</strong>
         <span className="popup-mode">popup</span>
         <span className="spacer" />

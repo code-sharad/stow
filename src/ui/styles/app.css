@@ -141,6 +141,10 @@ kbd {
   gap: 0;
   border-bottom: 1px solid var(--line);
   background: var(--canvas);
+  /* The topbar runs one step larger than the rest of the console so the two
+     controls that matter — search and stow — read first. */
+  --topbar-control-h: 40px;
+  --topbar-font: 15px;
 }
 .brand {
   display: flex;
@@ -153,14 +157,15 @@ kbd {
   border-inline-end: 1px solid var(--line);
   overflow: hidden;
 }
-.brand-glyph {
-  color: var(--accent);
-  font-size: var(--fs-body);
-  line-height: 1;
+.brand-mark {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  object-fit: contain;
 }
 .brand-name {
   color: var(--ink);
-  font-size: var(--fs-body);
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -175,10 +180,13 @@ kbd {
   display: flex;
   align-items: center;
   gap: 0;
-  width: min(520px, 46vw);
-  height: calc(var(--control-h) + 2px);
-  margin: 0 12px;
-  padding: 0 7px;
+  flex: 1 1 auto;
+  width: auto;
+  max-width: 620px;
+  min-width: 0;
+  height: var(--topbar-control-h);
+  margin: 0 14px;
+  padding: 0 10px;
   border: 1px solid var(--line-strong);
   border-inline-start: 2px solid var(--accent);
   border-radius: 0;
@@ -186,9 +194,9 @@ kbd {
 }
 .search-shell::before {
   content: "❯";
-  margin-inline-end: 7px;
+  margin-inline-end: 9px;
   color: var(--accent);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   line-height: 1;
 }
 .search-shell > svg {
@@ -208,6 +216,7 @@ kbd {
   background: transparent;
   color: var(--ink);
   font: var(--font-sm) var(--font-ui);
+  font-size: var(--topbar-font);
 }
 .search-input::placeholder {
   color: var(--ink-3);
@@ -219,7 +228,7 @@ kbd {
   color: var(--ink-3);
 }
 .search-hint kbd {
-  height: 16px;
+  height: 18px;
 }
 .search-clear {
   position: static;
@@ -228,7 +237,45 @@ kbd {
   height: 20px;
 }
 .topbar .stow-split {
-  margin-inline-end: 8px;
+  margin-inline-end: 12px;
+}
+/* Neutral primary: invert the canvas so the stow action leads without adding a
+   second colour to the console. */
+.topbar .btn-primary {
+  border-color: var(--cta);
+  background: var(--cta);
+  color: var(--ink-on-cta);
+}
+.topbar .btn-primary:hover {
+  border-color: var(--cta-hover);
+  background: var(--cta-hover);
+  color: var(--ink-on-cta);
+}
+.topbar .btn-primary:active {
+  border-color: var(--cta-press);
+  background: var(--cta-press);
+}
+.topbar .split-arrow {
+  border-inline-start-color: color-mix(in srgb, var(--ink-on-cta) 28%, transparent);
+}
+/* The search takes the free space up to its max; the spacer only carries the
+   auto margin that pins stow to the right edge. */
+.topbar .spacer {
+  flex: 0 1 auto;
+}
+.topbar .stow-split .btn {
+  height: var(--topbar-control-h);
+  padding: 0 16px;
+  gap: 8px;
+  font-size: var(--topbar-font);
+}
+.topbar .stow-split .btn svg {
+  width: 18px;
+  height: 18px;
+}
+.topbar .split-arrow {
+  width: var(--topbar-control-h);
+  padding: 0;
 }
 .topbar .search-shell + .spacer + .stow-split {
   margin-inline-start: auto;
@@ -236,9 +283,17 @@ kbd {
 @media (min-width: 900px) {
   .search-shell {
     position: absolute;
-    /* centered over the content column, not the whole window */
-    left: calc(50% + var(--rail-w) / 2);
-    transform: translateX(-50%);
+    /* Line the search's left edge up with the page title's text edge, which is
+       the reading column inset by its padding, so "❯ search" and "# All tabs"
+       share one vertical rule. `--main-gutter` is measured from the scroll
+       container because the column centres inside its content box. */
+    left: calc(
+      var(--rail-w) +
+      max(0px, (100% - var(--rail-w) - var(--main-gutter) - var(--reading-max)) / 2) +
+      var(--reading-pad)
+    );
+    transform: none;
+    width: min(620px, calc(100% - var(--rail-w) - var(--main-gutter) - var(--reading-pad) - 320px));
     margin: 0;
   }
 }
@@ -596,14 +651,18 @@ kbd {
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  /* Reserve the scrollbar gutter so the reading column keeps its centre when a
+     scrollbar appears; the topbar's search anchors to that same centre and
+     would drift by half a scrollbar otherwise. */
+  scrollbar-gutter: stable;
   background: var(--canvas);
 }
 .reading {
   width: 100%;
-  max-width: 860px;
+  max-width: var(--reading-max);
   min-height: 100%;
   margin: 0 auto;
-  padding: 18px 26px 48px;
+  padding: 18px var(--reading-pad) 48px;
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -813,7 +872,10 @@ kbd {
   flex: none;
   border-radius: 0;
   object-fit: contain;
-  opacity: 0.9;
+  opacity: var(--favicon-opacity, 0.9);
+}
+img.favicon {
+  filter: var(--favicon-filter, none);
 }
 .favicon-letter {
   color: var(--ink-3);
@@ -1184,7 +1246,7 @@ kbd {
   background: var(--scrim);
 }
 .palette {
-  width: min(600px, 100%);
+  width: min(760px, 100%);
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 0;
@@ -1194,53 +1256,55 @@ kbd {
 .palette-search {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 10px;
+  gap: 10px;
+  padding: 0 14px;
   border-bottom: 1px solid var(--line-strong);
   border-inline-start: 2px solid var(--accent);
   background: var(--canvas);
 }
 .palette-search svg {
-  width: 13px;
-  height: 13px;
+  width: 17px;
+  height: 17px;
   color: var(--accent);
   flex: none;
 }
 .palette-search input {
   flex: 1;
   min-width: 0;
-  height: 36px;
+  height: 48px;
   border: 0;
   outline: 0;
   background: transparent;
   color: var(--ink);
   font: var(--font-body) var(--font-ui);
+  font-size: 16px;
 }
 .palette-search input::placeholder {
   color: var(--ink-3);
 }
 .palette-list {
-  max-height: 340px;
+  max-height: 440px;
   overflow: auto;
-  padding: 3px;
+  padding: 4px;
 }
 .palette-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  height: 28px;
-  padding: 0 7px;
+  height: 36px;
+  padding: 0 10px;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--ink-2);
   text-align: start;
-  font: var(--font-xs) var(--font-ui);
+  font: var(--font-sm) var(--font-ui);
+  font-size: 14px;
 }
 .palette-item .meta {
   margin-inline-start: auto;
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-xs);
 }
 .palette-item.is-active {
   background: var(--accent-wash);
@@ -1249,7 +1313,7 @@ kbd {
 }
 .palette-icon {
   display: inline-flex;
-  width: 15px;
+  width: 18px;
   justify-content: center;
   flex: none;
   opacity: 0.7;
@@ -1693,15 +1757,18 @@ kbd {
 
 /* ---------- responsive ---------- */
 @media (max-width: 1099px) {
+  :root {
+    --reading-pad: 20px;
+  }
   .stack-meta time,
   .stack-meta [aria-hidden="true"] {
     display: none;
   }
-  .reading {
-    padding-inline: 20px;
-  }
 }
 @media (max-width: 899px) {
+  :root {
+    --reading-pad: 16px;
+  }
   .library {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: var(--topbar-h) minmax(0, 1fr) var(--status-h);
@@ -1733,7 +1800,7 @@ kbd {
     padding: 0;
   }
   .reading {
-    padding: 14px 16px 40px;
+    padding: 14px var(--reading-pad) 40px;
   }
   .status-hint:nth-last-child(-n + 2) {
     display: none;
@@ -1789,7 +1856,6 @@ kbd {
 kbd,
 code,
 samp,
-.brand-glyph,
 .brand-path,
 .search-hint,
 .rail-label,

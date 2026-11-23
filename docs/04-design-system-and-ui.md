@@ -525,18 +525,8 @@ Heading: "Close the clutter. Keep the tabs." · Body: "Click the Stow icon in yo
 
 ## 14. Brand and assets
 
-- **Wordmark:** "Stow" in Newsreader 600, 20 px in the top bar, preceded by the glyph.
-- **Glyph/icon concept:** three left-aligned bars of decreasing width, like index tabs stepping down: a stack being tidied. Placeholder SVG source (`assets/icon.svg`; a designer may refine, but the structure stays):
-
-```svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="28" fill="#1B6B52"/>
-  <rect x="24" y="30" width="80" height="18" rx="5" fill="#FBFCFA"/>
-  <rect x="24" y="55" width="62" height="18" rx="5" fill="#FBFCFA" fill-opacity=".72"/>
-  <rect x="24" y="80" width="44" height="18" rx="5" fill="#FBFCFA" fill-opacity=".48"/>
-</svg>
-```
-- **Small sizes:** `icon-16.svg` variant with 22-unit bars and full-opacity bars (width steps only) so pixel snapping stays crisp. `scripts/gen-icons.ts` renders 16/32/48/128 PNGs from the SVGs at build time; the toolbar icon is the same on light and dark browser chrome (accent tile with light bars reads on both).
+- **Wordmark:** "stow" in Inter 700, 16 px in the top bar, preceded by the 20 px mark.
+- **Mark:** the `layered-archive` raster master (`assets/icon.png`) — a dark tile holding a cream layered archive over an amber base. The rail and popup use `public/icon/128.png`; the toolbar uses the generated 16/32/48/128 family. `scripts/gen-icons.ts` downscales the master for the manifest; see `docs/BRAND.md`.
 - **Badge:** background `#1B6B52`, text white (`ink-on-accent` light value; set explicitly via `action.setBadgeBackgroundColor/TextColor` because action APIs don't read CSS variables). Transient success `✓`, error `!` (error background `#B3261E`).
 - **Store assets:** screenshots 1280×800 ×5 (Library light with several stacks and a spine in two colors; Library dark during a drag; search with highlights; popup; import preview), small promo tile 440×280, marquee 1400×560, all showing real-looking but fictional content, no third-party logos or trademarks. Listing copy follows §13 voice.
 

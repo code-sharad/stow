@@ -120,6 +120,29 @@ export function LibraryApp(): ReactNode {
     return () => window.removeEventListener('keydown', onKey);
   }, [clearSelection]);
 
+  useEffect(() => {
+    const main = scrollRef.current;
+    if (!main) return;
+    const root = document.documentElement;
+    // The reading column is centred inside the scroll container's content box;
+    // publish the scrollbar gutter so the topbar's search can anchor to the
+    // same vertical rule as the page title. `scrollbar-gutter: stable` keeps it
+    // constant whether or not the list actually overflows.
+    const sync = (): void => {
+      root.style.setProperty(
+        '--main-gutter',
+        `${Math.max(0, main.offsetWidth - main.clientWidth)}px`,
+      );
+    };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(main);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty('--main-gutter');
+    };
+  }, []);
+
   const navigate = (next: Route): void => {
     location.hash = routeHash(next);
     setRoute(next);

@@ -58,9 +58,7 @@ export function routeHash(route: Route): string {
 function Brand(): ReactNode {
   return (
     <div className="brand">
-      <span className="brand-glyph" aria-hidden="true">
-        ▪
-      </span>
+      <img className="brand-mark" src="/icon/128.png" alt="" width={20} height={20} />
       <span className="brand-name">stow</span>
       <span className="brand-path">v{chrome.runtime.getManifest().version}</span>
     </div>

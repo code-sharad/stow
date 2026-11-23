@@ -317,7 +317,7 @@ No horizontal scroll at 320 px. Test at 320, 375, 640, 768, 1440.
 
 ## 11. Asset checklist
 
-- [ ] `assets/icon.svg`, `favicon.png`, `og.svg`, `og.png` 1200×630
+- [ ] `assets/icon.png`, `favicon.png`, `og.svg`, `og.png` 1200×630
 - [ ] `assets/inter-var.woff2`
 - [ ] `library-dark.webp` / `library-light.webp` 1600×1000
 - [ ] `library-mobile-dark.webp` / `library-mobile-light.webp` 750×1000

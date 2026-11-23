@@ -36,39 +36,40 @@
       .toolbar .ext img { width: 16px; height: 16px; image-rendering: pixelated; }
       .mono { filter: grayscale(1); }
       .zoom { transform: scale(2); transform-origin: top left; }
+      .zoom img { image-rendering: pixelated; }
       code { color: var(--accent); }
     </style>
   </head>
   <body>
     <h1>Stow icon preview</h1>
-    <p><code>stack-prompt</code> · 8 px grid · check the 16 px tile at 100%.</p>
+    <p><code>layered-archive</code> · raster master · check the 16 px tile at 100%.</p>
 
     <section>
       <h2>Size family</h2>
       <div class="row">
-        <figure><img src="../../assets/icon.svg" width="16" height="16" alt="" /><figcaption>16</figcaption></figure>
-        <figure><img src="../../assets/icon.svg" width="32" height="32" alt="" /><figcaption>32</figcaption></figure>
-        <figure><img src="../../assets/icon.svg" width="48" height="48" alt="" /><figcaption>48</figcaption></figure>
-        <figure><img src="../../assets/icon.svg" width="128" height="128" alt="" /><figcaption>128</figcaption></figure>
+        <figure><img src="../../public/icon/16.png" width="16" height="16" alt="" /><figcaption>16</figcaption></figure>
+        <figure><img src="../../public/icon/32.png" width="32" height="32" alt="" /><figcaption>32</figcaption></figure>
+        <figure><img src="../../public/icon/48.png" width="48" height="48" alt="" /><figcaption>48</figcaption></figure>
+        <figure><img src="../../public/icon/128.png" width="128" height="128" alt="" /><figcaption>128</figcaption></figure>
       </div>
     </section>
 
     <section>
       <h2>Toolbar, both themes</h2>
       <div class="toolbar light">
-        <span>◀ ▶ ⟳</span><span class="url">chrome://extensions</span><span class="ext"><img src="../../assets/icon.svg" width="16" height="16" alt="" /></span><span>⋮</span>
+        <span>◀ ▶ ⟳</span><span class="url">chrome://extensions</span><span class="ext"><img src="../../public/icon/16.png" width="16" height="16" alt="" /></span><span>⋮</span>
       </div>
       <div class="toolbar dark" style="margin-top: 8px">
-        <span>◀ ▶ ⟳</span><span class="url">chrome://extensions</span><span class="ext"><img src="../../assets/icon.svg" width="16" height="16" alt="" /></span><span>⋮</span>
+        <span>◀ ▶ ⟳</span><span class="url">chrome://extensions</span><span class="ext"><img src="../../public/icon/16.png" width="16" height="16" alt="" /></span><span>⋮</span>
       </div>
     </section>
 
     <section>
       <h2>Grayscale and 2× inspection</h2>
       <div class="row">
-        <figure class="mono"><img src="../../assets/icon.svg" width="32" height="32" alt="" /><figcaption>grayscale</figcaption></figure>
-        <figure><div class="zoom"><img src="../../assets/icon.svg" width="16" height="16" alt="" /></div><figcaption>16 @ 2×</figcaption></figure>
-        <figure><div class="zoom"><img src="../../assets/icon.svg" width="32" height="32" alt="" /></div><figcaption>32 @ 2×</figcaption></figure>
+        <figure class="mono"><img src="../../public/icon/32.png" width="32" height="32" alt="" /><figcaption>grayscale</figcaption></figure>
+        <figure><div class="zoom"><img src="../../public/icon/16.png" width="16" height="16" alt="" /></div><figcaption>16 @ 2×</figcaption></figure>
+        <figure><div class="zoom"><img src="../../public/icon/32.png" width="32" height="32" alt="" /></div><figcaption>32 @ 2×</figcaption></figure>
       </div>
     </section>
   </body>

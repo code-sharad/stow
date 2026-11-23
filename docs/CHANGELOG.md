@@ -13,11 +13,23 @@
   underline, a live `local-only` status, and a full-height mobile menu carrying the install CTA.
 - Authored the feature stills with Stageshow and added compact recompositions for phones below
   640px instead of scaling desktop stills down.
+- Rebuilt the Library topbar: the search grows and anchors to the reading column's vertical rule
+  (the scrollbar gutter is published as `--main-gutter`), the stow action is a 40px amber button,
+  and the bar is 60px at standard density and 54px compact.
+- Replaced the `stack-prompt` mark with the layered-archive icon across the rail, popup, toolbar
+  sizes, favicon, Open Graph image, and landing page. `scripts/gen-icons.ts` now rasterises the
+  1254px `assets/icon.png` master with ImageMagick, and `docs/BRAND.md` documents the new source.
 
 ### Added
 
 - Sixteen dark/light feature stills in `landing/assets/`, with the copy deck, still provenance,
   and responsive rules updated in `docs/LANDING.md`.
+
+### Fixed
+
+- Light theme: site icons cached for a dark page are legible on the cream canvas again. `img.favicon`
+  takes a light-only ink halo and full opacity, lifting the worst pale mark from 1.8:1 to 9.6:1
+  against the row background; dark mode keeps the existing rendering.
 
 ## 0.1.0 — 2026-11-22
 
