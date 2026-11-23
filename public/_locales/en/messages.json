@@ -1,7 +1,7 @@
 {
   "extName": { "message": "Stow", "description": "Extension name." },
   "extDescription": {
-    "message": "A quiet, local-first home for tabs in flight. Save a window's tabs, close them, and find them later.",
+    "message": "One click saves a window's tabs as a searchable list, then closes them. No account, no network, no telemetry.",
     "description": "Extension description shown in the browser and store."
   },
   "actionTitle": { "message": "Stow", "description": "Toolbar button title." },

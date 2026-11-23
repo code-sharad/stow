@@ -4,7 +4,8 @@ Stow stores the tabs you choose to save in your browser's local extension storag
 (IndexedDB). It does not transmit titles, URLs, settings, or usage data anywhere.
 
 - **No network requests.** The extension has no host permissions and its content security policy
-  blocks remote scripts. Favicons are read from Chromium's on-device `_favicon` cache.
+  blocks remote scripts. Favicons are read from Chromium's on-device `_favicon` cache; in Firefox,
+  Stow draws letter tiles locally instead, so no icon is ever fetched.
 - **No telemetry or analytics.** No identifiers, crash reports, or usage counters are collected.
 - **No accounts.** There is no sign-in, sync service, or server operated by Stow.
 - **Downloads.** If you enable scheduled backups, Stow asks for the optional `downloads`

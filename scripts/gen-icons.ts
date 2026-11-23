@@ -6,7 +6,7 @@ const source = join(process.cwd(), 'assets/icon.png');
 const out = join(process.cwd(), 'public/icon');
 if (!existsSync(source)) throw new Error(`Missing ${source}`);
 mkdirSync(out, { recursive: true });
-for (const size of [16, 32, 48, 128]) {
+for (const size of [16, 32, 48, 64, 128]) {
   execFileSync('magick', [
     source,
     '-filter',

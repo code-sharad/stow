@@ -42,6 +42,21 @@ Stow is not in the Chrome Web Store yet. Install the current build from the
 
 Requires Chrome 120+ or another Manifest V3 Chromium browser.
 
+### Firefox
+
+Firefox is not in the add-on store yet either. Build the signed-ready package from source:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm zip:firefox     # writes .output/stow-0.1.0-firefox.zip
+```
+
+Then open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select
+`.output/firefox-mv3/manifest.json`. Requires Firefox 140+, or Firefox for Android 142+.
+
+The Firefox build targets Manifest V3 with `browser_specific_settings.gecko.id`
+`stow-tabs@code-sharad.github.io`, and declares `data_collection_permissions.required: ["none"]`.
+
 ## Develop
 
 Requirements: Node 22+, pnpm 10+, and a Chromium-based browser.
@@ -50,6 +65,7 @@ Requirements: Node 22+, pnpm 10+, and a Chromium-based browser.
 pnpm install
 pnpm dev          # WXT dev server with the extension loaded
 pnpm build        # production build in .output/chrome-mv3
+pnpm build:firefox  # production build in .output/firefox-mv3
 ```
 
 Load the unpacked extension:

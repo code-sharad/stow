@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://code-sharad.github.io/stow/" />
     <meta
       name="description"
-      content="A local-first tab shelf for Chrome. Stow a window into searchable stacks, close every tab, and restore it all later. No account, sync, or network."
+      content="A local-first tab shelf for Chrome and Firefox. One click saves a window's tabs as a searchable list, then closes them. No account, no network, no tracking."
     />
     <meta name="theme-color" content="#0c0c0c" />
     <link rel="icon" href="assets/favicon.png" sizes="32x32" />
@@ -73,10 +73,11 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="kicker">❯ stow --save</p>
-          <h1 id="hero-title">Close the tabs.<br /> Keep the work.</h1>
+          <h1 id="hero-title">Close 100 tabs.<br /> Keep every one.</h1>
           <p class="lede">
-            Stow saves a whole window as searchable stacks, closes every tab, and brings back
-            exactly what you need. Local-first. No account, no sync, no network.
+            One click saves every tab in the window as a searchable list, then closes them. Search
+            the list later and restore just the tabs you need. No account, no sync, no server, and
+            no host permissions.
           </p>
           <div class="actions">
             <a class="btn btn-primary" href="#install">load unpacked</a>
@@ -98,7 +99,7 @@
           </div>
           <div class="receipt-body">
             <p class="receipt-row"><span>tabs open</span><span>23</span></p>
-            <p class="receipt-row"><span>stacks saved</span><span>4</span></p>
+            <p class="receipt-row"><span>lists saved</span><span>4</span></p>
             <p class="receipt-row"><span>tabs closed</span><span>23</span></p>
             <p class="receipt-row receipt-ok">
               <span>network requests</span><span>0</span>
@@ -123,7 +124,7 @@
               src="assets/library-dark.webp"
               width="1600"
               height="1000"
-              alt="The Stow library: a dark console with three stacks named Docs, Design, and Build, each holding a list of saved tabs."
+              alt="The Stow library: a dark console with three lists named Docs, Design, and Build, each holding its saved tabs."
             />
           </picture>
         </figure>
@@ -144,7 +145,7 @@
             <p class="tile-label">stow</p>
             <h3>Save the whole window.</h3>
             <p class="tile-copy">
-              One keystroke turns every tab into stacks, sorted by the groups you already made.
+              One keystroke turns every tab into a list, sorted by the groups you already made.
               Pinned tabs stay open.
             </p>
             <figure class="tile-shot">
@@ -183,7 +184,7 @@
             <p class="tile-label">find</p>
             <h3>Half a memory is enough.</h3>
             <p class="tile-copy">
-              Search titles, URLs, and stacks as you type. Typos are fine; <code>domain:</code>
+              Search titles, URLs, and lists as you type. Typos are fine; <code>domain:</code>
               narrows it down.
             </p>
             <figure class="tile-shot">
@@ -193,7 +194,7 @@
                   src="assets/search-dark.webp"
                   width="716"
                   height="480"
-                  alt="Stow's search palette showing three invoice-related tabs found across different stacks."
+                  alt="Stow's search palette showing three invoice-related tabs found across different lists."
                 />
               </picture>
             </figure>
@@ -214,7 +215,7 @@
                   src="assets/undo-dark.webp"
                   width="716"
                   height="480"
-                  alt="The Stow trash, with a toast confirming a stack was moved there and an undo action."
+                  alt="The Stow trash, with a toast confirming a list was moved there and an undo action."
                 />
               </picture>
             </figure>
@@ -246,7 +247,7 @@
             <p class="tile-label">groups</p>
             <h3>Your tab groups come with you.</h3>
             <p class="tile-copy">
-              Native names, colors, and pinned tabs survive the trip. Restore a stack into the shape
+              Native names, colors, and pinned tabs survive the trip. Restore a list into the shape
               it left in.
             </p>
             <figure class="tile-shot">
@@ -261,7 +262,7 @@
                   src="assets/groups-dark.webp"
                   width="1440"
                   height="440"
-                  alt="Three Chrome tab groups — Design, Reading, and Build — mapped to three Stow stacks with the same names and colors."
+                  alt="Three Chrome tab groups — Design, Reading, and Build — mapped to three Stow lists with the same names and colors."
                 />
               </picture>
             </figure>
@@ -308,7 +309,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>Tabs and stacks</td>
+                <td>Tabs and lists</td>
                 <td>IndexedDB, extension origin</td>
                 <td class="no">No</td>
               </tr>

@@ -34,8 +34,9 @@
   "scripts": {
     "dev": "wxt",
     "build": "wxt build",
-    "build:firefox": "wxt build -b firefox",
+    "build:firefox": "wxt build -b firefox --mv3",
     "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox --mv3",
     "postinstall": "wxt prepare",
     "lint": "biome check .",
     "format": "biome check --write .",

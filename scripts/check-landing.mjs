@@ -75,7 +75,7 @@ try {
 
       if (metrics.overflow > 1)
         failures.push(`${width}/${scheme}: horizontal overflow ${metrics.overflow}px`);
-      if (!metrics.h1.startsWith('Close the tabs')) failures.push(`${width}/${scheme}: missing h1`);
+      if (!metrics.h1.startsWith('Close 100 tabs')) failures.push(`${width}/${scheme}: missing h1`);
       if (metrics.shots < 5) failures.push(`${width}/${scheme}: feature stills missing`);
       if (!metrics.font.includes('Inter')) failures.push(`${width}/${scheme}: Inter not active`);
       for (const image of metrics.images) {

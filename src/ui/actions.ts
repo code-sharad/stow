@@ -53,7 +53,7 @@ export async function stowScope(scope: StowScope): Promise<boolean> {
       n: result.saved,
       m: result.stacks,
       tabs: plural(result.saved, 'tab', 'tabs'),
-      stacks: plural(result.stacks, 'stack', 'stacks'),
+      lists: plural(result.stacks, 'list', 'lists'),
     });
     push(message);
     if (result.closeFailed > 0) {
@@ -149,7 +149,7 @@ export async function moveTabsToStack(tabIds: Id[], target: Stack): Promise<void
   if (tabIds.length === 0) return;
   apply((await moveTabs(tabIds, target.id)).change);
   useLibrary.getState().clearSelection();
-  push(t('movedTabs', { n: tabIds.length, stack: stackTitle(target) }));
+  push(t('movedTabs', { n: tabIds.length, list: stackTitle(target) }));
 }
 
 export async function groupSelection(): Promise<void> {

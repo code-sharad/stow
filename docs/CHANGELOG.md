@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Renamed the public noun for a saved set of tabs from "stacks" to "lists" in every
+  user-facing string (`src/ui/i18n.ts`), the landing page, the copy deck, and the store
+  description. `Stack` remains the term in code, tests, routes (`#/stack/<id>`), and the data
+  model, so nothing in the domain layer moved.
+- Rewrote the landing hero to state the function: `Close 100 tabs.` / `Keep every one.`, with
+  a lede that names the mechanic ("saves every tab in the window as a searchable list, then
+  closes them") before the promises. The old H1 named a mood, not an action.
 - Rebuilt the landing page as a product tour: the real Library capture under the hero, then a
   seven-tile feature bento covering stow, zero network requests, search, save-before-close,
   import/export, tab groups, and keyboard control. Install moved to section 03.

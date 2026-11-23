@@ -46,7 +46,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 | Term | Meaning |
 |------|---------|
 | **Stow** (verb) | Save tabs into the Library and close them. |
-| **Stack** | An ordered set of saved tabs created by one stow (or by the user). OneTab calls these "tab groups"; we avoid that term because it collides with the browser's native **tab groups**. |
+| **Stack** | An ordered set of saved tabs created by one stow (or by the user). OneTab calls these "tab groups"; we avoid that term because it collides with the browser's native **tab groups**. In all user-facing copy the word is **list** (`List`, `Lists`, `Untitled list`); `Stack` stays as the term in code, tests, and this document, so the two never need syncing in lockstep. |
 | **Saved tab** | One URL + title inside a Stack. In UI copy: "tab". |
 | **Library** | The full-page extension UI listing all Stacks. Singleton tab. |
 | **Restore** | Re-open a saved tab or Stack as real browser tabs. |

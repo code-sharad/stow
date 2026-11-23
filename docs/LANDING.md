@@ -23,9 +23,9 @@ One page, one decision: install Stow.
 │  ❯ stow --save                                               │
 │  Close the tabs.            ┌ stow --window        demo ┐    │
 │  Keep the work.             │ tabs open             23  │    │
-│                             │ stacks saved           4  │    │
+│                             │ lists saved           4  │    │
 │  Stow saves a whole window  │ tabs closed           23  │    │
-│  as searchable stacks…      │ network requests       0  │    │
+│  as searchable lists…      │ network requests       0  │    │
 │                             └ every tab written…       ┘    │
 │  [ load unpacked ]  $ read the source                        │
 │  Chrome 120+ · works offline after install                   │
@@ -71,8 +71,8 @@ Use these strings as written. Keep labels lowercase and prose sentence case.
 ### Hero
 
 - Kicker: `❯ stow --save`
-- H1: `Close the tabs.` / `Keep the work.`
-- Lede: `Stow saves a whole window as searchable stacks, closes every tab, and brings back exactly what you need. Local-first. No account, no sync, no network.`
+- H1: `Close 100 tabs.` / `Keep every one.`
+- Lede: `One click saves every tab in the window as a searchable list, then closes them. Search the list later and restore just the tabs you need. No account, no sync, no server, and no host permissions.`
 - Primary: `load unpacked`
 - Secondary: `$ read the source`
 - Note under CTA: `Chrome 120+ · works offline after install`
@@ -85,7 +85,7 @@ measured claim.
 ```text
 stow --window                                        demo
 tabs open                                              23
-stacks saved                                            4
+lists saved                                            4
 tabs closed                                            23
 network requests                                        0
 every tab written and read back before Chrome closes it
@@ -95,7 +95,7 @@ every tab written and read back before Chrome closes it
 
 - Bar: `library.html` / `the actual library`
 - Image: the real Library in the reader’s color scheme; mobile uses the 750×1000 capture.
-- Alt: `The Stow library: a dark console with three stacks named Docs, Design, and Build, each holding a list of saved tabs.`
+- Alt: `The Stow library: a dark console with three lists named Docs, Design, and Build, each holding a list of saved tabs.`
 
 ### Parts section
 
@@ -106,12 +106,12 @@ every tab written and read back before Chrome closes it
 Tiles:
 
 1. **stow** — `Save the whole window.`
-   `One keystroke turns every tab into stacks, sorted by the groups you already made. Pinned tabs stay open.`
+   `One keystroke turns every tab into a list, sorted by the groups you already made. Pinned tabs stay open.`
    Foot: `⌥⇧S stow window · ⌥⇧T stow tab`
 2. **quiet by default** — `0` / `network requests`
    `No account, sync, telemetry, or favicon service. The extension asks for no host permissions.`
 3. **find** — `Half a memory is enough.`
-   `Search titles, URLs, and stacks as you type. Typos are fine; domain: narrows it down.`
+   `Search titles, URLs, and lists as you type. Typos are fine; domain: narrows it down.`
    Foot: `⌘K from anywhere`
 4. **safe** — `Nothing closes until it’s saved.`
    `Every tab is written and read back first. Change your mind and Trash holds it for 30 days.`
@@ -120,7 +120,7 @@ Tiles:
    `Import OneTab, Markdown lists, bookmarks, or a Stow backup. Export the same library whenever you want.`
    Foot: `no lock-in`
 6. **groups** — `Your tab groups come with you.`
-   `Native names, colors, and pinned tabs survive the trip. Restore a stack into the shape it left in.`
+   `Native names, colors, and pinned tabs survive the trip. Restore a list into the shape it left in.`
    Foot: `Chrome tab groups · recreated on restore`
 7. **keyboard** — `Hands stay on the keys.`
    `Stow, search, restore, and rename without reaching for the mouse.`
@@ -135,7 +135,7 @@ Tiles:
 
 | Data | Lives in | Leaves device |
 | --- | --- | --- |
-| Tabs and stacks | IndexedDB, extension origin | No |
+| Tabs and lists | IndexedDB, extension origin | No |
 | Settings | IndexedDB + two localStorage mirrors | No |
 | Favicons | Chromium’s local `_favicon` cache | No |
 | Backups | Your Downloads folder, only if enabled | No |
@@ -308,7 +308,7 @@ No horizontal scroll at 320 px. Test at 320, 375, 640, 768, 1440.
 ## 10. SEO and social
 
 - Title: `Stow — close the tabs, keep the work`
-- Description: `A local-first tab shelf for Chrome. Stow a window into searchable stacks, close every tab, and restore it all later. No account, sync, or network.`
+- Description: `A local-first tab shelf for Chrome and Firefox. One click saves a window's tabs as a searchable list, then closes them. No account, no network, no tracking.`
 - Canonical: final production URL.
 - OG type `website`, OG image `1200×630`, Twitter `summary_large_image`.
 - `robots.txt` allows all; `sitemap.xml` contains one URL.
