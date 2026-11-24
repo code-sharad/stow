@@ -1,0 +1,4 @@
+ts	phase	decision	why	evidence	result
+2026-11-24T12:40:53Z	validate	Run declared repository tests and deployment checks	Prove the final metadata, scripts and publishing configuration before pushing	Declared pnpm test and pnpm e2e plus local/deployed pnpm check:landing; YAML parser for manual redirect	in progress
+2026-11-24T12:45:48Z	verify	Use the original self-contained preview server for remote checks	A guessed serve dependency was not installed; do not add a dependency or test-only headers to fix it	scripts/check-landing.mjs, pnpm check:landing	local checks green; remote pending
+2026-11-24T12:45:48Z	delivery	Keep the migration commit on a feature branch	main requires a pull request; preserve the protected main ref	GitHub branch protection, deploy-vercel-landing	PR pending

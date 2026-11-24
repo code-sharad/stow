@@ -1,0 +1,43 @@
+{
+  "status": "error",
+  "reason": "verification_failed",
+  "message": "https://stow-tabs.vercel.app returned 404.",
+  "deployment": {
+    "id": "dpl_GVZrNBtckRU2ENmMg49bwesjKExb",
+    "url": "https://stow-tabs-e14xqwal7-sharad-bhadaits-projects.vercel.app",
+    "productionUrl": "https://stow-tabs.vercel.app",
+    "inspectorUrl": "https://vercel.com/sharad-bhadaits-projects/stow-tabs/GVZrNBtckRU2ENmMg49bwesjKExb",
+    "readyState": "READY",
+    "target": "production",
+    "environment": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_GVZrNBtckRU2ENmMg49bwesjKExb",
+    "buildMachine": {
+      "cores": 2,
+      "memory": 8192,
+      "machine": "basic",
+      "selectionType": "fixed",
+      "selectionSource": "plan-default"
+    },
+    "deploymentProtection": [
+      "vercel_authentication"
+    ],
+    "verification": {
+      "url": "https://stow-tabs.vercel.app",
+      "ok": false,
+      "statusCode": 404,
+      "size": 107,
+      "title": null,
+      "error": null
+    }
+  },
+  "next": [
+    {
+      "command": "vercel curl https://stow-tabs.vercel.app",
+      "when": "See the full response"
+    },
+    {
+      "command": "vercel inspect stow-tabs-e14xqwal7-sharad-bhadaits-projects.vercel.app --logs --cwd landing",
+      "when": "read build logs"
+    }
+  ]
+}
