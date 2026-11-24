@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Rewrote the landing page copy to lead with the problem and the outcome instead of the demo's
+  mechanics: the H1 is now `Close every tab.` / `Keep every page.`, the lede opens on `Forty tabs
+  open, three you're actually using`, and a new three-cell benefits band (only the tabs you're
+  using / a lighter browser / nothing lost) sits between the hero demo and how-it-works. The
+  keyword title, meta description, and JSON-LD are unchanged. `scripts/check-landing.mjs` now
+  asserts the new H1.
 - Replaced the icon mark with the new master (`assets/icon.png`): a white, dark-outlined card
   holding the layered archive on a solid orange base, on a transparent surround. `pnpm icons` now
   trims the master to its ink and centres it in each square export, and it writes the two landing

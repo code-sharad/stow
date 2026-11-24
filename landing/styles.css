@@ -623,6 +623,46 @@ h1 {
   object-position: top left;
 }
 
+/* ---------- benefits ---------- */
+
+.section--tight {
+  padding-block: clamp(40px, 5vw, 56px);
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.benefit {
+  padding-right: 32px;
+}
+
+.benefit + .benefit {
+  padding-left: 32px;
+  border-left: 1px solid var(--border);
+}
+
+.benefit:last-child {
+  padding-right: 0;
+}
+
+.benefit dt {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.benefit dd {
+  max-width: 32ch;
+  margin: 7px 0 0;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 /* ---------- how it works ---------- */
 
 .steps {
@@ -1071,6 +1111,28 @@ h1 {
 
   .hero-shot {
     margin-top: 32px;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit {
+    padding: 20px 0;
+  }
+
+  .benefit + .benefit {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .benefit:first-child {
+    padding-top: 0;
+  }
+
+  .benefit:last-child {
+    padding-bottom: 0;
   }
 
   .section {

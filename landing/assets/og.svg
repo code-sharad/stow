@@ -11,8 +11,8 @@
   </g>
   <text x="1128" y="90" text-anchor="end" font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#8A8A8A" letter-spacing="2">V0.1.0 / LOCAL-ONLY</text>
 
-  <text x="72" y="232" font-family="Inter" font-size="78" font-weight="600" fill="#EEEEEE" letter-spacing="-4">Close the tabs.</text>
-  <text x="72" y="314" font-family="Inter" font-size="78" font-weight="600" fill="#A5A0B6" letter-spacing="-4">Keep the work.</text>
+  <text x="72" y="232" font-family="Inter" font-size="78" font-weight="600" fill="#EEEEEE" letter-spacing="-4">Close every tab.</text>
+  <text x="72" y="314" font-family="Inter" font-size="78" font-weight="600" fill="#A5A0B6" letter-spacing="-4">Keep every page.</text>
 
   <text x="72" y="376" font-family="Inter" font-size="24" fill="#B8B8B8">A local-first tab manager for Chrome.</text>
 

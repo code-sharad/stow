@@ -19,9 +19,11 @@ One page, one decision: add Stow from the browser's extension store.
 
 ```text
 header: stow · how it works · features · privacy · [Add to Chrome / Firefox]
-hero:   Fifteen tabs. / Three lists. One click.
+hero:   Close every tab. / Keep every page.
         centered copy · store CTA + view source · trust line · compatibility
         full-width live 18s hero demo (real UI, no video, no labels)
+benefits: three columns — only the tabs you're using / a lighter browser / nothing lost
+        (outcome strip between the demo and how-it-works)
 how:    three rows — Stow / Find / Restore, each with a real UI capture
         A calmer browser in three steps.
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
@@ -53,18 +55,37 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 
 - Kicker: `A local-first tab manager` — a centered square badge above the H1 (hero only; no
   dash; section eyebrows keep their left-aligned orange dash).
-- H1: `Fifteen tabs.` / `Three lists. One click.`
-- Lede: `Stow is a browser extension that turns a crowded window of tabs into grouped,
-  searchable lists — then restores any of them. Watch fifteen tabs become three lists, a search
-  find the Docs, and the tabs come back.`
-- Why the lede names the product: the H1 is a slogan, so the first sentence after it has to say
-  what Stow is in the words people search with (browser extension, tabs, lists).
+- Title tag: `Stow — a local-first Chrome tab manager` — the keyword title stays; the H1 carries
+  the promise. Do not put the slogan back in the title (the SEO audit explains why).
+- H1: `Close every tab.` / `Keep every page.` — the promise, not the demo, and concrete on both
+  halves: "every" removes the fear of losing a tab, "page" names what you keep. The lede says how.
+  Both lines are 16 characters, so the centered hero stays balanced.
+- Lede: `Forty tabs open, three you're actually using. Stow is a browser extension that saves the
+  whole window as one searchable list, closes the tabs, and restores any of them later — one page,
+  a selection, or all of them.`
+- Why the lede opens on the pain: the visitor arrives with too many tabs, not with curiosity about
+  a browser extension. Name the situation first, then the product category, then the mechanic,
+  then the restore. Keep `browser extension` in the sentence — it is the query language the
+  title cannot hold.
 - Layout: centered copy above the full-width demo; no right-column illustration and no labels
   around the animation.
 - Primary: `Add to Chrome` / `Add to Firefox`
 - Secondary: `View source ↗`
 - Trust line: `No account · No cloud · No tracking`
 - Compatibility: `Chrome 120+ · Firefox 140+ · Works offline`
+
+### Benefits strip
+
+- Sits directly after the hero demo, before `how it works`: three outcome cells in one bordered
+  band, no heading (a definition list, so it adds no h3 before the first h2).
+- Cells:
+  1. `Only the tabs you're using.` — the working window stops competing with the tabs saved for
+     later.
+  2. `A lighter browser.` — Stow closes the tab rather than hiding it, so saved pages stop using
+     memory.
+  3. `Nothing lost.` — every tab is saved with title, URL, and favicon before it closes.
+- Copy rule: benefits describe what changes for the person, features describe what the extension
+  does. Do not repeat the three steps here.
 
 ### Hero demo
 

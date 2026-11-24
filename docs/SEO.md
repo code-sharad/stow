@@ -36,7 +36,7 @@ Severity is about expected impact on organic search, not code tidiness. Everythi
 | --- | --- | --- |
 | The `<title>` carried no category or browser words (`Stow — Close the tabs. Keep the work.`), so it matched no query a searcher types. | Read from the live page; every ranking competitor puts category + browser in the title. | Title is now `Stow — a local-first Chrome tab manager` (39 chars). |
 | The description was a slogan with no query language. | Live `<meta name="description">`. | Rewritten to 155 chars naming the category, the job, and the local-first promise. |
-| The page never answered the questions it competes on: 721 words, no "save all tabs", no Chrome tab-group comparison, no import path for OneTab users. | Word and term counts over the rendered text. | New Questions section (`#questions`, six Q&As, 250 words) between features and privacy; hero lede now names the product ("a browser extension that turns a crowded window of tabs into grouped, searchable lists"). |
+| The page never answered the questions it competes on: 721 words, no "save all tabs", no Chrome tab-group comparison, no import path for OneTab users. | Word and term counts over the rendered text. | New Questions section (`#questions`, six Q&As, 250 words) between features and privacy; hero lede now names the product ("Stow is a browser extension that saves the whole window as one searchable list"). |
 | `demo.html` was served as a public, indexable HTML page (200, `text/html`), and `HERO-DEMO.md` as `text/markdown`. Both are dev artifacts. | `curl -I` on the live URLs. | `demo.html` is `noindex, follow`; `pages.yml` stages the artifact with `rsync --exclude demo.html --exclude HERO-DEMO.md`, so neither ships. |
 
 ### High — fixed
