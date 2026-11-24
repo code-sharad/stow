@@ -2,20 +2,21 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-const source = join(process.cwd(), 'assets/icon.png');
-if (!existsSync(source)) throw new Error(`Missing ${source}`);
-
 /**
- * The landing page uses a glossier render than the extension: a 3D archive box
- * photographed on a near-black backdrop. Key that backdrop out so the inline
- * header/footer marks and the favicon sit on the page instead of inside a dark
- * tile, then inset it slightly so it balances the wordmark next to it.
+ * One master for every surface: a glossy 3D archive box rendered against a
+ * near-black backdrop. It arrives photographed rather than cut out, so a plain
+ * downscale would carry a dark tile onto the page and into the toolbar. Key the
+ * backdrop out first, then inset the subject slightly so a mark this dense does
+ * not crowd the wordmark it sits next to.
+ *
+ * `assets/icon.png` is the retired flat master. It stays in the repository as
+ * the previous mark; nothing renders from it.
  */
-const glossySource = join(process.cwd(), 'assets/icon-glossy.png');
-if (!existsSync(glossySource)) throw new Error(`Missing ${glossySource}`);
+const master = join(process.cwd(), 'assets/icon-glossy.png');
+if (!existsSync(master)) throw new Error(`Missing ${master}`);
 
-const renderGlossy = (size: number, file: string) => {
-  const [width, height] = execFileSync('magick', [glossySource, '-format', '%w %h', 'info:'])
+const render = (size: number, file: string) => {
+  const [width, height] = execFileSync('magick', [master, '-format', '%w %h', 'info:'])
     .toString()
     .trim()
     .split(' ')
@@ -32,7 +33,7 @@ const renderGlossy = (size: number, file: string) => {
   ];
   const inset = Math.round(size * 0.96);
   execFileSync('magick', [
-    glossySource,
+    master,
     '-background',
     'black',
     '-alpha',
@@ -75,37 +76,11 @@ const renderGlossy = (size: number, file: string) => {
   console.log(`${file.slice(process.cwd().length + 1)}`);
 };
 
-/**
- * Trim the master to its ink, then centre it in a square. The master has
- * transparent rounded corners and a few pixels of slack on each side, so a
- * plain resize would leave a mark that drifts off-centre and shrinks at 16 px.
- */
-const render = (size: number, file: string) => {
-  execFileSync('magick', [
-    source,
-    '-trim',
-    '+repage',
-    '-filter',
-    'Lanczos',
-    '-resize',
-    `${size}x${size}`,
-    '-background',
-    'none',
-    '-gravity',
-    'center',
-    '-extent',
-    `${size}x${size}`,
-    '-strip',
-    file,
-  ]);
-  console.log(`${file.slice(process.cwd().length + 1)}`);
-};
-
 const out = join(process.cwd(), 'public/icon');
 mkdirSync(out, { recursive: true });
 for (const size of [16, 32, 48, 64, 128]) render(size, join(out, `${size}.png`));
 
 const landing = join(process.cwd(), 'landing/assets');
 mkdirSync(landing, { recursive: true });
-renderGlossy(128, join(landing, 'icon.png'));
-renderGlossy(32, join(landing, 'favicon.png'));
+render(128, join(landing, 'icon.png'));
+render(32, join(landing, 'favicon.png'));

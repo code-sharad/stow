@@ -195,8 +195,6 @@ ol {
   place-items: center;
   width: 28px;
   height: 28px;
-  border: 1px solid var(--border);
-  background: var(--sheet);
 }
 
 .brand-word {
