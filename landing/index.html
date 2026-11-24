@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" href="assets/icon.png" sizes="128x128" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css?v=10" />
-    <link rel="stylesheet" href="hero-demo.css?v=3" />
+    <link rel="stylesheet" href="hero-demo.css?v=4" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stow" />
@@ -133,7 +133,7 @@
       document.documentElement.classList.add('js');
       if (location.protocol === 'file:') document.documentElement.classList.add('is-file');
     </script>
-    <script type="module" src="hero-demo.js?v=2"></script>
+    <script type="module" src="hero-demo.js?v=4"></script>
     <script src="main.js?v=5" defer></script>
   </head>
   <body>
@@ -198,12 +198,12 @@
     <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy reveal">
-          <p class="eyebrow">A local-first tab manager</p>
+          <p class="eyebrow">Free · private tab manager</p>
           <h1 id="hero-title">Close every tab.<br />Keep every page.</h1>
           <p class="hero-lede">
             Forty tabs open, three you're actually using. Stow is a browser extension that saves
-            the whole window as one searchable list, closes the tabs, and restores any of them
-            later — one page, a selection, or all of them.
+            your whole window as one searchable list, closes the tabs, and brings back any page
+            when you need it.
           </p>
           <div class="hero-actions">
             <a
@@ -212,8 +212,8 @@
               href="https://chromewebstore.google.com/search/stow"
               >Add to Chrome</a
             >
-            <a class="btn btn-secondary" href="https://github.com/code-sharad/stow"
-              >View source <span aria-hidden="true">↗</span></a
+            <a class="btn btn-secondary" href="#how"
+              >See how it works <span aria-hidden="true">↓</span></a
             >
           </div>
           <p class="trust-line">
@@ -222,7 +222,8 @@
             <span>No tracking</span>
           </p>
           <p class="compat">
-            Chrome 120+ <span aria-hidden="true">·</span> Firefox 140+
+            Free <span aria-hidden="true">·</span> Open source
+            <span aria-hidden="true">·</span> Also on Firefox
             <span aria-hidden="true">·</span> Works offline
           </p>
         </div>
@@ -232,20 +233,20 @@
             class="hero-demo"
             data-stow-demo
             role="img"
-            aria-label="A browser with fifteen crowded tabs. The Stow icon saves the window into grouped lists, the library opens, a search finds two lists, and the Docs list restores into a clean browser."
+            aria-label="A browser with forty crowded tabs. The Stow icon collapses them into a clean window, the library opens on three lists, a search for flights finds two lists, and the Trip list restores into the tab strip."
           >
             <picture class="hero-demo__fallback">
               <source
                 media="(max-width: 639px) and (prefers-color-scheme: light)"
-                srcset="assets/library-mobile-light.webp"
+                srcset="assets/hero-mess-mobile-light.webp"
               />
-              <source media="(max-width: 639px)" srcset="assets/library-mobile-dark.webp" />
-              <source media="(prefers-color-scheme: light)" srcset="assets/library-light.webp" />
+              <source media="(max-width: 639px)" srcset="assets/hero-mess-mobile-dark.webp" />
+              <source media="(prefers-color-scheme: light)" srcset="assets/hero-mess-light.webp" />
               <img
-                src="assets/library-dark.webp"
+                src="assets/hero-mess-dark.webp"
                 width="1440"
-                height="900"
-                alt="Stow's library showing saved tabs grouped into three lists: Docs, Design, and Build."
+                height="810"
+                alt="A browser window with forty open tabs, and a caption: 40 tabs open, 3 you're using."
               />
             </picture>
             <p class="hero-demo__notice">
@@ -253,6 +254,7 @@
               <code>file://</code>.
             </p>
           </div>
+          <figcaption>Forty open tabs become three lists. One click, and nothing is lost.</figcaption>
         </figure>
       </section>
 
@@ -270,8 +272,8 @@
           <div class="benefit reveal">
             <dt>A lighter browser.</dt>
             <dd>
-              Stow closes the tab, not just hides it, so the pages you put away stop using
-              memory.
+              Stow closes the tab instead of hiding it, so the pages you put away free up your
+              computer's memory (RAM).
             </dd>
           </div>
           <div class="benefit reveal">
@@ -298,7 +300,6 @@
           <article class="step reveal">
             <p class="step-num" aria-hidden="true">01</p>
             <div class="step-copy">
-              <p class="step-kicker">Stow</p>
               <h3>Save every tab in the window.</h3>
               <p>
                 Every eligible tab is saved into Stow as one list, and the window closes. Pinned
@@ -306,14 +307,11 @@
               </p>
               <p class="step-shortcut">
                 <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> <span>save window</span>
+                <kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd> <span>save this tab</span>
               </p>
             </div>
             <figure class="step-media step-media--popup">
               <div class="step-frame">
-                <div class="shot-bar">
-                  <span>popup.html</span>
-                  <span class="shot-meta">quick capture</span>
-                </div>
                 <picture>
                   <source media="(prefers-color-scheme: light)" srcset="assets/popup-light.webp" />
                   <img
@@ -333,22 +331,17 @@
           <article class="step reveal">
             <p class="step-num" aria-hidden="true">02</p>
             <div class="step-copy">
-              <p class="step-kicker">Find</p>
               <h3>Find any tab you saved.</h3>
               <p>
                 All the tabs you save live in Stow, searchable by title, URL, domain, or list
                 name. The index stays in your browser, so results appear as you type.
               </p>
               <p class="step-shortcut">
-                <kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd> <span>search from anywhere</span>
+                <kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd> <span>open the library</span>
               </p>
             </div>
             <figure class="step-media step-media--search">
               <div class="step-frame">
-                <div class="shot-bar">
-                  <span>library.html</span>
-                  <span class="shot-meta">search results</span>
-                </div>
                 <picture>
                   <source
                     media="(max-width: 639px) and (prefers-color-scheme: light)"
@@ -376,22 +369,17 @@
           <article class="step reveal">
             <p class="step-num" aria-hidden="true">03</p>
             <div class="step-copy">
-              <p class="step-kicker">Restore</p>
               <h3>Bring back one tab, or the whole list.</h3>
               <p>
                 Restore a single tab, a selection, or an entire list to the current window or a
                 new one. Remove it from Stow afterward if you like.
               </p>
               <p class="step-shortcut">
-                <kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd> <span>open library</span>
+                <kbd>Enter</kbd> <span>restore the selected tab</span>
               </p>
             </div>
             <figure class="step-media step-media--restore">
               <div class="step-frame">
-                <div class="shot-bar">
-                  <span>library.html</span>
-                  <span class="shot-meta">restore selection</span>
-                </div>
                 <picture>
                   <source
                     media="(max-width: 639px) and (prefers-color-scheme: light)"
@@ -421,65 +409,54 @@
       <section class="section" id="features" aria-labelledby="features-title">
         <div class="section-head reveal">
           <p class="eyebrow">Features</p>
-          <h2 id="features-title">Everything you need to put tabs away—and find them again.</h2>
+          <h2 id="features-title">The parts you only miss once you rely on it.</h2>
           <p class="section-lede">
-            Six tools for the whole life of a tab in Chrome and Firefox: capture it, organize it,
-            search it, and put it back. All of it stays on your machine.
+            Saving, searching, and restoring are above. These are the six things that keep a
+            library trustworthy after the first week.
           </p>
         </div>
 
         <div class="feature-grid">
           <article class="feature reveal">
-            <p class="feature-label">Capture</p>
-            <h3>Save the whole window.</h3>
-            <p>
-              One shortcut saves every eligible tab as a list and closes the clutter. Pinned tabs
-              stay open.
-            </p>
-            <dl class="shortcut-list">
-              <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd></dt><dd>save window</dd></div>
-              <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd></dt><dd>save this tab</dd></div>
-            </dl>
-          </article>
-
-          <article class="feature reveal">
-            <p class="feature-label">Search</p>
-            <h3>Find it from half a memory.</h3>
-            <p>
-              Search titles, URLs, domains, and list names. No account, no server round trip, no
-              waiting.
-            </p>
-            <dl class="shortcut-list">
-              <div><dt><kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd></dt><dd>commands</dd></div>
-              <div><dt><kbd>/</kbd></dt><dd>focus search</dd></div>
-            </dl>
-          </article>
-
-          <article class="feature reveal">
             <p class="feature-label">Organize</p>
-            <h3>Keep related tabs together.</h3>
+            <h3>Shape a list around a project.</h3>
             <p>
-              Shape a list around a project, then keep it out of the way. Your structure survives
-              restarts and updates.
+              Rename it, pin it to the top, lock it so a restore won't empty it, or collapse it
+              and move on. Your structure survives restarts and updates.
             </p>
             <ul class="cap-list">
               <li>Rename, pin, lock, and collapse</li>
               <li>Reorder lists and move tabs between them</li>
-              <li>Dedupe saved tabs</li>
+              <li>Dedupe a list in one click</li>
             </ul>
           </article>
 
           <article class="feature reveal">
-            <p class="feature-label">Restore</p>
-            <h3>Pick up where you left off.</h3>
+            <p class="feature-label">Tab groups</p>
+            <h3>Keep Chrome's groups intact.</h3>
             <p>
-              Bring back one page, selected tabs, or a complete list. Choose the current window or
-              a fresh one.
+              If you already group tabs by project, Stow keeps each group as its own list and
+              recreates the groups when you restore. Turn it off to fold everything into one
+              list.
             </p>
             <ul class="cap-list">
-              <li>Restore one tab or a selection</li>
-              <li>Restore a whole list</li>
-              <li>Copy links anywhere</li>
+              <li>One group, one list</li>
+              <li>Groups come back on restore</li>
+              <li>Optional, and off is fine too</li>
+            </ul>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Undo</p>
+            <h3>Nothing is deleted on the first click.</h3>
+            <p>
+              Closing a tab in the library moves it to Trash, not out of existence. Every action
+              is also reversible from the undo control.
+            </p>
+            <ul class="cap-list">
+              <li>Deleted tabs wait in Trash</li>
+              <li>Keep Trash for 7, 30, or 90 days</li>
+              <li>Restore it, or empty it on purpose</li>
             </ul>
           </article>
 
@@ -487,14 +464,28 @@
             <p class="feature-label">Import / export</p>
             <h3>Bring your existing tabs with you.</h3>
             <p>
-              Import a OneTab list, bookmarks HTML, or Markdown, or export everything as a JSON
-              backup whenever you want a copy you own.
+              Import a OneTab list, bookmarks HTML, or Markdown. Export everything as a JSON file
+              whenever you want a copy you own.
             </p>
             <ul class="format-list" aria-label="Supported import formats">
               <li>OneTab</li>
               <li>Markdown</li>
               <li>Bookmarks HTML</li>
               <li>Stow JSON</li>
+            </ul>
+          </article>
+
+          <article class="feature reveal">
+            <p class="feature-label">Exceptions</p>
+            <h3>Some tabs should never move.</h3>
+            <p>
+              Name the sites Stow must leave alone, keep pinned tabs where they are, and decide
+              whether private windows count.
+            </p>
+            <ul class="cap-list">
+              <li>Never stow these sites</li>
+              <li>Leave pinned tabs open</li>
+              <li>Include private windows only if you ask</li>
             </ul>
           </article>
 
@@ -507,7 +498,9 @@
             </p>
             <dl class="shortcut-list">
               <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd></dt><dd>open library</dd></div>
-              <div><dt><kbd>Esc</kbd></dt><dd>clear search or selection</dd></div>
+              <div><dt><kbd>Ctrl</kbd>/<kbd>Cmd</kbd><kbd>K</kbd></dt><dd>commands</dd></div>
+              <div><dt><kbd>/</kbd></dt><dd>focus search</dd></div>
+              <div><dt><kbd>Enter</kbd></dt><dd>restore selected</dd></div>
             </dl>
           </article>
         </div>
@@ -577,7 +570,7 @@
           <h2 id="privacy-title">Your tabs stay on your device.</h2>
           <p class="section-lede">
             Stow keeps your library inside your browser. There is no Stow account, no cloud
-            sync, and no analytics. The ledger below is the whole story.
+            sync, and no analytics. The table of what it stores is the whole story.
           </p>
         </div>
 
@@ -605,6 +598,14 @@
               <p>
                 No analytics, no telemetry. The extension contains no network code, so there is
                 nothing to send.
+              </p>
+            </article>
+            <article class="privacy-promise">
+              <span class="privacy-promise__index" aria-hidden="true">04</span>
+              <h3>One device at a time.</h3>
+              <p>
+                Stow does not sync between devices, and that is the price of keeping everything
+                local. Moving to another computer? Export a JSON backup and import it there.
               </p>
             </article>
           </div>
@@ -654,6 +655,28 @@
           </div>
         </div>
       </section>
+      <section class="section section--tight closing" aria-labelledby="closing-title">
+        <div class="closing-inner reveal">
+          <h2 id="closing-title">Start with the window you have open.</h2>
+          <p>
+            Install Stow, save the window, and the tabs come back whenever you want them. Free,
+            open source, and it works offline.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              data-store-link
+              href="https://chromewebstore.google.com/search/stow"
+              >Add to Chrome</a
+            >
+          </div>
+          <p class="trust-line">
+            <span>No account</span><span class="dot" aria-hidden="true">·</span>
+            <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
+            <span>No tracking</span>
+          </p>
+        </div>
+      </section>
     </main>
 
     <footer class="site-foot">
@@ -664,7 +687,7 @@
           /></span>
           <span class="brand-word">stow</span>
         </a>
-        <p class="foot-tagline">local-first tab manager</p>
+        <p class="foot-tagline">free, private tab manager</p>
         <nav class="foot-nav" aria-label="Project">
           <a href="https://github.com/code-sharad/stow">source</a>
           <a href="#questions">questions</a>

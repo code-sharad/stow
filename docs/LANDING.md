@@ -21,7 +21,7 @@ One page, one decision: add Stow from the browser's extension store.
 header: stow · how it works · features · privacy · [Add to Chrome / Firefox]
 hero:   Close every tab. / Keep every page.
         centered copy · store CTA + view source · trust line · compatibility
-        full-width live 18s hero demo (real UI, no video, no labels)
+        full-width live 12s hero demo (real UI, no video, one caption)
 benefits: three columns — only the tabs you're using / a lighter browser / nothing lost
         (outcome strip between the demo and how-it-works)
 how:    three rows — Stow / Find / Restore, each with a real UI capture
@@ -53,16 +53,19 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 
 ### Hero
 
-- Kicker: `A local-first tab manager` — a centered square badge above the H1 (hero only; no
-  dash; section eyebrows keep their left-aligned orange dash).
+- Kicker: `Free · private tab manager` — a centered badge above the H1 (hero only; no dash;
+  section eyebrows keep their left-aligned orange dash). It replaced `A local-first tab manager`
+  because "local-first" is developer vocabulary and the two facts a visitor actually wants are
+  that it costs nothing and that it stays private.
 - Title tag: `Stow — a local-first Chrome tab manager` — the keyword title stays; the H1 carries
   the promise. Do not put the slogan back in the title (the SEO audit explains why).
 - H1: `Close every tab.` / `Keep every page.` — the promise, not the demo, and concrete on both
   halves: "every" removes the fear of losing a tab, "page" names what you keep. The lede says how.
   Both lines are 16 characters, so the centered hero stays balanced.
-- Lede: `Forty tabs open, three you're actually using. Stow is a browser extension that saves the
-  whole window as one searchable list, closes the tabs, and restores any of them later — one page,
-  a selection, or all of them.`
+- Lede: `Forty tabs open, three you're actually using. Stow is a browser extension that saves
+  your whole window as one searchable list, closes the tabs, and brings back any page when you
+  need it.` — it stops at the promise. `one page, a selection, or all of them` was cut because
+  step 03 says it again two screens down.
 - Why the lede opens on the pain: the visitor arrives with too many tabs, not with curiosity about
   a browser extension. Name the situation first, then the product category, then the mechanic,
   then the restore. Keep `browser extension` in the sentence — it is the query language the
@@ -70,9 +73,15 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 - Layout: centered copy above the full-width demo; no right-column illustration and no labels
   around the animation.
 - Primary: `Add to Chrome` / `Add to Firefox`
-- Secondary: `View source ↗`
+- Secondary: `See how it works ↓` — links to `#how`. It used to be `View source ↗`, which competed
+  with the install button for a decision nobody makes on a landing page; the source link lives in
+  the footer nav instead.
 - Trust line: `No account · No cloud · No tracking`
-- Compatibility: `Chrome 120+ · Firefox 140+ · Works offline`
+- Compatibility: `Free · Open source · Also on Firefox · Works offline` — the version numbers moved
+  out of the small print (the FAQ still states `Chrome 120+` and `Firefox 140+`), because a Firefox
+  visitor reading a button that says "Add to Chrome" needs to know the extension is for them, and
+  `Also on Firefox` is the shortest way to say it. `main.js` also rewrites the button label to
+  `Add to Firefox` when it detects Firefox.
 
 ### Benefits strip
 
@@ -89,21 +98,34 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 
 ### Hero demo
 
-- Files: `landing/hero-demo.js`, `landing/hero-demo.css`, `landing/demo.html`; usage and timing
-  knobs are in `landing/HERO-DEMO.md`.
+- Files: `landing/hero-demo.js`, `landing/hero-demo.css`, `landing/demo.html`,
+  `scripts/capture-hero-poster.mjs`; usage and timing knobs are in `landing/HERO-DEMO.md`.
 - Stage: 1280×720. At desktop it is 16:9; at ≤1024px it becomes a 4:5 host with a 440×550 camera
   crop that follows the action. The library keeps the real grid: rail 220px, topbar 60px, status
   26px, reading text x=346 through x=1154, stack heads 34px, rows 30px.
-- Story: fifteen crowded tabs → Stow toolbar click (the default stows the whole window, no popup) →
-  the library auto-opens → `indexeddb` search → `2 matches in 2 lists` → Docs `Restore all` →
-  `Restored 5 tabs.` → the restored Docs tab → clean browser. A duplicate opening frame crossfades
-  in at 16.9–17.75s, so the 18/0 seam is effectively pixel-identical.
-- Presentation: no shot bar or caption. The copy above carries the explanation and the animation
-  is the whole visual; the figure keeps its thin border.
-- No-JS and first paint use the real library screenshot fallback; the module replaces it and pauses
-  offscreen. On `file://`, Chrome blocks the module, so the inline `.is-file` class keeps the fallback
-  visible and adds a “serve over HTTP” note. Reduced motion renders the static payoff at 13.6s. The
-  host is a labelled `role="img"`; the stage is `aria-hidden` and contains no focusable controls.
+- Story (`12s`, forwards — mess first, payoff last): forty crowded favicon tabs while the camera
+  pushes in and the counter climbs → Stow toolbar click (the default stows the whole window, no
+  popup) → the tabs drain into the icon, the counter falls to 0, `Stowed 40 tabs · 3 lists` → hard
+  cut into the library, lists reveal → `flights` search → `2 matches in 2 lists` → Trip
+  `Restore all` → `Restored 11 tabs · Trip` → the opening frame fades back in at 11–11.8s so the
+  12/0 seam is effectively pixel-identical.
+- Story order is a rule, not a preference: a visitor must recognise their own mess before seeing a
+  library, so the demo never opens on the library, a search, or a restore.
+- Presentation: no shot bar, no per-beat cards. A stage HUD carries the whole narration — a tab
+  counter that climbs 12 → 24 → 40 then drops to 0, and one caption per beat (`40 tabs open. 3
+  you're using.`, `One click. Clean window.`, `Nothing lost.`, `Find anything.`, `Pick up where you
+  left off.`). The HUD is 19px at the 1120px figure and 13px on the mobile crop, and fades out at
+  10.6–10.85s for the seam. The figure still carries one plain caption
+  (`Forty open tabs become three lists. One click, and nothing is lost.`) for anyone who reads the
+  page instead of watching it.
+- Content is everyday, not developer: a Google Flights result page for Lisbon and Chrome's own
+  new-tab page stand in for the old Chrome-extensions docs, and the three lists are Trip, Work, and
+  Shopping. No fake extension URL, no `indexeddb` query, no Chrome Web Store screenshots.
+- No-JS and first paint use the demo's own opening frame (`assets/hero-mess-*.webp`, captured at
+  1.6s by `scripts/capture-hero-poster.mjs`); the module replaces it and pauses offscreen. On
+  `file://`, Chrome blocks the module, so the inline `.is-file` class keeps the poster visible and
+  adds a “serve over HTTP” note. Reduced motion renders the still at 1.6s. The host is a labelled
+  `role="img"`; the stage is `aria-hidden` and contains no focusable controls.
 - This is a scripted reconstruction from the real components and tokens, not a capture. It must
   stay in sync with them; do not add UI Stow does not have.
 
@@ -114,45 +136,61 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 - Lede: `Stow saves every tab in the window as one list you can search. Find any of them later,
   then restore one tab or the whole list.`
 
-1. **Stow** — `Save every tab in the window.`
+The three steps carry no kicker any more (`Stow` / `Find` / `Restore` repeated the heading right
+below it), and no shot bar above the screenshot (`popup.html`, `library.html`, `quick capture` were
+developer decoration about the mock, not about the product).
+
+1. `Save every tab in the window.`
    `Every eligible tab is saved into Stow as one list, and the window closes. Pinned tabs stay
-   exactly where you put them.` · `Alt Shift S — save window`
-2. **Find** — `Find any tab you saved.`
+   exactly where you put them.` · `Alt Shift S — save window`, `Alt Shift T — save this tab`
+2. `Find any tab you saved.`
    `All the tabs you save live in Stow, searchable by title, URL, domain, or list name. The index
-   stays in your browser, so results appear as you type.` · `Ctrl/Cmd K — search from anywhere`
-3. **Restore** — `Bring back one tab, or the whole list.`
+   stays in your browser, so results appear as you type.` · `Alt Shift L — open the library`
+3. `Bring back one tab, or the whole list.`
    `Restore a single tab, a selection, or an entire list to the current window or a new one. Remove
-   it from Stow afterward if you like.` · `Alt Shift L — open library`
+   it from Stow afterward if you like.` · `Enter — restore the selected tab`
+
+Shortcut accuracy matters here: step 03 used to print `Alt Shift L` beside Restore, but that
+shortcut opens the library and restores nothing. Step 02 now owns `Alt Shift L`, and step 03 shows
+the key that actually restores (`Enter`, from `src/ui/components/StackList.tsx:267`).
 
 ### Features
 
 - Eyebrow: `Features`
-- H2: `Everything you need to put tabs away—and find them again.`
-- Lede: `A small set of tools for the whole life of a tab in Chrome and Firefox: capture it,
-  organize it, search it, and put it back.`
+- H2: `The parts you only miss once you rely on it.`
+- Lede: `Saving, searching, and restoring are above. These are the six things that keep a library
+  trustworthy after the first week.`
+- Why: the grid used to be six cards whose first three were Capture / Search / Restore — the same
+  three steps as the section above them, in the same order. Three cards now cover what the steps
+  cannot: organizing, Chrome tab groups, undo, import/export, exceptions, keyboard. The six keep
+  the grid full without repeating the story.
 
 | Label | H3 | Body |
 | --- | --- | --- |
-| Capture | Save the whole window. | One shortcut saves every eligible tab as a list and closes the clutter. Pinned tabs stay open. |
-| Search | Find it from half a memory. | Search titles, URLs, domains, and list names. No account, no server round trip, no waiting. |
-| Organize | Keep related tabs together. | Shape a list around a project, then keep it out of the way. Your structure survives restarts and updates. |
-| Restore | Pick up where you left off. | Bring back one page, selected tabs, or a complete list. Choose the current window or a fresh one. |
-| Import / export | Bring your existing tabs with you. | Import a OneTab list, bookmarks HTML, or Markdown, or export everything as a JSON backup whenever you want a copy you own. |
+| Organize | Shape a list around a project. | Rename it, pin it to the top, lock it so a restore won't empty it, or collapse it and move on. Your structure survives restarts and updates. |
+| Tab groups | Keep Chrome's groups intact. | If you already group tabs by project, Stow keeps each group as its own list and recreates the groups when you restore. Turn it off to fold everything into one list. |
+| Undo | Nothing is deleted on the first click. | Closing a tab in the library moves it to Trash, not out of existence. Every action is also reversible from the undo control. |
+| Import / export | Bring your existing tabs with you. | Import a OneTab list, bookmarks HTML, or Markdown. Export everything as a JSON file whenever you want a copy you own. |
+| Exceptions | Some tabs should never move. | Name the sites Stow must leave alone, keep pinned tabs where they are, and decide whether private windows count. |
 | Keyboard | Keep your hands on the keys. | The library is built to be driven from the keyboard, from the first capture to the final restore. |
 
-Shortcut rows: `Alt Shift S` save window, `Alt Shift T` save this tab, `Ctrl/Cmd K` commands,
-`/` focus search, `Alt Shift L` open library, `Esc` clear search or selection.
+Shortcut rows: `Alt Shift L` open library, `Ctrl/Cmd K` commands, `/` focus search, `Enter`
+restore selected.
 
 Organize capabilities: rename, pin, lock, and collapse; reorder lists and move tabs between them;
-dedupe saved tabs.
-Restore capabilities: restore one tab or a selection; restore a whole list; copy links.
+dedupe a list.
+Tab groups: `preserveBrowserGroups` (one group, one list) and `restoreGroups` (recreate them on
+restore), both default on — `src/core/settings/schema.ts:8,15`.
+Undo: soft delete to Trash plus `undo(opId)` (`src/core/db/repo.ts:346,416`); retention is 7, 30, or
+90 days, or off.
+Exceptions: `ignoredSites`, `ignorePinnedTabs`, `stowIncognito` (`src/core/settings/schema.ts`).
 Import formats: OneTab, Markdown, Bookmarks HTML, Stow JSON.
 
 ### Questions
 
 - Eyebrow: `Questions`
-- H2: `Questions, answered.`
-- Lede: `Short answers to what people ask before they move forty tabs into Stow.`
+- H2: `Before you move your tabs.`
+- Lede: `What people ask before trusting an extension with a full window of open pages.`
 - Shape: `<div class="faq">` with `<div class="faq-item"><h3>` / `<p>` rows; one column below
   768px, a 34%/1fr grid above it. Headings, not `<dl>`, because a `<dt>` may not contain heading
   content and these questions need to sit in the document outline.
@@ -175,14 +213,21 @@ fails if the question sets drift apart.
 - Eyebrow: `Privacy`
 - H2: `Your tabs stay on your device.`
 - Lede: `Stow keeps your library inside your browser. There is no Stow account, no cloud sync,
-  and no analytics. The ledger below is the whole story.`
+  and no analytics. The table of what it stores is the whole story.` — "the ledger below" was
+  wrong as well as jargon: on desktop the table sits to the *right* of the promises, not below.
 - Promises: `No account.` — `There is nothing to sign up for. Install Stow, save a window, and
   your library is there.`; `No cloud.` — `Lists live in your browser's own storage, not on a
   Stow server. Backups are files you choose to export.`; `No tracking.` — `No analytics, no
   telemetry. The extension contains no network code, so there is nothing to send.`
+- Tradeoff: `One device at a time.` — `Stow does not sync between devices, and that is the price
+  of keeping everything local. Moving to another computer? Export a JSON backup and import it
+  there.` This is the fourth promise and the answer to the question the other three raise. Saying
+  "no cloud" without saying "so no sync, and here is your workaround" makes the visitor ask it
+  themselves and assume the worst. Says nothing the FAQ (`Does Stow sync my tabs to another
+  device?`) contradicts.
 - Ledger: `local only` · `Nothing in this table leaves your browser.`
 - Footnote: `Uninstalling Stow removes its library. Export a JSON backup first if you want a copy.`
-- No screenshot: the three promises and the ledger carry the section.
+- No screenshot: the four promises and the table carry the section.
 
 | Data | Where it is stored | Sent to Stow servers |
 | --- | --- | --- |
@@ -191,22 +236,36 @@ fails if the question sets drift apart.
 | Optional backup files | A download location you choose | No |
 | Favicons | Your browser's local favicon cache | No |
 
-### Footer
+#### Closing call to action
 
-`stow` · `local-first tab manager` · `source` · `questions` · `privacy` · `changelog` · `v0.1.0 · © 2026 Stow`
+- Section after privacy, before the footer: `.section.section--tight.closing`.
+- H2: `Start with the window you have open.`
+- Body: `Install Stow, save the window, and the tabs come back whenever you want them. Free, open
+  source, and it works offline.`
+- One button (`data-store-link`, so Firefox gets its own label), then the trust line again.
+- Why it exists: the review's last note was that a hesitant visitor reaching the bottom of the
+  page had no button and no reason to scroll back up. It repeats the hero's promise and nothing
+  else — no new claims.
+
+## Footer
+
+`stow` · `free, private tab manager` · `source` · `questions` · `privacy` · `changelog` · `v0.1.0 · © 2026 Stow`
 
 ## Screenshots
 
 The Library, popup, search, and restore images are current-build captures, not
 reconstructions. They are stored in `landing/assets/` as WebP with explicit `width`/`height`
-attributes. The hero demo is a scripted reconstruction from the same components and tokens; the
-library images serve as its no-JS fallback. The step images remain current-build captures. The
-former privacy WebPs are no longer used by the page.
+attributes. The hero demo is a scripted reconstruction from the same components and tokens, so its
+poster is captured from the demo itself (`scripts/capture-hero-poster.mjs`) rather than from the
+extension; the library captures still lead the README and fill the JSON-LD `screenshot`. The step
+images remain current-build captures. The former privacy WebPs are no longer used by the page.
 
 | File | Size | Shows | Used in |
 | --- | --- | --- | --- |
-| `library-dark.webp`, `library-light.webp` | 1440×900 | Library with Docs, Design, Build | Hero demo, no-JS fallback (desktop) |
-| `library-mobile-dark.webp`, `library-mobile-light.webp` | 390×844 | Library mobile crop | Hero demo, no-JS fallback (≤639px) |
+| `hero-mess-dark.webp`, `hero-mess-light.webp` | 1440×810 | Demo opening frame at 1.6s: forty tabs, counter at 40, first caption | Hero demo poster, no-JS fallback (desktop) |
+| `hero-mess-mobile-dark.webp`, `hero-mess-mobile-light.webp` | 480×600 | The same frame on the 4:5 mobile crop | Hero demo poster, no-JS fallback (≤639px) |
+| `library-dark.webp`, `library-light.webp` | 1440×900 | Library with Docs, Design, Build | README lead image, JSON-LD `screenshot` |
+| `library-mobile-dark.webp`, `library-mobile-light.webp` | 390×844 | Library mobile crop | Asset checks only |
 | `popup-dark.webp`, `popup-light.webp` | 360×274 | Quick capture popup | Step 01 |
 | `search-step-dark.webp`, `search-step-light.webp` | 720×520 | Search `web`, 4 matches in 2 lists | Step 02, desktop |
 | `search-mobile-dark.webp`, `search-mobile-light.webp` | 390×844 | Search mobile crop | Step 02, ≤639px |
@@ -256,6 +315,10 @@ sync with them. The step images remain real captures.
   uploaded artifact, so neither is served from the live site.
 - No analytics, cookies, third-party embeds, or network calls after load.
 - Header is 56px desktop / 52px mobile and sticky. Content is capped at 1120px with 32/20px gutters.
+- Secondary text contrast: `--ink-3` was raised from `#8a8a8a` to `#9b9b9b` on dark and from
+  `#5c5851` to `#55514b` on light, because the 9-11px mono labels, shortcut rows, and capability
+  lists were the dimmest text on the page and the review called them unreadable on black. Steps
+  and figures use `--ink-2` for captions now, not `--ink-3`.
 - Hero, step, feature, and privacy layouts collapse at 1023, 767, and 639px. The hero demo
   switches to its 4:5 camera at 1024px (the site's compact breakpoint), max 480px wide. The privacy
   grid becomes one column at 1023px; the ledger table becomes labelled rows below 640px.

@@ -196,13 +196,13 @@
       }
     </style>
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
-    <link rel="stylesheet" href="hero-demo.css?v=3" />
+    <link rel="stylesheet" href="hero-demo.css?v=4" />
   </head>
   <body class="js">
     <div class="wrap">
       <header class="demo-head">
         <h1>Stow hero demo</h1>
-        <p>18s loop · 1280×720 stage · vanilla ES module</p>
+        <p>12s loop · 1280×720 stage · vanilla ES module</p>
       </header>
 
       <div class="stage-wrap">
@@ -212,7 +212,7 @@
           data-stow-demo
           data-manual
           role="img"
-          aria-label="A browser with fifteen crowded tabs. The Stow icon saves the window into grouped lists, the library opens, a search finds two lists, and the Docs list restores into a clean browser."
+          aria-label="A browser with forty crowded tabs. The Stow icon collapses them into a clean window, the library opens on three lists, a search for flights finds two lists, and the Trip list restores into the tab strip."
         ></div>
       </div>
 
@@ -239,27 +239,27 @@
             id="seek"
             type="range"
             min="0"
-            max="18"
+            max="12"
             step="0.001"
             value="0"
             aria-label="Timeline position"
           />
-          <span class="time" id="time">0.00 / 18.00</span>
+          <span class="time" id="time">0.00 / 12.00</span>
         </div>
 
         <div class="controls-row">
           <span class="label">Beats</span>
-          <button class="beat" data-at="0.4" type="button">0.4 open</button>
-          <button class="beat" data-at="2.5" type="button">2.5 hover</button>
-          <button class="beat" data-at="3.2" type="button">3.2 stow</button>
-          <button class="beat" data-at="4.8" type="button">4.8 library</button>
-          <button class="beat" data-at="7.8" type="button">7.8 search</button>
-          <button class="beat" data-at="8.85" type="button">8.85 results</button>
-          <button class="beat" data-at="9.95" type="button">9.95 restore</button>
+          <button class="beat" data-at="0.6" type="button">0.6 mess</button>
+          <button class="beat" data-at="1.6" type="button">1.6 zoom</button>
+          <button class="beat" data-at="2.9" type="button">2.9 click</button>
+          <button class="beat" data-at="3.5" type="button">3.5 stow</button>
+          <button class="beat" data-at="4.4" type="button">4.4 clean</button>
+          <button class="beat" data-at="5.6" type="button">5.6 library</button>
+          <button class="beat" data-at="7.4" type="button">7.4 search</button>
+          <button class="beat" data-at="8.3" type="button">8.3 results</button>
+          <button class="beat" data-at="9.7" type="button">9.7 restore</button>
           <button class="beat" data-at="10.4" type="button">10.4 tabs in</button>
-          <button class="beat" data-at="12.08" type="button">12.08 switch</button>
-          <button class="beat" data-at="15.5" type="button">15.5 payoff</button>
-          <button class="beat" data-at="17.5" type="button">17.5 loop</button>
+          <button class="beat" data-at="11.6" type="button">11.6 payoff</button>
         </div>
 
         <div class="controls-row">
@@ -276,13 +276,13 @@
 
         <p class="note" id="note">
           <strong>Test hooks:</strong> window.__demo (play/pause/seek/setSpeed/setTheme/destroy) ·
-          add <code>#t=8.8</code> to open on a frame · screenshot the stage or the page.
+          add <code>#t=7.4</code> to open on a frame · screenshot the stage or the page.
         </p>
       </section>
     </div>
 
     <script type="module">
-      import { mountStowDemo } from './hero-demo.js?v=2';
+      import { mountStowDemo } from './hero-demo.js?v=4';
 
       const host = document.getElementById('stage');
       const seek = document.getElementById('seek');
@@ -306,6 +306,10 @@
       });
       window.__demo = demo;
 
+      const total = demo.duration;
+      seek.max = String(total);
+      const clock = (t) => `${t.toFixed(2)} / ${total.toFixed(2)}`;
+
       const setPlayingLabel = () => {
         toggle.textContent = demo.isPlaying?.() ? 'Pause' : 'Play';
       };
@@ -319,7 +323,7 @@
       const update = () => {
         const t = demo.getTime();
         if (!dragging && document.activeElement !== seek) seek.value = String(t);
-        time.textContent = `${t.toFixed(2)} / 18.00`;
+        time.textContent = clock(t);
       };
       setInterval(update, 80);
       update();

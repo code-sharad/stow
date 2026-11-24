@@ -15,8 +15,8 @@
   --border-strong: #47434a;
   --ink: #eeeeee;
   --ink-2: #b8b8b8;
-  --ink-3: #8a8a8a;
-  --accent: #a5a0b6;
+  --ink-3: #9b9b9b;
+  --accent: #b3aec4;
   --accent-wash: rgb(165 160 182 / 12%);
   --grp-orange: #e0a06a;
   --cta-bg: var(--grp-orange);
@@ -43,8 +43,8 @@
     --border-strong: #b4ada0;
     --ink: #1e1d1b;
     --ink-2: #46433e;
-    --ink-3: #5c5851;
-    --accent: #5b566e;
+    --ink-3: #55514b;
+    --accent: #524d64;
     --accent-wash: rgb(91 86 110 / 10%);
     --grp-orange: #a15c25;
     --cta-hover: color-mix(in srgb, var(--grp-orange) 86%, black);
@@ -277,7 +277,7 @@ ol {
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--ink-2);
-  font: 500 9px/1 var(--font-mono);
+  font: 500 10px/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
@@ -597,25 +597,6 @@ h1 {
   background: var(--sheet);
 }
 
-.shot-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 32px;
-  padding: 0 12px;
-  border-bottom: 1px solid var(--border);
-  color: var(--ink-3);
-  font: 9px/1.5 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-}
-
-.shot-meta {
-  color: var(--ink-3);
-  text-align: right;
-}
-
 .hero-shot img {
   width: 100%;
   aspect-ratio: 1440 / 900;
@@ -671,8 +652,8 @@ h1 {
 
 .step {
   display: grid;
-  grid-template-columns: 52px minmax(0, 0.82fr) minmax(0, 1.18fr);
-  gap: 34px;
+  grid-template-columns: 44px minmax(0, 420px) minmax(0, 1fr);
+  gap: 28px;
   align-items: center;
   padding: 38px 0;
   border-bottom: 1px solid var(--border);
@@ -686,21 +667,14 @@ h1 {
   letter-spacing: 0.1em;
 }
 
-.step-kicker {
-  color: var(--ink-3);
-  font: 500 10px/1.4 var(--font-mono);
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
 .step-copy h3 {
-  margin: 7px 0 10px;
+  margin: 0 0 10px;
   font-size: clamp(24px, 2.4vw, 31px);
   line-height: 1.12;
   letter-spacing: -0.035em;
 }
 
-.step-copy > p:not(.step-kicker, .step-shortcut) {
+.step-copy > p:not(.step-shortcut) {
   max-width: 430px;
   color: var(--ink-2);
   font-size: 15px;
@@ -738,7 +712,7 @@ h1 {
 }
 
 .step-media--popup {
-  justify-self: end;
+  justify-self: center;
   width: 100%;
   max-width: 362px;
 }
@@ -751,10 +725,11 @@ h1 {
   aspect-ratio: 360 / 274;
 }
 
-.step-media figcaption {
-  padding-top: 8px;
-  color: var(--ink-3);
-  font: 9px/1.55 var(--font-mono);
+.step-media figcaption,
+.hero-shot figcaption {
+  padding-top: 10px;
+  color: var(--ink-2);
+  font: 11px/1.55 var(--font-ui);
 }
 
 /* ---------- features ---------- */
@@ -782,8 +757,8 @@ h1 {
 }
 
 .feature-label {
-  color: var(--ink-3);
-  font: 500 9px/1.4 var(--font-mono);
+  color: var(--ink-2);
+  font: 500 10px/1.4 var(--font-mono);
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -820,8 +795,8 @@ h1 {
 }
 
 .shortcut-list dd {
-  color: var(--ink-3);
-  font: 9px var(--font-mono);
+  color: var(--ink-2);
+  font: 10px var(--font-mono);
   text-align: right;
 }
 
@@ -840,8 +815,8 @@ h1 {
 .cap-list li {
   display: flex;
   gap: 8px;
-  color: var(--ink-3);
-  font: 10px/1.5 var(--font-mono);
+  color: var(--ink-2);
+  font: 11px/1.5 var(--font-mono);
 }
 
 .cap-list li::before {
@@ -859,7 +834,7 @@ h1 {
   padding: 3px 6px;
   border: 1px solid var(--border);
   color: var(--ink-2);
-  font: 9px/1.4 var(--font-mono);
+  font: 10px/1.4 var(--font-mono);
   letter-spacing: 0.02em;
 }
 
@@ -1005,6 +980,36 @@ h1 {
   font: 10px/1.65 var(--font-mono);
 }
 
+/* ---------- closing cta ---------- */
+
+.closing {
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.closing-inner {
+  max-width: 620px;
+  margin-inline: auto;
+}
+
+.closing h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3.2vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.closing p {
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.closing .hero-actions {
+  margin: 22px 0 16px;
+}
+
 /* ---------- footer ---------- */
 
 .site-foot {
@@ -1033,7 +1038,7 @@ h1 {
 
 .foot-tagline {
   color: var(--ink-3);
-  font: 9px var(--font-mono);
+  font: 10px var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1056,7 +1061,7 @@ h1 {
 
 .foot-meta {
   color: var(--ink-3);
-  font: 9px var(--font-mono);
+  font: 10px var(--font-mono);
 }
 
 /* ---------- responsive ---------- */

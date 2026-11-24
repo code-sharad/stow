@@ -4,12 +4,46 @@
 
 ### Changed
 
+- Rebuilt the hero demo to the animation review's storyboard. It now runs 12s instead of 18s and
+  tells the story forwards: forty crowded tabs while the camera pushes into the strip and a counter
+  climbs 12 → 24 → 40, one click on the Stow icon, the tabs draining into it and the counter falling
+  to 0 (`Stowed 40 tabs · 3 lists`), a hard cut into the library, `flights` finding two matches in
+  two lists, and Trip `Restore all` putting eleven tabs back. Roughly half the old loop was static;
+  every beat now moves, and the opening frame reappears at 11–11.8s for a clean seam. A stage HUD
+  carries the narration (counter plus one caption per beat) so the demo reads at half size, where
+  the old 11.5px tab titles were illegible. The content is everyday — a Google Flights result page
+  and Chrome's new-tab page replace the Chrome-extensions docs, the lists are Trip, Work, and
+  Shopping, and the fake `chrome-extension://` URL and `indexeddb` query are gone. Type and contrast
+  were raised across the library (`--sd-ink-2` and `--sd-ink-3` in both themes, rows 14.5px, titles
+  15px, search 16px). The no-JS fallback is now the demo's own opening frame
+  (`landing/assets/hero-mess-*.webp`, captured by the new `scripts/capture-hero-poster.mjs`) instead
+  of an extension screenshot, so the poster and the first second of the loop show the same frame.
+  `landing/demo.html` follows the new duration, and `landing/HERO-DEMO.md` and `docs/LANDING.md`
+  document the new beats, camera keys, and posters.
 - Rewrote the landing page copy to lead with the problem and the outcome instead of the demo's
   mechanics: the H1 is now `Close every tab.` / `Keep every page.`, the lede opens on `Forty tabs
   open, three you're actually using`, and a new three-cell benefits band (only the tabs you're
   using / a lighter browser / nothing lost) sits between the hero demo and how-it-works. The
   keyword title, meta description, and JSON-LD are unchanged. `scripts/check-landing.mjs` now
   asserts the new H1.
+- De-duplicated the features grid. It was six cards whose first three (Capture / Search / Restore)
+  repeated the three steps directly above them; it now covers Organize, Chrome tab groups, Undo,
+  Import / export, Exceptions, and Keyboard, under the H2 `The parts you only miss once you rely on
+  it.`
+- Rewrote the hero's small print and secondary action: the kicker is `Free · private tab manager`
+  instead of `A local-first tab manager`, the compatibility row reads `Free · Open source · Also on
+  Firefox · Works offline`, and the second button is `See how it works ↓` instead of `View source ↗`,
+  which was competing with the install button.
+- Fixed three accuracy and clarity problems the review caught: step 03 advertised `Alt Shift L`
+  beside Restore although that shortcut opens the library (step 02 owns it now, and step 03 shows
+  `Enter`), the privacy lede pointed at a `ledger below` that sits to the right on desktop, and
+  `stop using memory` now says it frees up RAM.
+- Removed the step kickers (`Stow` / `Find` / `Restore`, which repeated the headings) and the
+  `.shot-bar` labels above each screenshot (`popup.html`, `library.html`, `quick capture`), all
+  developer decoration about the mock rather than the product. Added a plain caption under the hero
+  demo, which carries the before/after in words instead of resizing the animation.
+- Raised `--ink-3` contrast (`#8a8a8a` → `#9b9b9b` dark, `#5c5851` → `#55514b` light) and set step
+  and hero captions in `--ink-2`, because the smallest mono text was the least legible on black.
 - Replaced the icon mark with the new master (`assets/icon.png`): a white, dark-outlined card
   holding the layered archive on a solid orange base, on a transparent surround. `pnpm icons` now
   trims the master to its ink and centres it in each square export, and it writes the two landing
@@ -46,6 +80,11 @@
 
 - Sixteen dark/light feature stills in `landing/assets/`, with the copy deck, still provenance,
   and responsive rules updated in `docs/LANDING.md`.
+- A closing call to action after the privacy section (`Start with the window you have open.`) with
+  one store button and the trust line, so a visitor who reads to the bottom does not have to scroll
+  back up to install.
+- A fourth privacy promise, `One device at a time.`, which states the limitation the other three
+  imply: Stow does not sync between devices, and the export/import pair is the workaround.
 
 ### Fixed
 
