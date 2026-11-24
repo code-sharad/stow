@@ -3,7 +3,7 @@
 **Version:** 1.0\
 **Product:** Stow\
 **Reference implementation:** `landing/`\
-**Canonical URL:** https://code-sharad.github.io/stow/\
+**Canonical URL:** https://stow-tabs.vercel.app/\
 **Primary goal:** Turn visitors into confident Stow installs without
 compromising the product's local-first identity.
 

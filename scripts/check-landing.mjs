@@ -6,6 +6,11 @@ import { chromium } from '@playwright/test';
 
 const root = resolve('landing');
 const port = 4178;
+const canonical = process.env.LANDING_URL
+  ? `${new URL(process.env.LANDING_URL).href.replace(/\/$/, '')}/`
+  : 'https://stow-tabs.vercel.app/';
+const localUrl = process.env.LANDING_TEST_URL ?? `http://127.0.0.1:${port}`;
+const testingRemote = Boolean(process.env.LANDING_TEST_URL);
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -34,7 +39,7 @@ const server = createServer((req, res) => {
   createReadStream(file).pipe(res);
 });
 
-await new Promise((done) => server.listen(port, '127.0.0.1', done));
+if (!testingRemote) await new Promise((done) => server.listen(port, '127.0.0.1', done));
 const browser = await chromium.launch({
   headless: true,
   executablePath:
@@ -60,7 +65,7 @@ try {
       page.on('pageerror', (error) => errors.push(error.message));
       page.on('requestfailed', (request) => errors.push(`failed: ${request.url()}`));
 
-      await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+      await page.goto(`${localUrl}/`, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
       await page.evaluate(async () => {
         for (let y = 0; y < document.documentElement.scrollHeight; y += 600) {
@@ -123,8 +128,7 @@ try {
         'Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking.'
       )
         failures.push(`${width}/${scheme}: description mismatch`);
-      if (metrics.canonical !== 'https://code-sharad.github.io/stow/')
-        failures.push(`${width}/${scheme}: canonical mismatch`);
+      if (metrics.canonical !== canonical) failures.push(`${width}/${scheme}: canonical mismatch`);
       if (metrics.lang !== 'en') failures.push(`${width}/${scheme}: lang ${metrics.lang}`);
       if (metrics.shots < 5) failures.push(`${width}/${scheme}: screenshots missing`);
       if (!metrics.font.includes('Inter')) failures.push(`${width}/${scheme}: Inter not active`);
@@ -203,7 +207,7 @@ try {
       reducedMotion: 'reduce',
     });
     const page = await context.newPage();
-    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${localUrl}/`, { waitUntil: 'domcontentloaded' });
     const seo = await page.evaluate(() => {
       const meta = (selector) =>
         document.querySelector(selector)?.getAttribute('content')?.trim() ?? '';
@@ -253,7 +257,6 @@ try {
       };
     });
 
-    const canonical = 'https://code-sharad.github.io/stow/';
     if (seo.title !== 'Stow — a local-first Chrome tab manager')
       failures.push(`seo: title ${seo.title}`);
     if (seo.title.length > 60) failures.push(`seo: title ${seo.title.length} chars`);
@@ -263,6 +266,19 @@ try {
     if (!seo.description.toLowerCase().includes('tab manager'))
       failures.push('seo: description keywords');
     if (seo.canonical !== canonical) failures.push(`seo: canonical ${seo.canonical}`);
+    for (const selector of ['meta[property="og:url"]', 'meta[name="twitter:image"]']) {
+      const value = await page.locator(selector).getAttribute('content');
+      const expected = selector.includes('og:url') ? canonical : `${canonical}assets/og.png`;
+      if (value !== expected) failures.push(`seo: ${selector} ${value}`);
+    }
+    const screenshot = await page.evaluate(
+      () =>
+        [...document.querySelectorAll('script[type="application/ld+json"]')]
+          .map((block) => JSON.parse(block.textContent))
+          .find((data) => data['@type'] === 'SoftwareApplication')?.screenshot,
+    );
+    if (screenshot !== `${canonical}assets/library-dark.webp`)
+      failures.push(`seo: JSON-LD screenshot ${screenshot}`);
     if (!seo.robots.includes('index')) failures.push(`seo: robots ${seo.robots}`);
     if (seo.ogImage !== `${canonical}assets/og.png`) failures.push(`seo: og:image ${seo.ogImage}`);
     if (seo.ogImageWidth !== '1200') failures.push(`seo: og:image:width ${seo.ogImageWidth}`);
@@ -299,14 +315,23 @@ try {
     if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap))
       failures.push('seo: sitemap lastmod missing');
     if (
-      !/Sitemap: https:\/\/code-sharad\.github\.io\/stow\/sitemap\.xml/.test(
-        readFileSync(join(root, 'robots.txt'), 'utf8'),
-      )
+      !readFileSync(join(root, 'robots.txt'), 'utf8').includes(`Sitemap: ${canonical}sitemap.xml`)
     )
       failures.push('seo: robots.txt sitemap line');
     const demo = readFileSync(join(root, 'demo.html'), 'utf8');
     if (!/<meta name="robots" content="noindex/.test(demo))
       failures.push('seo: demo.html is not noindex');
+    if (testingRemote) {
+      for (const path of ['demo.html', 'HERO-DEMO.md']) {
+        const response = await page.request.get(`${localUrl}/${path}`);
+        if (response.status() !== 404)
+          failures.push(`deployment: ${path} must not be public (${response.status()})`);
+      }
+      for (const path of ['sitemap.xml', 'robots.txt', 'assets/og.png']) {
+        const response = await page.request.get(`${localUrl}/${path}`);
+        if (!response.ok()) failures.push(`deployment: ${path} returned ${response.status()}`);
+      }
+    }
 
     log(
       `seo title=${seo.title.length}ch description=${seo.description.length}ch questions=${seo.visibleQuestions.length} headings=${seo.levels.length}`,
@@ -320,7 +345,7 @@ try {
       reducedMotion: 'reduce',
     });
     const page = await context.newPage();
-    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    await page.goto(`${localUrl}/`, { waitUntil: 'networkidle' });
     const toggle = page.locator('.menu-toggle');
     if (!(await toggle.isVisible())) failures.push('menu: toggle not visible at 375');
     await toggle.click();
@@ -344,7 +369,7 @@ try {
       reducedMotion: 'reduce',
     });
     const page = await context.newPage();
-    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    await page.goto(`${localUrl}/`, { waitUntil: 'networkidle' });
     const nojs = await page.evaluate(() => ({
       menu: getComputedStyle(document.querySelector('.menu-toggle')).display,
       nav: getComputedStyle(document.querySelector('.no-js-nav')).display,
@@ -367,7 +392,7 @@ try {
       if (message.type() === 'error') errors.push(message.text());
     });
     page.on('pageerror', (error) => errors.push(error.message));
-    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    await page.goto(`${localUrl}/`, { waitUntil: 'networkidle' });
     await page.waitForFunction(
       () =>
         [...document.querySelectorAll('.reveal')].every(
@@ -390,5 +415,5 @@ try {
   }
 } finally {
   await browser.close();
-  await new Promise((done) => server.close(done));
+  if (!testingRemote) await new Promise((done) => server.close(done));
 }
