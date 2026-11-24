@@ -58,7 +58,7 @@ Severity is about expected impact on organic search, not code tidiness. Everythi
 
 ### Low — noted, not actioned
 
-- `assets/icon.png` is 15.8 KB for a 24 px render; the hero fallback image is eager at 41 KB.
+- `landing/assets/icon.png` is 22.9 KB for a 24 px render; the hero fallback image is eager at 41 KB.
   Both are below the threshold where a fix changes anything measurable; revisit only with field
   data.
 - `og:title` deliberately keeps the slogan while the `<title>` carries keywords. Social previews

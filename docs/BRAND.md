@@ -20,13 +20,14 @@ dark toolbar without one.
 | Asset | Size | Notes |
 | --- | --- | --- |
 | `assets/icon.png` | 1254×1254 | Raster master, sRGB with alpha, trimmed before export |
+| `assets/icon-glossy.png` | 1254×1254 | Landing master: glossy render on a near-black backdrop, keyed out at export |
 | `public/icon/16.png` | 16×16 | Toolbar; downscaled from the master |
 | `public/icon/32.png` | 32×32 | Toolbar / retina |
 | `public/icon/48.png` | 48×48 | Extensions page |
 | `public/icon/64.png` | 64×64 | Store submission (32/64/128 set) |
 | `public/icon/128.png` | 128×128 | Store listing, install dialog, in-app brand |
-| `landing/assets/icon.png` | 128×128 | Landing header and footer; written by `pnpm icons` |
-| `landing/assets/favicon.png` | 32×32 | Favicon and apple-touch-icon; written by `pnpm icons` |
+| `landing/assets/icon.png` | 128×128 | Landing header and footer; written from the glossy master |
+| `landing/assets/favicon.png` | 32×32 | Favicon and apple-touch-icon; written from the glossy master |
 | `landing/assets/og.svg` | 1200×630 | Open Graph source; embeds a 96 px copy |
 | `docs/brand/icon-preview.html` | browser | Size and toolbar preview |
 
@@ -37,9 +38,13 @@ pnpm icons
 pnpm build
 ```
 
-`pnpm icons` writes the whole family: five manifest sizes into `public/icon/` and the two landing
-copies. The library rail and popup use `public/icon/128.png` directly, so one command updates the
-toolbar, the in-app brand, and the site header together. The Open Graph raster is generated from its source:
+`pnpm icons` writes the whole family: five manifest sizes into `public/icon/` from `assets/icon.png`,
+and the two landing copies from `assets/icon-glossy.png`. The extension and the site therefore carry
+sibling marks rather than one identical file. The landing master is a 3D render lit against near
+black, so `scripts/gen-icons.ts` keys that backdrop out by flood-filling from the eight frame edges,
+erodes the mask a little so the selected rim stays inside the subject, feathers the alpha, and insets
+the result to 96% of the tile so it balances the wordmark. The library rail and popup use
+`public/icon/128.png` directly. The Open Graph raster is generated from its source:
 
 ```bash
 rsvg-convert -w 1200 -h 630 landing/assets/og.svg -o landing/assets/og.png
@@ -75,7 +80,9 @@ one, so the same file works on both without a plate.
 
 ## Changing the mark
 
-1. Replace `assets/icon.png` with a square master at 512 px or larger.
+1. Replace `assets/icon.png` (extension family) or `assets/icon-glossy.png` (landing copies) with a
+   square master at 512 px or larger. A new landing master must sit on a dark, uniform backdrop for
+   the edge flood-fill to key cleanly; adjust the `14%` fuzz in `scripts/gen-icons.ts` otherwise.
 2. Run `pnpm icons` and `pnpm build` — the manifest family and both landing copies update together.
 3. Open `docs/brand/icon-preview.html` and check the 16 px tile at 100% on both toolbars.
 4. Update `landing/assets/og.svg` if the mark changed, then regenerate `og.png`.
@@ -90,7 +97,8 @@ one, so the same file works on both without a plate.
 
 ## Files
 
-- `assets/icon.png` — raster master
+- `assets/icon.png` — raster master for the extension family
+- `assets/icon-glossy.png` — raster master for the landing copies
 - `docs/brand/icon-preview.html` — size and toolbar preview
 - `scripts/gen-icons.ts` — PNG export
 - `docs/LANDING.md` — landing page implementation, copy, and checks

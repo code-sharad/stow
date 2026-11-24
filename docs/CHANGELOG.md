@@ -4,6 +4,13 @@
 
 ### Changed
 
+- Swapped the landing page's product icon to the glossy archive-box render (`assets/icon-glossy.png`),
+  used at 24 px in the header, 20 px in the footer, and as the favicon and apple-touch-icon. The
+  render arrives lit against a near-black backdrop, so `scripts/gen-icons.ts` keys the backdrop out by
+  flood-filling from the eight frame edges, erodes and feathers the mask, and insets the subject to
+  96% of the tile; the result is 22.9 KB at 128 px and 2.6 KB at 32 px. The extension icon family in
+  `public/icon/` is unchanged and still derives from `assets/icon.png`, so the site and the toolbar
+  now carry sibling marks rather than one identical file; `docs/BRAND.md` documents both masters.
 - Rebuilt the hero demo to the animation review's storyboard. It now runs 12s instead of 18s and
   tells the story forwards: forty crowded tabs while the camera pushes into the strip and a counter
   climbs 12 → 24 → 40, one click on the Stow icon, the tabs draining into it and the counter falling
