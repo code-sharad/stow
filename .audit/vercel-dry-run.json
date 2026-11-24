@@ -1,0 +1,343 @@
+{
+  "framework": {
+    "name": "Other",
+    "slug": null
+  },
+  "basePath": "/home/sharad/dev/github/mytabs/landing",
+  "fileCount": 35,
+  "totalSize": 644972,
+  "ignoredCount": 5,
+  "ignored": [
+    ".env.local",
+    ".gitignore",
+    ".vercel",
+    "HERO-DEMO.md",
+    "demo.html"
+  ],
+  "directories": [
+    {
+      "path": "assets",
+      "fileCount": 26,
+      "size": 520161
+    },
+    {
+      "path": "hero-demo.js",
+      "fileCount": 1,
+      "size": 41689
+    },
+    {
+      "path": "index.html",
+      "fileCount": 1,
+      "size": 30050
+    },
+    {
+      "path": "hero-demo.css",
+      "fileCount": 1,
+      "size": 27893
+    },
+    {
+      "path": "styles.css",
+      "fileCount": 1,
+      "size": 20961
+    },
+    {
+      "path": "main.js",
+      "fileCount": 1,
+      "size": 3782
+    },
+    {
+      "path": "sitemap.xml",
+      "fileCount": 1,
+      "size": 272
+    },
+    {
+      "path": "robots.txt",
+      "fileCount": 1,
+      "size": 74
+    },
+    {
+      "path": "google3d833a44d7eced00.html",
+      "fileCount": 1,
+      "size": 53
+    },
+    {
+      "path": ".vercelignore",
+      "fileCount": 1,
+      "size": 37
+    }
+  ],
+  "largestFiles": [
+    {
+      "path": "assets/inter-var.woff2",
+      "size": 65508,
+      "mode": 33188,
+      "sha": "514bc632caac177f51677b88e93a311068182d5c"
+    },
+    {
+      "path": "assets/og.png",
+      "size": 58158,
+      "mode": 33188,
+      "sha": "41aef54b3c52da3d73f8b6b1858e28111b346d3a"
+    },
+    {
+      "path": "hero-demo.js",
+      "size": 41689,
+      "mode": 33188,
+      "sha": "bd9cb2b3d1444cad5fafe62a93f3f2a4639fd2b7"
+    },
+    {
+      "path": "assets/library-light.webp",
+      "size": 41562,
+      "mode": 33188,
+      "sha": "051fdd7293993ffbfc2b1ea43edbd2fab8fc43ce"
+    },
+    {
+      "path": "assets/library-dark.webp",
+      "size": 40090,
+      "mode": 33188,
+      "sha": "bbc7f336393c9e136fa60b248077f6e7739f2611"
+    },
+    {
+      "path": "index.html",
+      "size": 30050,
+      "mode": 33188,
+      "sha": "3dc8b8e832463286924a024d3945de8151c3101a"
+    },
+    {
+      "path": "hero-demo.css",
+      "size": 27893,
+      "mode": 33188,
+      "sha": "04301ad40b1938bc0704e4665470d98556e549ce"
+    },
+    {
+      "path": "assets/restore-step-light.webp",
+      "size": 24910,
+      "mode": 33188,
+      "sha": "26a472c33a518d00ea9cd02772936b50d505f544"
+    },
+    {
+      "path": "assets/hero-mess-light.webp",
+      "size": 24524,
+      "mode": 33188,
+      "sha": "1c3b77602a7197f1b167785625e6408fb3a875ca"
+    },
+    {
+      "path": "assets/restore-step-dark.webp",
+      "size": 23810,
+      "mode": 33188,
+      "sha": "cd57c5e3e02f543ae0ab89b704b447ae0bb886a7"
+    }
+  ],
+  "files": [
+    {
+      "path": ".vercelignore",
+      "size": 37,
+      "mode": 33188,
+      "sha": "08d82314418127c3550ca1e708185bdcbeda09e6"
+    },
+    {
+      "path": "assets/favicon.png",
+      "size": 2208,
+      "mode": 33188,
+      "sha": "e3660eaa7c69f0e4106bcc266c172d5abdd8266a"
+    },
+    {
+      "path": "assets/hero-mess-dark.webp",
+      "size": 22584,
+      "mode": 33188,
+      "sha": "ff8ce613a782ecb970a49f4d3085f1adb8ee9c71"
+    },
+    {
+      "path": "assets/hero-mess-light.webp",
+      "size": 24524,
+      "mode": 33188,
+      "sha": "1c3b77602a7197f1b167785625e6408fb3a875ca"
+    },
+    {
+      "path": "assets/hero-mess-mobile-dark.webp",
+      "size": 12112,
+      "mode": 33188,
+      "sha": "5c36fb25c7ed1dd68cf2dd6217655b0e4e05c787"
+    },
+    {
+      "path": "assets/hero-mess-mobile-light.webp",
+      "size": 12946,
+      "mode": 33188,
+      "sha": "4b1c6d23738cfac590f0d272224c6695648c7bdd"
+    },
+    {
+      "path": "assets/icon.png",
+      "size": 15523,
+      "mode": 33188,
+      "sha": "814a3d3438eef81228f1ce234d58084e52f58537"
+    },
+    {
+      "path": "assets/INTER-LICENSE.txt",
+      "size": 4380,
+      "mode": 33188,
+      "sha": "174b037934980ddcad39144da3ce7b0f9d73546c"
+    },
+    {
+      "path": "assets/inter-var.woff2",
+      "size": 65508,
+      "mode": 33188,
+      "sha": "514bc632caac177f51677b88e93a311068182d5c"
+    },
+    {
+      "path": "assets/library-dark.webp",
+      "size": 40090,
+      "mode": 33188,
+      "sha": "bbc7f336393c9e136fa60b248077f6e7739f2611"
+    },
+    {
+      "path": "assets/library-light.webp",
+      "size": 41562,
+      "mode": 33188,
+      "sha": "051fdd7293993ffbfc2b1ea43edbd2fab8fc43ce"
+    },
+    {
+      "path": "assets/library-mobile-dark.webp",
+      "size": 19366,
+      "mode": 33188,
+      "sha": "50da436bdaaebce771a798bd1b71b13fc168e7b3"
+    },
+    {
+      "path": "assets/library-mobile-light.webp",
+      "size": 20310,
+      "mode": 33188,
+      "sha": "ce552b2ffe363a227fe71779b678ffac83fa1d04"
+    },
+    {
+      "path": "assets/og.png",
+      "size": 58158,
+      "mode": 33188,
+      "sha": "41aef54b3c52da3d73f8b6b1858e28111b346d3a"
+    },
+    {
+      "path": "assets/og.svg",
+      "size": 15482,
+      "mode": 33188,
+      "sha": "a8dd2c3aa1073a24ffbdb1b138fafdf5c90c8f8d"
+    },
+    {
+      "path": "assets/popup-dark.webp",
+      "size": 5530,
+      "mode": 33188,
+      "sha": "e85dc3bf0d174d602ecb8871e23de2da4d95fe91"
+    },
+    {
+      "path": "assets/popup-light.webp",
+      "size": 5674,
+      "mode": 33188,
+      "sha": "b943ebf40c7f319574d009d1bc63dab5236d8618"
+    },
+    {
+      "path": "assets/privacy-dark.webp",
+      "size": 2574,
+      "mode": 33188,
+      "sha": "5b43db63c7534e28f36c54841de503c9c1287561"
+    },
+    {
+      "path": "assets/privacy-light.webp",
+      "size": 2762,
+      "mode": 33188,
+      "sha": "a8cfbad538eb14a28073ebc41c51bfec8a2188cb"
+    },
+    {
+      "path": "assets/restore-mobile-dark.webp",
+      "size": 21976,
+      "mode": 33188,
+      "sha": "cc6c73328b189a9a133ffa1a9d1bc4ccf758de22"
+    },
+    {
+      "path": "assets/restore-mobile-light.webp",
+      "size": 22944,
+      "mode": 33188,
+      "sha": "007f9f2f1d9b9251446600d76d75e9f9679fd58a"
+    },
+    {
+      "path": "assets/restore-step-dark.webp",
+      "size": 23810,
+      "mode": 33188,
+      "sha": "cd57c5e3e02f543ae0ab89b704b447ae0bb886a7"
+    },
+    {
+      "path": "assets/restore-step-light.webp",
+      "size": 24910,
+      "mode": 33188,
+      "sha": "26a472c33a518d00ea9cd02772936b50d505f544"
+    },
+    {
+      "path": "assets/search-mobile-dark.webp",
+      "size": 10780,
+      "mode": 33188,
+      "sha": "a1a0f085a8c442ad3c2905234e417041bdca367d"
+    },
+    {
+      "path": "assets/search-mobile-light.webp",
+      "size": 11256,
+      "mode": 33188,
+      "sha": "4bae4606e35b88378ab268110a42187dd0bb453e"
+    },
+    {
+      "path": "assets/search-step-dark.webp",
+      "size": 16342,
+      "mode": 33188,
+      "sha": "b7882b40032112d80f18b7b18995b3071ab65fc1"
+    },
+    {
+      "path": "assets/search-step-light.webp",
+      "size": 16850,
+      "mode": 33188,
+      "sha": "3365753d54afc7b958aa82bf5d9eb0cc18a80f81"
+    },
+    {
+      "path": "google3d833a44d7eced00.html",
+      "size": 53,
+      "mode": 33188,
+      "sha": "7b4218aebc21660fb5ab76ae4a89d1db495dc04d"
+    },
+    {
+      "path": "hero-demo.css",
+      "size": 27893,
+      "mode": 33188,
+      "sha": "04301ad40b1938bc0704e4665470d98556e549ce"
+    },
+    {
+      "path": "hero-demo.js",
+      "size": 41689,
+      "mode": 33188,
+      "sha": "bd9cb2b3d1444cad5fafe62a93f3f2a4639fd2b7"
+    },
+    {
+      "path": "index.html",
+      "size": 30050,
+      "mode": 33188,
+      "sha": "3dc8b8e832463286924a024d3945de8151c3101a"
+    },
+    {
+      "path": "main.js",
+      "size": 3782,
+      "mode": 33188,
+      "sha": "546cb9431e3f2cc651cf92a420fd62dd65466862"
+    },
+    {
+      "path": "robots.txt",
+      "size": 74,
+      "mode": 33188,
+      "sha": "965dae61a565b0db25c8e264518fb6bfa7c5c8f1"
+    },
+    {
+      "path": "sitemap.xml",
+      "size": 272,
+      "mode": 33188,
+      "sha": "0b2aa51fa4b5f88d705d599df518f65e676ed324"
+    },
+    {
+      "path": "styles.css",
+      "size": 20961,
+      "mode": 33188,
+      "sha": "d351d502f74737133f62a3494f22ed9084c7abe7"
+    }
+  ]
+}
