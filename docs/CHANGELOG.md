@@ -4,12 +4,12 @@
 
 ### Fixed
 
-- The Vercel ignore command exited 0 when `git diff` failed, and it always failed in Vercel's shallow
-  checkout because `HEAD^` does not exist there. Every Git-triggered deployment after the first was
-  therefore cancelled as an ignored build, including the one for the commit that introduced the
-  command, so a merged change could sit on `main` without reaching the site. It now guards with
-  `git rev-parse --verify HEAD^` and builds whenever it cannot prove the last commit left `landing/`
-  alone.
+- Removed the Vercel ignored-build command that kept production on the first deployment. It exited 0
+  when `git diff` failed, and it always failed in Vercel's shallow checkout because `HEAD^` does not
+  resolve there, so every Git-triggered deployment was cancelled as an ignored build — including the
+  merges that added the icon, which is why the site kept the old mark. The step is gone rather than
+  guarded: it saved a few seconds on a site that builds in four. An extension-only commit now
+  deploys the unchanged landing directory.
 
 ### Changed
 

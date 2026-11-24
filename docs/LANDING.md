@@ -362,32 +362,35 @@ light with reduced motion. It asserts:
 The Vercel project `stow-tabs` serves `landing/` as a static site at
 `https://stow-tabs.vercel.app/`. Its Git repository is `code-sharad/stow`, its root directory is
 `landing`, and its production branch is `main`. There is no build, install, or output-directory
-command. The ignored-build command is:
+command, and **no ignored-build command**; every push to a connected branch deploys.
+
+That last part is deliberate. The project used to skip deployments whose commits left `landing/`
+alone, with:
 
 ```sh
-if git rev-parse --verify HEAD^ >/dev/null 2>&1 &&
-   ! git diff --name-only HEAD^ HEAD -- landing | grep -q .; then
-  exit 0
-else
-  exit 1
-fi
+if git diff --name-only HEAD^ HEAD -- landing | grep -q .; then exit 1; else exit 0; fi
 ```
 
-The command has to fail open. Vercel checks the repository out shallow, so `HEAD^` does not exist
-there; a bare `git diff HEAD^ HEAD` then fails, `grep -q .` sees no input, and the exit-0 branch
-skips the build — which is how the first version of this command silently skipped every Git-triggered
-deployment, including the one for the commit that added it. The `rev-parse --verify` guard skips only
-when it can prove the last commit left `landing/` alone, and builds otherwise. Reproduce the shallow
-case with `git clone --depth 1 file://$PWD /tmp/shallow && cd /tmp/shallow && git diff HEAD^ HEAD`.
+Vercel checks the repository out shallow, so `HEAD^` does not resolve; `git diff` fails, `grep -q .`
+sees no input, and the pipeline exits 0, which means *skip*. Every Git-triggered deployment was
+therefore cancelled as an ignored build while production quietly kept the first CLI deploy, and a
+merged icon change never reached the site. A fail-open guard (`git rev-parse --verify HEAD^` first)
+fixes that class of bug, but the guard was buying a few seconds on a site that builds in four: the
+step is gone, and an extension-only commit now deploys the unchanged landing directory.
 
-When the guard holds, an extension-only commit skips deployment, while a commit touching both the
-extension and the landing page still deploys it. `.vercelignore` excludes local project settings,
-environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads. Do not commit `.vercel/` or
-environment files.
+Reproduce the shallow case before trusting any future guard:
 
-Deploy by merging to `main`; the CLI is not a substitute here, because `vercel --prod` from the
-repository root ignores the project's root directory and fails looking for a `dist` output, and
-running it inside `landing/` cannot resolve the configured root directory either.
+```sh
+git clone --depth 1 file://$PWD /tmp/shallow
+cd /tmp/shallow && git diff HEAD^ HEAD   # fatal: bad revision 'HEAD^'
+```
+
+The CLI is not an escape hatch. `vercel --prod` from the repository root ignores the project's root
+directory and fails looking for a `dist` output; inside `landing/` it cannot resolve the configured
+root directory. Deploy by merging to `main`.
+
+`.vercelignore` excludes local project settings, environment files, `demo.html`, and `HERO-DEMO.md`
+from CLI uploads. Do not commit `.vercel/` or environment files.
 
 To check a deployed URL, run:
 
