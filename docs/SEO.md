@@ -36,7 +36,7 @@ Severity is about expected impact on organic search, not code tidiness. Everythi
 | The `<title>` carried no category or browser words (`Stow — Close the tabs. Keep the work.`), so it matched no query a searcher types. | Read from the live page; every ranking competitor puts category + browser in the title. | Title is now `Stow — a local-first Chrome tab manager` (39 chars). |
 | The description was a slogan with no query language. | Live `<meta name="description">`. | Rewritten to 155 chars naming the category, the job, and the local-first promise. |
 | The page never answered the questions it competes on: 721 words, no "save all tabs", no Chrome tab-group comparison, no import path for OneTab users. | Word and term counts over the rendered text. | New Questions section (`#questions`, six Q&As, 250 words) between features and privacy; hero lede now names the product ("Stow is a browser extension that saves the whole window as one searchable list"). |
-| `demo.html` was served as a public, indexable HTML page (200, `text/html`), and `HERO-DEMO.md` as `text/markdown`. Both are dev artifacts. | `curl -I` on the live URLs. | `demo.html` is `noindex, follow`; `pages.yml` stages the artifact with `rsync --exclude demo.html --exclude HERO-DEMO.md`, so neither ships. |
+| `demo.html` was served as a public, indexable HTML page (200, `text/html`), and `HERO-DEMO.md` as `text/markdown`. Both are dev artifacts. | `curl -I` on the live URLs. | `demo.html` is `noindex, follow`; `landing/.vercelignore` excludes it and `HERO-DEMO.md`, so neither ships. The deployed-page check requires both URLs to return 404. |
 
 ### High — fixed
 
@@ -51,7 +51,7 @@ Severity is about expected impact on organic search, not code tidiness. Everythi
 | Finding | Evidence | Status |
 | --- | --- | --- |
 | `robots.txt` was inert on the GitHub Pages subpath. | `curl https://code-sharad.github.io/robots.txt` → 404. | Vercel now serves `robots.txt` at the site's root. |
-| The GitHub Pages URL could retain a stale copy after the migration. | The old URL returned 200 before the publishing workflow was removed. | Replace its deployment with a meta-refresh redirect to `https://stow-tabs.vercel.app/`. Keep the old Search Console property; it cannot be converted into a Vercel URL-prefix property. |
+| The GitHub Pages URL could retain a stale copy after the migration. | The old URL returned 200 before the publishing workflow was removed. | A manually dispatched workflow replaces its deployment with a meta-refresh redirect to `https://stow-tabs.vercel.app/`. Keep the old Search Console property; it cannot be converted into a Vercel URL-prefix property. |
 | No Search Console property for the Vercel URL, so nothing is known about clicks, impressions, or indexation there. | The existing verification file belongs to the old URL-prefix property. | Add the Vercel URL as a URL-prefix property in Search Console, obtain its verification file, and submit `https://stow-tabs.vercel.app/sitemap.xml`. Do not claim indexation before that check. |
 | No external links. OneTab, Toby, Workona, and Session Buddy all have directory listings and reviews. | No link sources found in the repo or on the page. | Roadmap below; backlinks cannot be manufactured honestly in code. |
 | Only two internal link targets, both in-page anchors. | Link inventory of the page. | Footer now links `#questions`; the structural fix is more pages, not more anchors. |

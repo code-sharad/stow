@@ -1,7 +1,6 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { spawn } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { createReadStream, existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { extname, join, normalize, resolve } from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
 import { chromium } from '@playwright/test';
 
@@ -12,41 +11,35 @@ const canonical = process.env.LANDING_URL
   : 'https://stow-tabs.vercel.app/';
 const localUrl = process.env.LANDING_TEST_URL ?? `http://127.0.0.1:${port}`;
 const testingRemote = Boolean(process.env.LANDING_TEST_URL);
-const server = testingRemote
-  ? null
-  : spawn(
-      process.execPath,
-      [
-        resolve(dirname(fileURLToPath(import.meta.url)), '../node_modules/serve/build/main.js'),
-        'landing',
-        '--no-clipboard',
-        '--no-port-switching',
-        '--listen',
-        String(port),
-      ],
-      { stdio: ['ignore', 'ignore', 'pipe'] },
-    );
-let serverError = '';
-server?.stderr.on('data', (chunk) => {
-  serverError += chunk;
-});
-if (server) {
-  let ready = false;
-  for (let attempt = 0; attempt < 50; attempt += 1) {
-    if (server.exitCode !== null) throw new Error(`Preview server exited: ${serverError}`);
-    try {
-      if ((await fetch(localUrl)).ok) {
-        ready = true;
-        break;
-      }
-    } catch {
-      await new Promise((done) => setTimeout(done, 100));
-      continue;
-    }
-    await new Promise((done) => setTimeout(done, 100));
+const types = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.webp': 'image/webp',
+  '.woff2': 'font/woff2',
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+};
+
+const server = createServer((req, res) => {
+  const pathname = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname);
+  const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  const file = normalize(join(root, relative));
+  if (!file.startsWith(root) || !existsSync(file) || !statSync(file).isFile()) {
+    res.writeHead(404);
+    res.end('not found');
+    return;
   }
-  if (!ready) throw new Error(`Preview server did not start: ${serverError}`);
-}
+  res.writeHead(200, {
+    'content-type': types[extname(file)] ?? 'application/octet-stream',
+    'cache-control': 'no-store',
+  });
+  createReadStream(file).pipe(res);
+});
+
+if (!testingRemote) await new Promise((done) => server.listen(port, '127.0.0.1', done));
 const browser = await chromium.launch({
   headless: true,
   executablePath:
@@ -422,5 +415,5 @@ try {
   }
 } finally {
   await browser.close();
-  server?.kill('SIGTERM');
+  if (!testingRemote) await new Promise((done) => server.close(done));
 }

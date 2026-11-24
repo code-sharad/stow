@@ -365,12 +365,17 @@ The Vercel project `stow-tabs` serves `landing/` as a static site at
 command. The ignored-build command is:
 
 ```sh
-git diff --quiet HEAD^ HEAD -- landing
+if git diff --name-only HEAD^ HEAD -- landing | grep -q .; then
+  exit 1
+else
+  exit 0
+fi
 ```
 
-A push that only changes extension code therefore skips deployment. `.vercelignore` excludes
-local project settings, environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads.
-Do not commit `.vercel/` or environment files.
+The explicit branches matter: an extension-only commit skips deployment, while a commit touching
+both the extension and landing page still deploys it. `.vercelignore` excludes local project
+settings, environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads. Do not commit
+`.vercel/` or environment files.
 
 To check a deployed URL, run:
 
