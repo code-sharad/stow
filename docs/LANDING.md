@@ -362,20 +362,35 @@ light with reduced motion. It asserts:
 The Vercel project `stow-tabs` serves `landing/` as a static site at
 `https://stow-tabs.vercel.app/`. Its Git repository is `code-sharad/stow`, its root directory is
 `landing`, and its production branch is `main`. There is no build, install, or output-directory
-command. The ignored-build command is:
+command, and **no ignored-build command**; every push to a connected branch deploys.
+
+That last part is deliberate. The project used to skip deployments whose commits left `landing/`
+alone, with:
 
 ```sh
-if git diff --name-only HEAD^ HEAD -- landing | grep -q .; then
-  exit 1
-else
-  exit 0
-fi
+if git diff --name-only HEAD^ HEAD -- landing | grep -q .; then exit 1; else exit 0; fi
 ```
 
-The explicit branches matter: an extension-only commit skips deployment, while a commit touching
-both the extension and landing page still deploys it. `.vercelignore` excludes local project
-settings, environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads. Do not commit
-`.vercel/` or environment files.
+Vercel checks the repository out shallow, so `HEAD^` does not resolve; `git diff` fails, `grep -q .`
+sees no input, and the pipeline exits 0, which means *skip*. Every Git-triggered deployment was
+therefore cancelled as an ignored build while production quietly kept the first CLI deploy, and a
+merged icon change never reached the site. A fail-open guard (`git rev-parse --verify HEAD^` first)
+fixes that class of bug, but the guard was buying a few seconds on a site that builds in four: the
+step is gone, and an extension-only commit now deploys the unchanged landing directory.
+
+Reproduce the shallow case before trusting any future guard:
+
+```sh
+git clone --depth 1 file://$PWD /tmp/shallow
+cd /tmp/shallow && git diff HEAD^ HEAD   # fatal: bad revision 'HEAD^'
+```
+
+The CLI is not an escape hatch. `vercel --prod` from the repository root ignores the project's root
+directory and fails looking for a `dist` output; inside `landing/` it cannot resolve the configured
+root directory. Deploy by merging to `main`.
+
+`.vercelignore` excludes local project settings, environment files, `demo.html`, and `HERO-DEMO.md`
+from CLI uploads. Do not commit `.vercel/` or environment files.
 
 To check a deployed URL, run:
 
