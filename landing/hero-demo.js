@@ -483,17 +483,19 @@ function hudHTML() {
 
 /* ---------- cursor + camera ---------- */
 
+// `cx`/`cy` are the quadratic control point of the segment that STARTS at that key, not the one
+// that arrives: a curve into (1193, 62) puts its control on the key before (1193, 62).
 const CURSOR_KEYS = [
   { t: 0, x: 980, y: 260 },
-  { t: 2.0, x: 986, y: 262 },
-  { t: 2.78, x: 1193, y: 62, cx: 1130, cy: 250 },
-  { t: 3.1, x: 1188, y: 68 },
-  { t: 4.35, x: 1030, y: 300, cx: 1120, cy: 180 },
+  { t: 2.0, x: 986, y: 262, cx: 1130, cy: 250 },
+  { t: 2.78, x: 1193, y: 62 },
+  { t: 3.1, x: 1188, y: 68, cx: 1120, cy: 180 },
+  { t: 4.35, x: 1030, y: 300 },
   { t: 4.9, x: 980, y: 330 },
-  { t: 5.6, x: 900, y: 420 },
-  { t: 6.75, x: 520, y: 96, cx: 700, cy: 380 },
-  { t: 7.9, x: 560, y: 100 },
-  { t: 9.4, x: 1080, y: 218, cx: 800, cy: 200 },
+  { t: 5.6, x: 900, y: 420, cx: 700, cy: 380 },
+  { t: 6.75, x: 520, y: 96 },
+  { t: 7.9, x: 560, y: 100, cx: 800, cy: 200 },
+  { t: 9.4, x: 1080, y: 218 },
   { t: 9.9, x: 1078, y: 220 },
   { t: 10.7, x: 980, y: 330, cx: 1030, cy: 260 },
   { t: 11.4, x: 980, y: 260 },
@@ -588,8 +590,8 @@ function resetHTML() {
         ${chromeHTML(false, true)}
         <div class="sd-page">${flightsHTML()}</div>
       </div>
-      <div class="sd-cursor" data-reset-cursor>${CURSOR}</div>
     </div>
+    <div class="sd-cursor" data-reset-cursor>${CURSOR}</div>
   </div>`;
 }
 
@@ -698,7 +700,7 @@ export function mountStowDemo(host, options = {}) {
     const scale0 = s * (cam0.z || 1);
     els.resetSurface.style.transform = `translate3d(${(-cam0.x * scale0).toFixed(2)}px, ${(-cam0.y * scale0).toFixed(2)}px, 0) scale(${scale0.toFixed(4)})`;
     const c0 = cursorAt(0);
-    els.resetCursor.style.transform = `translate3d(${(c0.x - 2).toFixed(1)}px, ${(c0.y - 2).toFixed(1)}px, 0)`;
+    els.resetCursor.style.transform = `translate3d(${((c0.x - cam0.x) * scale0 - 2).toFixed(1)}px, ${((c0.y - cam0.y) * scale0 - 2).toFixed(1)}px, 0)`;
 
     // 4 — the library replaces the browser in one cut
     els.lib.style.opacity = t >= T_CUT ? '1' : '0';
@@ -808,7 +810,7 @@ export function mountStowDemo(host, options = {}) {
     for (const click of CLICKS) {
       dip = Math.max(dip, win(t, click.t - 0.04, click.t + 0.1) * (1 - win(t, click.t + 0.1, click.t + 0.24)));
     }
-    els.cursor.style.transform = `translate3d(${(c.x - 2).toFixed(1)}px, ${(c.y - 2).toFixed(1)}px, 0) scale(${(1 - 0.12 * dip).toFixed(3)})`;
+    els.cursor.style.transform = `translate3d(${((c.x - cam.x) * scale - 2).toFixed(1)}px, ${((c.y - cam.y) * scale - 2).toFixed(1)}px, 0) scale(${(1 - 0.12 * dip).toFixed(3)})`;
 
     let ripple = null;
     for (const click of CLICKS) {
@@ -817,7 +819,7 @@ export function mountStowDemo(host, options = {}) {
     }
     if (ripple) {
       els.ripple.style.opacity = String((1 - ripple.p) * 0.7);
-      els.ripple.style.transform = `translate3d(${ripple.click.x}px, ${ripple.click.y}px, 0) scale(${lerp(0.4, 2.1, easeOut(ripple.p)).toFixed(2)})`;
+      els.ripple.style.transform = `translate3d(${((ripple.click.x - cam.x) * scale).toFixed(1)}px, ${((ripple.click.y - cam.y) * scale).toFixed(1)}px, 0) scale(${lerp(0.4, 2.1, easeOut(ripple.p)).toFixed(2)})`;
     } else {
       els.ripple.style.opacity = '0';
     }

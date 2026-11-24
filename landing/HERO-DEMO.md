@@ -97,11 +97,12 @@ Everything lives in `landing/hero-demo.js`.
 | Constant | What it controls |
 | --- | --- |
 | `DURATION = 12` | Loop length; also the seek range and the reset timing. |
-| `CURSOR_KEYS` | `{ t, x, y, cx, cy }` waypoints. Each segment is a quadratic Bézier; `cx`/`cy` are the control point, so moves curve. Repeat `t` to hold still before a click. |
-| `CLICKS` | `{ t, x, y }` for the Stow icon, the search field, and `Restore all`. The ripple and the 140ms cursor dip derive from these. |
+| `CURSOR_KEYS` | `{ t, x, y, cx, cy }` waypoints in stage pixels. Each segment is a quadratic Bézier, and `cx`/`cy` sit on the key that *starts* the segment (`{ t: 2.0, cx: 1130, cy: 250 }` shapes 2.0 → 2.78), so moves curve into the click instead of around it. Repeat `t` to hold still before a click. |
+| `CLICKS` | `{ t, x, y }` for the Stow icon, the search field, and `Restore all`, in stage pixels. The ripple and the 140ms cursor dip derive from these, and the cursor is drawn in container pixels through the live camera (`(c − cam) × scale`), so its tip lands on the element it clicks at every zoom level and every figure width. |
 | `CAM_KEYS_DESKTOP` / `CAM_KEYS_MOBILE` | `{ t, x, y }` camera waypoints; the desktop set also carries `z`, so it pushes from 2× into the strip end and pulls back to 1× at 4.15s. Both are pure `translate × scale` on one surface, so a frame costs one transform. |
 | `STATIC_AT = 1.6` | The reduced-motion still (forty tabs, counter at 40, first caption). |
 | `T_CUT = 5` | The beat where the library replaces the browser. It is a step, not a fade: `opacity` flips on one frame. |
+| reset layer | `resetHTML()` duplicates frame zero in `.sd-reset` behind the stage, and it takes *that* frame's camera (`camAt(0)`), not the live one, so 11.999 and 0.000 composite the same pixels: the measured seam is 2 antialiased pixels. |
 | `render(t)` staggers | Mess tabs drain at `3 + (39 - i) * 0.026`; restored Trip tabs enter at `9.55 + i * 0.05`; library reveals use each node’s `data-d`, and each node’s `data-r` marks it for the reveal pass. |
 
 Other beats in `render`: the click ripple 2.9–3.36, the single `Stow` tab appearing 3.94–4.04 and
@@ -118,7 +119,8 @@ stacks, and the restored Trip group cannot drift apart.
 The library content is deliberately positioned on the real grid: rail 220px, topbar 60px, status
 26px, the max-860px reading column with its text at x=346 through x=1154, stack heads 34px, rows
 30px. If you edit the stage or the reading width, update the markup builders and the cursor/click x
-values together.
+values together. `CLICKS` must equal the element’s stage position: the verification below asserts
+that each click point falls inside its target at 1440, 768, and 390px.
 
 ## Demo page and verification
 
@@ -152,9 +154,13 @@ after any change to the opening frame, the HUD, or the token colors.
 
 Measured behavior (1280 stage, Chromium):
 
+- Seam: the frame at 11.999 and the frame at 0 differ by 2 antialiased pixels (AE 2.29); 11.999 vs
+  0.01 differs by 97 px, which is the HUD’s 0.22s fade-in and nothing else.
+- Clicks: all three land inside their target boxes — Stow icon at 2.9s, search at 6.9s, `Restore
+  all` at 9.5s — at figure widths 1440, 768, and 390.
 - Weight: 39KB JS + 27KB CSS raw, **19.2KB gzip** (13.6KB + 5.6KB).
-- Desktop camera keeps the whole 1280×720 surface inside the frame at every key (2× crop x=634–652
-  to 1274, y=0–360; 1× from 4.15s).
+- Desktop camera: at 2× the visible window stays inside the stage at every key (stage x=634–652
+  through 1274, y=0–360), so the crop never shows an empty edge before it pulls back to 1× at 4.15s.
 - Library height: content 541px inside the 554px main column, so titles ellipsize instead of
   clipping.
 - Offscreen: the timeline holds at the paused time and resumes when the demo returns.
