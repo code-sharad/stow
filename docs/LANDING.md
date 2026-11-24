@@ -365,17 +365,29 @@ The Vercel project `stow-tabs` serves `landing/` as a static site at
 command. The ignored-build command is:
 
 ```sh
-if git diff --name-only HEAD^ HEAD -- landing | grep -q .; then
-  exit 1
-else
+if git rev-parse --verify HEAD^ >/dev/null 2>&1 &&
+   ! git diff --name-only HEAD^ HEAD -- landing | grep -q .; then
   exit 0
+else
+  exit 1
 fi
 ```
 
-The explicit branches matter: an extension-only commit skips deployment, while a commit touching
-both the extension and landing page still deploys it. `.vercelignore` excludes local project
-settings, environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads. Do not commit
-`.vercel/` or environment files.
+The command has to fail open. Vercel checks the repository out shallow, so `HEAD^` does not exist
+there; a bare `git diff HEAD^ HEAD` then fails, `grep -q .` sees no input, and the exit-0 branch
+skips the build — which is how the first version of this command silently skipped every Git-triggered
+deployment, including the one for the commit that added it. The `rev-parse --verify` guard skips only
+when it can prove the last commit left `landing/` alone, and builds otherwise. Reproduce the shallow
+case with `git clone --depth 1 file://$PWD /tmp/shallow && cd /tmp/shallow && git diff HEAD^ HEAD`.
+
+When the guard holds, an extension-only commit skips deployment, while a commit touching both the
+extension and the landing page still deploys it. `.vercelignore` excludes local project settings,
+environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads. Do not commit `.vercel/` or
+environment files.
+
+Deploy by merging to `main`; the CLI is not a substitute here, because `vercel --prod` from the
+repository root ignores the project's root directory and fails looking for a `dist` output, and
+running it inside `landing/` cannot resolve the configured root directory either.
 
 To check a deployed URL, run:
 

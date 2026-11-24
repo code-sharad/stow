@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Fixed
+
+- The Vercel ignore command exited 0 when `git diff` failed, and it always failed in Vercel's shallow
+  checkout because `HEAD^` does not exist there. Every Git-triggered deployment after the first was
+  therefore cancelled as an ignored build, including the one for the commit that introduced the
+  command, so a merged change could sit on `main` without reaching the site. It now guards with
+  `git rev-parse --verify HEAD^` and builds whenever it cannot prove the last commit left `landing/`
+  alone.
+
 ### Changed
 
 - Replaced the mark on every surface with the glossy archive-box render (`assets/icon-glossy.png`):
