@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://code-sharad.github.io/stow/sitemap.xml
+Sitemap: https://stow-tabs.vercel.app/sitemap.xml

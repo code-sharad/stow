@@ -1,0 +1,39 @@
+name: Landing redirect
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Stage the canonical redirect
+        run: |
+          mkdir _site
+          printf '%s\n' '<!doctype html>' \
+            '<html lang="en"><head><meta charset="utf-8">' \
+            '<meta name="robots" content="noindex">' \
+            '<meta http-equiv="refresh" content="0; url=https://stow-tabs.vercel.app/">' \
+            '<link rel="canonical" href="https://stow-tabs.vercel.app/">' \
+            '<title>Stow has moved</title></head>' \
+            '<body><p>Stow now lives at <a href="https://stow-tabs.vercel.app/">stow-tabs.vercel.app</a>.</p></body></html>' \
+            > _site/index.html
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

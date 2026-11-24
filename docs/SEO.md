@@ -8,20 +8,19 @@ ads, and social are out of scope.
 
 | Item | Value |
 | --- | --- |
-| URL | `https://code-sharad.github.io/stow/` (GitHub Pages project site, one page) |
-| Source | `landing/` on `main`, published by `.github/workflows/pages.yml` |
+| URL | `https://stow-tabs.vercel.app/` (Vercel, one page) |
+| Source | `landing/` on `main`, deployed by the connected `stow-tabs` Vercel project |
 | Indexable pages | 1 (`landing/index.html`, ~970 visible words) |
 | Synthetic | `landing/demo.html` (hero-animation dev page), `landing/HERO-DEMO.md` |
 | Sitemap | `landing/sitemap.xml`, one URL |
-| Robots | `landing/robots.txt` — see the caveat below |
+| Robots | `https://stow-tabs.vercel.app/robots.txt` |
 
-Two hard constraints shape everything here:
+Vercel serves the site and `robots.txt` from the same root. The GitHub Pages URL redirects to the
+current canonical URL so its existing links do not lead to a stale copy.
 
-1. **The host root is not ours.** Crawlers only read `https://code-sharad.github.io/robots.txt`,
-   which 404s — Google never sees `landing/robots.txt`, so its `Sitemap:` line does nothing and a
-   `Disallow` rule would do nothing either. (Verified with `curl`.) Control over robots, and real
-   crawl directives, requires a custom domain.
-2. **No link equity yet.** The page has no directory listings or editorial links; rankings for
+One hard constraint still shapes the search strategy:
+
+**No link equity yet.** The page has no directory listings or editorial links; rankings for
    short commercial terms need links this site does not have. Long-tail problem queries and an
    honest alternative page are the realistic entry points.
 
@@ -51,9 +50,9 @@ Severity is about expected impact on organic search, not code tidiness. Everythi
 
 | Finding | Evidence | Status |
 | --- | --- | --- |
-| `robots.txt` at the host root does not exist, so the site's own robots file is inert. | `curl https://code-sharad.github.io/robots.txt` → 404. | Not fixable on `github.io`. Keep the file for correctness and move to a custom domain when the site gets one. |
-| Duplicate URL `/stow/index.html` returns 200 next to `/stow/`. | `curl -I`. | Covered by the canonical; nothing else needed. |
-| No Search Console property, so nothing is known about clicks, impressions, or indexation. | No verification file in the repo. | Verification file added: `landing/google3d833a44d7eced00.html`, served at `https://code-sharad.github.io/stow/google3d833a44d7eced00.html`. The owner still deploys it, clicks Verify, submits the sitemap, and records the baseline. Nothing about indexation is claimed in this document until then. |
+| `robots.txt` was inert on the GitHub Pages subpath. | `curl https://code-sharad.github.io/robots.txt` → 404. | Vercel now serves `robots.txt` at the site's root. |
+| The GitHub Pages URL could retain a stale copy after the migration. | The old URL returned 200 before the publishing workflow was removed. | Replace its deployment with a meta-refresh redirect to `https://stow-tabs.vercel.app/`. Keep the old Search Console property; it cannot be converted into a Vercel URL-prefix property. |
+| No Search Console property for the Vercel URL, so nothing is known about clicks, impressions, or indexation there. | The existing verification file belongs to the old URL-prefix property. | Add the Vercel URL as a URL-prefix property in Search Console, obtain its verification file, and submit `https://stow-tabs.vercel.app/sitemap.xml`. Do not claim indexation before that check. |
 | No external links. OneTab, Toby, Workona, and Session Buddy all have directory listings and reviews. | No link sources found in the repo or on the page. | Roadmap below; backlinks cannot be manufactured honestly in code. |
 | Only two internal link targets, both in-page anchors. | Link inventory of the page. | Footer now links `#questions`; the structural fix is more pages, not more anchors. |
 
@@ -113,20 +112,19 @@ dishonest), and anything implying cloud sync, collaboration, or AI.
 
 What that means: the category is won by one strong page plus a small set of honest comparison and
 how-to pages, and Workona owns the "save all tabs" and "alternative" intents outright. Stow cannot
-out-write Workona from a `github.io` subpath; it can be the most accurate page about saving tabs
+out-write Workona from a one-page site; it can be the most accurate page about saving tabs
 locally and the best-documented OneTab alternative, which is a narrower and winnable claim.
 
 ## Roadmap
 
 Ordered by expected effect per unit of work. P0 items are done or need the owner only.
 
-1. **P0 (file added, owner action left):** Search Console verification. `landing/
-   google3d833a44d7eced00.html` is in the repo and the publish step copies it, so after the next
-   deploy the file is served at the URL-prefix property. Then: click **Verify**, submit
-   `sitemap.xml`, run URL Inspection on the page, and record the baseline (impressions, clicks,
-   average position, indexed status) in this file. The file only verifies the URL-prefix property
-   `https://code-sharad.github.io/stow/`; a Domain property is verified by DNS TXT instead and
-   cannot use this file. Nothing can be monitored before this exists.
+1. **P0 (owner action left):** add `https://stow-tabs.vercel.app/` as a Search Console URL-prefix
+   property. The existing `landing/google3d833a44d7eced00.html` belongs to the old GitHub Pages
+   property and cannot verify the new one. Obtain a verification file for the Vercel property, put
+   it in `landing/`, deploy it, click **Verify**, submit `sitemap.xml`, and record the baseline
+   (impressions, clicks, average position, indexed status) here. Nothing can be monitored for the
+   new property before this exists.
 2. **P0 (done):** title, description, questions section, JSON-LD, sitemap `lastmod`, `noindex` and
    publish exclusion for dev files, font subset.
 3. **P1:** one comparison page — `/stow/compare/onetab/` or similar, written as a fair table
@@ -134,8 +132,9 @@ Ordered by expected effect per unit of work. P0 items are done or need the owner
    This is the highest-intent query cluster Stow can honestly answer.
 4. **P1:** one how-to page for "save all tabs in Chrome", showing the shortcut, Chrome's bookmark
    route, and Stow, with the same honesty as the FAQ. Only if it can be better than Workona's.
-5. **P1:** a custom domain. It buys a root `robots.txt`, a real brand URL in results, and a place
-   for link equity to accumulate; it is also the prerequisite for anything beyond a single page.
+5. **P1:** a custom domain. `stowtabs.com` is the current recommendation. It gives Stow a short,
+   memorable brand URL in results and a place for link equity to accumulate. After connecting it,
+   update the canonical and social URLs, sitemap, robots file and these references together.
 6. **P2:** links: GitHub repo topics and README link, AlternativeTo listing, open-source and
    browser-productivity awesome lists, genuine comments where tab clutter is discussed. No paid
    links, no PBNs, no automated outreach.

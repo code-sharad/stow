@@ -357,10 +357,35 @@ light with reduced motion. It asserts:
   `google-site-verification: <its own file name>`, no heading level is skipped, no id is
   duplicated, and every `#anchor` resolves
 
-The Search Console file must stay at the root of `landing/` (served at
-`/stow/google3d833a44d7eced00.html`) and must keep its exact name, because Google compares the
-body against the URL it was given. It verifies the URL-prefix property
-`https://code-sharad.github.io/stow/` only.
+## Deployment
+
+The Vercel project `stow-tabs` serves `landing/` as a static site at
+`https://stow-tabs.vercel.app/`. Its Git repository is `code-sharad/stow`, its root directory is
+`landing`, and its production branch is `main`. There is no build, install, or output-directory
+command. The ignored-build command is:
+
+```sh
+git diff --quiet HEAD^ HEAD -- landing
+```
+
+A push that only changes extension code therefore skips deployment. `.vercelignore` excludes
+local project settings, environment files, `demo.html`, and `HERO-DEMO.md` from CLI uploads.
+Do not commit `.vercel/` or environment files.
+
+To check a deployed URL, run:
+
+```sh
+LANDING_TEST_URL=https://stow-tabs.vercel.app pnpm check:landing
+```
+
+The remote check runs the same browser, accessibility, and SEO assertions and also requires the
+public assets to load and both development files to return 404. `LANDING_URL` overrides the
+expected canonical origin when testing a custom domain.
+
+The Search Console file must stay at the root of `landing/` and keep its exact name, because
+Google compares the body against the URL it was given. The existing
+`google3d833a44d7eced00.html` verifies the old `https://code-sharad.github.io/stow/` URL-prefix
+property only. A Search Console property for the Vercel URL needs its own verification file.
 
 The page is ready to deploy as-is once the captures and checks pass. Keep `docs/brand` as the
 source of truth; update this file when shipped copy or screenshots change.

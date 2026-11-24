@@ -6,7 +6,7 @@
   "description": "A quiet, local-first tab shelf for Chrome. Stow tabs into searchable stacks, close them, restore them later.",
   "license": "MIT",
   "author": "Sharad Bhadait",
-  "homepage": "https://code-sharad.github.io/stow/",
+  "homepage": "https://stow-tabs.vercel.app/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/code-sharad/stow.git"

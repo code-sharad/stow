@@ -79,7 +79,7 @@ Stow is an independent project and is not affiliated with OneTab.
 | Language | English | English |
 | License | MIT | MIT |
 | Privacy policy | `https://github.com/code-sharad/stow/blob/main/docs/PRIVACY.md` | same |
-| Homepage | `https://code-sharad.github.io/stow/` | same |
+| Homepage | `https://stow-tabs.vercel.app/` | same |
 | Support | repository issues | same |
 
 ## Screenshots (5, 1280×800)
