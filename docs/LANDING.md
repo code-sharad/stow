@@ -29,6 +29,8 @@ how:    three rows — Stow / Find / Restore, each with a real UI capture
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
 questions: six-question list — Stow vs Chrome, saving all tabs, tab groups, sync, uninstalling,
         importing an OneTab list (matches the FAQPage JSON-LD word for word)
+switch: four cards of the complaints that move people off OneTab, Workona, and Toby — slow
+        saves, lost lists, subscriptions, moving your shelf (reuses the privacy grid styles)
 privacy: three promises + a transfer card, no ledger (no screenshot)
 footer: stow · local-first tab manager · source · questions · privacy · changelog · v0.1.0
 ```
@@ -37,6 +39,10 @@ The ordering is deliberate: the questions section sits between features and priv
 people who are evaluating a tab manager ask exactly these things, and the answers are the
 factual core the page is competing on. It is a definition list, not a FAQ accordion: nothing is
 hidden behind a click, so the text is in the initial HTML for readers and crawlers alike.
+The why-switch section sits after the questions and before privacy because it is the closer
+for a visitor who already uses OneTab, Workona, or Toby: the FAQ answers whether Stow works
+for them, and this section answers why it is worth the move — right before the privacy
+section restates the mechanism every card points at.
 
 ## Copy deck
 
@@ -76,7 +82,11 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 - Secondary: `See how it works ↓` — links to `#how`. It used to be `View source ↗`, which competed
   with the install button for a decision nobody makes on a landing page; the source link lives in
   the footer nav instead.
-- Trust line: `No account · No cloud · No tracking`
+- Trust line: `No account · No cloud · No tracking · No subscription` — the fourth clause
+  answers subscription fatigue reached in user research: OneTab moved to a subscription and
+  pricing complaints about Workona and Toby are the runner-up reason, after slowness, people
+  give for leaving them. The extension is MIT-licensed and free, so the claim costs the page
+  nothing new.
 - Compatibility: `Free · Open source · Also on Firefox · Works offline` — the version numbers moved
   out of the small print (the FAQ still states `Chrome 120+` and `Firefox 140+`), because a Firefox
   visitor reading a button that says "Add to Chrome" needs to know the extension is for them, and
@@ -208,6 +218,33 @@ Every answer states only what the extension already does. The same six answers a
 `FAQPage` JSON-LD in `landing/index.html`, so a copy edit has to change both; `pnpm check:landing`
 fails if the question sets drift apart.
 
+### Why switch
+
+- Eyebrow: `Why switch`
+- H2: `Already using a tab manager? Here is why people move.`
+- Lede: `OneTab, Workona, and Toby users keep reporting the same problems: slow saves,
+  lists that vanish, subscriptions that appear. Stow answers each one by staying local.`
+- Sits between questions and privacy. It exists because landing research found the reachable
+  audience is mostly refugees from OneTab, Workona, and Toby, and the four complaints they
+  give match properties Stow already has. It is complaint-driven copy, so the landing spec's
+  non-goal (no comparison tables, no testimonials, no pricing) holds: no feature table, no
+  star ratings, no prices. The full fair-comparison page remains the SEO roadmap's P1 item.
+- Cards (reuses the privacy promise styles, numbered 01-03 + a card):
+  1. `Too slow with a real window of tabs.` — Workona and Toby run a workspace layer over your
+     tabs; Stow writes straight to the browser's own IndexedDB.
+  2. `Tabs get lost along the way.` — OneTab lists vanish after browser updates and Workona
+     sync has lost tabs mid-work; Stow keeps everything in one local database with a JSON
+     backup you own.
+  3. `Subscriptions appeared.` — free tools turned on pricing; Stow is MIT-licensed, so there is
+     no meter to run.
+- Migration card (04): `Moving your shelf is one import.` Reads OneTab exports natively, and
+  any tab manager that can export bookmarks HTML or a plain links list moves over in the same
+  import screen. Copy deliberately does NOT promise Workona or Toby importers — the import
+  formats are `json`, `html`, `markdown`, `onetab` (`src/core/io/formats.ts:268`) — because the
+  honest path for a Workona/Toby user is their bookmarks export or a links list.
+- Route strip: `OneTab export → Bookmarks HTML or links → Stow` — here the hops are formats,
+  naming tools already covered by the cards above.
+
 ### Privacy
 
 - Eyebrow: `Privacy`
@@ -252,6 +289,7 @@ fails if the question sets drift apart.
 - Body: `Install Stow, save the window, and the tabs come back whenever you want them. Free, open
   source, and it works offline.`
 - One button (`data-store-link`, so Firefox gets its own label), then the trust line again.
+  The closing trust line carries the same four clauses as the hero's, `No subscription` included.
 - Why it exists: the review's last note was that a hesitant visitor reaching the bottom of the
   page had no button and no reason to scroll back up. It repeats the hero's promise and nothing
   else — no new claims.
