@@ -18,7 +18,7 @@
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="assets/icon.png" sizes="128x128" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=11" />
+    <link rel="stylesheet" href="styles.css?v=12" />
     <link rel="stylesheet" href="hero-demo.css?v=4" />
 
     <meta property="og:type" content="website" />
@@ -570,7 +570,7 @@
           <h2 id="privacy-title">Your tabs stay on your device.</h2>
           <p class="section-lede">
             Stow keeps your library inside your browser. There is no Stow account, no cloud
-            sync, and no analytics. The table of what it stores is the whole story.
+            sync, and no analytics. What it stores never leaves this device.
           </p>
         </div>
 
@@ -620,59 +620,15 @@
             </article>
           </div>
 
-          <div class="privacy-data reveal">
-            <div class="privacy-data__head">
-              <span class="local-pill"><span class="local-dot" aria-hidden="true"></span>local only</span>
-              <p>Nothing in this table leaves your browser.</p>
-            </div>
-
-            <table class="data-table">
-              <caption>What Stow stores</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Data</th>
-                  <th scope="col">Where it is stored</th>
-                  <th scope="col">Sent to Stow servers</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="Data">Saved tabs and lists</td>
-                  <td data-label="Where it is stored">Browser extension storage (IndexedDB)</td>
-                  <td data-label="Sent to Stow servers">No</td>
-                </tr>
-                <tr>
-                  <td data-label="Data">Preferences</td>
-                  <td data-label="Where it is stored">Browser-local storage</td>
-                  <td data-label="Sent to Stow servers">No</td>
-                </tr>
-                <tr>
-                  <td data-label="Data">Optional backup files</td>
-                  <td data-label="Where it is stored">A download location you choose</td>
-                  <td data-label="Sent to Stow servers">No</td>
-                </tr>
-                <tr>
-                  <td data-label="Data">Favicons</td>
-                  <td data-label="Where it is stored">Your browser's local favicon cache</td>
-                  <td data-label="Sent to Stow servers">No</td>
-                </tr>
-              </tbody>
-            </table>
-            <p class="footnote">
-              Uninstalling Stow removes its library. Export a JSON backup first if you want a
-              copy.
-            </p>
-          </div>
-
           <article class="privacy-move reveal">
-            <span class="privacy-move__index" aria-hidden="true">04</span>
-            <div class="privacy-move__body">
+            <div class="privacy-move__head">
+              <span class="privacy-move__index" aria-hidden="true">04</span>
               <h3>One device at a time.</h3>
-              <p>
-                Stow does not sync between devices, and that is the price of keeping everything
-                local. Moving to another computer? Export a JSON backup and import it there.
-              </p>
             </div>
+            <p>
+              Stow does not sync between devices, and that is the price of keeping everything
+              local. Moving to another computer? Export a JSON backup and import it there.
+            </p>
             <p class="privacy-move__path" aria-hidden="true">
               <span>this device</span>
               <span class="privacy-move__arrow">→</span>

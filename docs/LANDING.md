@@ -29,7 +29,7 @@ how:    three rows — Stow / Find / Restore, each with a real UI capture
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
 questions: six-question list — Stow vs Chrome, saving all tabs, tab groups, sync, uninstalling,
         importing an OneTab list (matches the FAQPage JSON-LD word for word)
-privacy: three promises + local-only ledger table + a full-width transfer rule (no screenshot)
+privacy: three promises + a transfer card, no ledger (no screenshot)
 footer: stow · local-first tab manager · source · questions · privacy · changelog · v0.1.0
 ```
 
@@ -213,8 +213,10 @@ fails if the question sets drift apart.
 - Eyebrow: `Privacy`
 - H2: `Your tabs stay on your device.`
 - Lede: `Stow keeps your library inside your browser. There is no Stow account, no cloud sync,
-  and no analytics. The table of what it stores is the whole story.` — "the ledger below" was
-  wrong as well as jargon: on desktop the table sits to the *right* of the promises, not below.
+  and no analytics. What it stores never leaves this device.` The page once said "the ledger
+  below" — wrong and jargon — then "the table of what it stores is the whole story" while the
+  table sat to the *right* of the promises. The table is gone; the sentence now states the fact
+  instead of pointing at proof.
 - Promises: `No account.` — `There is nothing to sign up for. Install Stow, save a window, and
   your library is there.`; `No cloud.` — `Lists live in your browser's own storage, not on a
   Stow server. Backups are files you choose to export.`; `No tracking.` — `No analytics, no
@@ -229,24 +231,19 @@ fails if the question sets drift apart.
   checkable rather than asserted — `No email, no password, no profile` / `Works offline, from the
   first tab`; `IndexedDB in your own profile` / `Backups stay where you save them`; `Zero outbound
   requests` / `No analytics events`.
-- Ledger: `local only` · `Nothing in this table leaves your browser.` The card sits flush with the
-  promise column (both are stretch items, so the footnote rides the bottom edge), carries a 2px
-  accent rule on its top border that reads as a tab, and prints the `No` column in `--success` so
-  the answer is scannable without reading the sentence.
-- Tradeoff row: `One device at a time.` spans both columns under the promises and the ledger,
-  numbered `04` like the others, and ends in an aria-hidden mono route — `this device → export.json
-  → that device` — that stacks vertically with the arrows rotated below 480px.
-- Footnote: `Uninstalling Stow removes its library. Export a JSON backup first if you want a copy.`
-- No screenshot: the four promises, their chips, and the table carry the section. The layout had a
-  capture at 420px from the settings page; it showed a form, not a promise, and the promises say
-  more in less space.
-
-| Data | Where it is stored | Sent to Stow servers |
-| --- | --- | --- |
-| Saved tabs and lists | Browser extension storage (IndexedDB) | No |
-| Preferences | Browser-local storage | No |
-| Optional backup files | A download location you choose | No |
-| Favicons | Your browser's local favicon cache | No |
+- No ledger: the "What Stow stores" table, its `local only` pill, and its uninstall footnote are
+  gone. Four near-identical rows that all answered `No` restated the three promises in table
+  form; the chips underneath each promise already name where the data lives, so the table argued
+  nothing new. The FAQ keeps the uninstall answer (`What happens to my lists if I uninstall
+  Stow?`), so the promise a visitor came to check is still answered on the page.
+- Transfer card: `One device at a time.` moves into the right column as the fourth numbered item,
+  styled as the sheet card — 2px accent rule on its top edge, `--sheet` fill — so the grid still
+  reads as three promises and a card rather than three promises and a gap. Copy unchanged:
+  `Stow does not sync between devices, and that is the price of keeping everything local. Moving
+  to another computer? Export a JSON backup and import it there.` Under the copy sits an
+  aria-hidden mono route — `this device → export.json → that device` — boxed hops that lose their
+  boxes below 480px to stay on one line.
+- No screenshot: the promises and the transfer card carry the section.
 
 #### Closing call to action
 
@@ -333,8 +330,8 @@ sync with them. The step images remain real captures.
   and figures use `--ink-2` for captions now, not `--ink-3`.
 - Hero, step, feature, and privacy layouts collapse at 1023, 767, and 639px. The hero demo
   switches to its 4:5 camera at 1024px (the site's compact breakpoint), max 480px wide. The privacy
-  grid becomes one column at 1023px and the tradeoff row drops its route into the second column;
-  the ledger table becomes labelled rows below 640px.
+  grid becomes one column at 1023px (stacked promises, then the transfer card). The transfer route
+  keeps one line at every width; below 640px it sets 9px type and the route loses its boxes.
 - Reveals are opacity/translate only, 180ms, and removed under `prefers-reduced-motion`. Images
   below the fold are lazy-loaded.
 - Accessibility: one H1, semantic landmarks, skip link, descriptive alt text, visible focus, menu

@@ -4,16 +4,16 @@
 
 ### Changed
 
-- Redesigned the landing page's privacy section and dropped its screenshot. The promises were four
-  plain blocks above a table, and the capture beside them was a settings form rather than a claim.
-  Each promise now numbers its own row, prints two mono chips naming the mechanism (`IndexedDB in
-  your own profile`, `Zero outbound requests`, …), and the ledger card sits flush with the promise
-  column, carries a 2 px accent rule on its top edge, and answers its `No` column in `--success` so
-  the row is scannable without reading the sentence. The fourth promise keeps the tradeoff, spans
-  both columns, and ends in a mono route — `this device → export.json → that device` — that drops its
-  boxes below 480 px to stay on one line. `scripts/capture-landing.mjs` no longer shoots the
-  settings page, and `privacy-dark.webp` / `privacy-light.webp` are gone from the repository and the
-  asset check.
+- Rebuilt the landing page's privacy section without its screenshot or its ledger. Only the three
+  promises remain on the left (each numbered, each carrying two mono chips naming the mechanism —
+  `IndexedDB in your own profile`, `Zero outbound requests`, …); the "What Stow stores" table, its
+  `local only` pill, and its uninstall footnote are gone, because four rows that all answered `No`
+  restated the promises in table form, and the FAQ still answers the uninstall question. The
+  tradeoff — `One device at a time.` — moves into the right column as the fourth numbered item in a
+  sheet card, carrying an aria-hidden mono route, `this device → export.json → that device`, that
+  drops its boxes below 480 px to stay on one line. `scripts/capture-landing.mjs` no longer shoots
+  the settings page, and `privacy-dark.webp` / `privacy-light.webp` are gone from the repository and
+  the asset check.
 
 ### Fixed
 

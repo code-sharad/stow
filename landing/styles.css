@@ -246,25 +246,6 @@ ol {
   margin-left: auto;
 }
 
-.local-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 7px;
-  border: 1px solid var(--border);
-  color: var(--ink-2);
-  font: 500 10px/1.4 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.local-dot {
-  width: 5px;
-  height: 5px;
-  background: var(--success);
-}
-
 .menu-toggle {
   display: none;
   align-items: center;
@@ -935,7 +916,7 @@ h1 {
   font: 10px/1.5 var(--font-mono);
 }
 
-.privacy-data {
+.privacy-move {
   display: flex;
   flex-direction: column;
   padding: 18px;
@@ -944,104 +925,29 @@ h1 {
   background: var(--sheet);
 }
 
-.privacy-data__head {
+.privacy-move__head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 12px;
+  align-items: baseline;
+  gap: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
-.privacy-data__head p {
-  flex: 1 1 180px;
-  color: var(--ink-2);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.data-table {
-  width: 100%;
-  margin: 14px 0 12px;
-  border-collapse: collapse;
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.data-table caption {
-  margin-bottom: 9px;
-  color: var(--ink-2);
-  font: 500 10px/1.4 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.data-table th {
-  padding: 7px 10px;
-  border-bottom: 1px solid var(--border-strong);
-  color: var(--ink-3);
-  font: 500 8px/1.4 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.data-table td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border);
-  color: var(--ink-2);
-  vertical-align: top;
-}
-
-.data-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.data-table td:first-child {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.data-table td:last-child {
-  color: var(--success);
-  font-weight: 500;
-}
-
-.footnote {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  color: var(--ink-3);
-  font: 10px/1.65 var(--font-mono);
-}
-
-.privacy-move {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 8px 16px;
-  align-items: start;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
 .privacy-move__index {
-  padding-top: 5px;
   color: var(--accent);
   font: 10px/1 var(--font-mono);
   letter-spacing: 0.1em;
 }
 
-.privacy-move h3 {
-  margin: 0 0 6px;
+.privacy-move__head h3 {
+  margin: 0;
   font-size: clamp(19px, 1.8vw, 22px);
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
 
-.privacy-move__body p {
-  max-width: 58ch;
+.privacy-move p {
+  margin: 13px 0 0;
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1.65;
@@ -1049,12 +955,13 @@ h1 {
 }
 
 .privacy-move__path {
-  max-width: none;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  padding-top: 4px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
   font: 10px/1.5 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1177,14 +1084,6 @@ h1 {
   .privacy-grid {
     grid-template-columns: 1fr;
     gap: 28px;
-  }
-
-  .privacy-move {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .privacy-move__path {
-    grid-column: 2;
   }
 
 }
@@ -1322,55 +1221,6 @@ h1 {
     aspect-ratio: 390 / 844;
   }
 
-  .privacy-data {
-    padding: 14px;
-  }
-
-
-  .data-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .data-table,
-  .data-table tbody,
-  .data-table tr,
-  .data-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .data-table tr {
-    padding: 11px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .data-table td {
-    padding: 2px 0;
-    border: 0;
-  }
-
-  .data-table td::before {
-    content: attr(data-label) ' · ';
-    color: var(--ink-3);
-    font: 8px var(--font-mono);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .data-table td:first-child {
-    font-weight: 600;
-  }
-
-}
-
-@media (max-width: 479px) {
-  /* Boxed hops need 253px for one line at 9px; the phone column gives 250. Plain mono
-     text at this width keeps the route on one line and lets the copy carry the section. */
   .privacy-move__path {
     gap: 5px;
     font-size: 9px;
