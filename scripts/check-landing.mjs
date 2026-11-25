@@ -98,8 +98,7 @@ try {
           loaded: image.complete && image.naturalWidth > 0,
         })),
         font: getComputedStyle(document.body).fontFamily,
-        shots: document.querySelectorAll('.hero-shot img, .step-media img, .privacy-shot img')
-          .length,
+        shots: document.querySelectorAll('.hero-shot img, .step-media img').length,
         missingAlt: [...document.images]
           .filter((image) => image.getAttribute('alt') === null)
           .map((image) => image.currentSrc || image.src),
@@ -183,8 +182,6 @@ try {
     'restore-step-light.webp',
     'restore-mobile-dark.webp',
     'restore-mobile-light.webp',
-    'privacy-dark.webp',
-    'privacy-light.webp',
   ]) {
     if (!existsSync(join(root, 'assets', asset))) failures.push(`missing ${asset}`);
   }

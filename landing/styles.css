@@ -876,9 +876,9 @@ h1 {
 
 .privacy-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 32px 40px;
+  align-items: stretch;
   margin-top: 34px;
 }
 
@@ -887,33 +887,60 @@ h1 {
 }
 
 .privacy-promise {
-  padding: 20px 0 22px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 16px;
+  padding: 18px 0 20px;
   border-bottom: 1px solid var(--border);
 }
 
 .privacy-promise__index {
+  padding-top: 5px;
   color: var(--accent);
   font: 10px/1 var(--font-mono);
   letter-spacing: 0.1em;
 }
 
+.privacy-promise__body {
+  min-width: 0;
+}
+
 .privacy-promise h3 {
-  margin: 7px 0;
-  font-size: clamp(20px, 2vw, 24px);
+  margin: 0 0 6px;
+  font-size: clamp(19px, 1.8vw, 22px);
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
 
 .privacy-promise p {
-  max-width: 44ch;
+  max-width: 46ch;
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.privacy-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 11px;
+  list-style: none;
+}
+
+.privacy-detail li {
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  font: 10px/1.5 var(--font-mono);
 }
 
 .privacy-data {
+  display: flex;
+  flex-direction: column;
   padding: 18px;
   border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
   background: var(--sheet);
 }
 
@@ -935,7 +962,7 @@ h1 {
 
 .data-table {
   width: 100%;
-  margin-top: 14px;
+  margin: 14px 0 12px;
   border-collapse: collapse;
   font-size: 12px;
   line-height: 1.55;
@@ -967,15 +994,80 @@ h1 {
   vertical-align: top;
 }
 
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 .data-table td:first-child {
   color: var(--ink);
   font-weight: 500;
 }
 
+.data-table td:last-child {
+  color: var(--success);
+  font-weight: 500;
+}
+
 .footnote {
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
   color: var(--ink-3);
   font: 10px/1.65 var(--font-mono);
+}
+
+.privacy-move {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: start;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.privacy-move__index {
+  padding-top: 5px;
+  color: var(--accent);
+  font: 10px/1 var(--font-mono);
+  letter-spacing: 0.1em;
+}
+
+.privacy-move h3 {
+  margin: 0 0 6px;
+  font-size: clamp(19px, 1.8vw, 22px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.privacy-move__body p {
+  max-width: 58ch;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.privacy-move__path {
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 4px;
+  font: 10px/1.5 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.privacy-move__path span:not(.privacy-move__arrow) {
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  color: var(--ink-3);
+}
+
+.privacy-move__arrow {
+  color: var(--accent);
 }
 
 /* ---------- closing cta ---------- */
@@ -1084,7 +1176,15 @@ h1 {
 
   .privacy-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
+  }
+
+  .privacy-move {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .privacy-move__path {
+    grid-column: 2;
   }
 
 }
@@ -1269,6 +1369,18 @@ h1 {
 }
 
 @media (max-width: 479px) {
+  /* Boxed hops need 253px for one line at 9px; the phone column gives 250. Plain mono
+     text at this width keeps the route on one line and lets the copy carry the section. */
+  .privacy-move__path {
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+  }
+
+  .privacy-move__path span:not(.privacy-move__arrow) {
+    padding: 0;
+    border: 0;
+  }
 }
 
 

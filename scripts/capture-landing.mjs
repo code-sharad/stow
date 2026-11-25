@@ -21,7 +21,6 @@ const worker = browser.serviceWorkers()[0] ?? (await browser.waitForEvent('servi
 const id = new URL(worker.url()).host;
 const page = await browser.newPage();
 const libraryUrl = `chrome-extension://${id}/library.html#/`;
-const settingsUrl = `chrome-extension://${id}/library.html#/settings`;
 const popupUrl = `chrome-extension://${id}/popup.html`;
 
 await worker.evaluate(async () => {
@@ -140,22 +139,6 @@ await shootRestore('restore-step-dark', 720, 520, 'dark');
 await shootRestore('restore-step-light', 720, 520, 'light');
 await shootRestore('restore-mobile-dark', 390, 844, 'dark');
 await shootRestore('restore-mobile-light', 390, 844, 'light');
-
-const shootPrivacy = async (name, scheme) => {
-  await page.setViewportSize({ width: 420, height: 900 });
-  await page.emulateMedia({ colorScheme: scheme });
-  await page.goto(settingsUrl);
-  await page.reload();
-  await page.waitForSelector('.about-block');
-  await page.evaluate(() => document.fonts.ready);
-  const section = page.locator('.settings-section').filter({ has: page.locator('.about-block') });
-  await section.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-  await save(name, await section.screenshot());
-};
-
-await shootPrivacy('privacy-dark', 'dark');
-await shootPrivacy('privacy-light', 'light');
 
 await worker.evaluate(async () => {
   const win = await chrome.windows.getCurrent();

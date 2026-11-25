@@ -18,7 +18,7 @@
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="assets/icon.png" sizes="128x128" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=10" />
+    <link rel="stylesheet" href="styles.css?v=11" />
     <link rel="stylesheet" href="hero-demo.css?v=4" />
 
     <meta property="og:type" content="website" />
@@ -578,35 +578,45 @@
           <div class="privacy-promises reveal">
             <article class="privacy-promise">
               <span class="privacy-promise__index" aria-hidden="true">01</span>
-              <h3>No account.</h3>
-              <p>
-                There is nothing to sign up for. Install Stow, save a window, and your library
-                is there.
-              </p>
+              <div class="privacy-promise__body">
+                <h3>No account.</h3>
+                <p>
+                  There is nothing to sign up for. Install Stow, save a window, and your library
+                  is there.
+                </p>
+                <ul class="privacy-detail">
+                  <li>No email, no password, no profile</li>
+                  <li>Works offline, from the first tab</li>
+                </ul>
+              </div>
             </article>
             <article class="privacy-promise">
               <span class="privacy-promise__index" aria-hidden="true">02</span>
-              <h3>No cloud.</h3>
-              <p>
-                Lists live in your browser's own storage, not on a Stow server. Backups are
-                files you choose to export.
-              </p>
+              <div class="privacy-promise__body">
+                <h3>No cloud.</h3>
+                <p>
+                  Lists live in your browser's own storage, not on a Stow server. Backups are
+                  files you choose to export.
+                </p>
+                <ul class="privacy-detail">
+                  <li>IndexedDB in your own profile</li>
+                  <li>Backups stay where you save them</li>
+                </ul>
+              </div>
             </article>
             <article class="privacy-promise">
               <span class="privacy-promise__index" aria-hidden="true">03</span>
-              <h3>No tracking.</h3>
-              <p>
-                No analytics, no telemetry. The extension contains no network code, so there is
-                nothing to send.
-              </p>
-            </article>
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">04</span>
-              <h3>One device at a time.</h3>
-              <p>
-                Stow does not sync between devices, and that is the price of keeping everything
-                local. Moving to another computer? Export a JSON backup and import it there.
-              </p>
+              <div class="privacy-promise__body">
+                <h3>No tracking.</h3>
+                <p>
+                  No analytics, no telemetry. The extension contains no network code, so there is
+                  nothing to send.
+                </p>
+                <ul class="privacy-detail">
+                  <li>Zero outbound requests</li>
+                  <li>No analytics events</li>
+                </ul>
+              </div>
             </article>
           </div>
 
@@ -653,6 +663,24 @@
               copy.
             </p>
           </div>
+
+          <article class="privacy-move reveal">
+            <span class="privacy-move__index" aria-hidden="true">04</span>
+            <div class="privacy-move__body">
+              <h3>One device at a time.</h3>
+              <p>
+                Stow does not sync between devices, and that is the price of keeping everything
+                local. Moving to another computer? Export a JSON backup and import it there.
+              </p>
+            </div>
+            <p class="privacy-move__path" aria-hidden="true">
+              <span>this device</span>
+              <span class="privacy-move__arrow">→</span>
+              <span>export.json</span>
+              <span class="privacy-move__arrow">→</span>
+              <span>that device</span>
+            </p>
+          </article>
         </div>
       </section>
       <section class="section section--tight closing" aria-labelledby="closing-title">

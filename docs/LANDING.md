@@ -29,7 +29,7 @@ how:    three rows — Stow / Find / Restore, each with a real UI capture
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
 questions: six-question list — Stow vs Chrome, saving all tabs, tab groups, sync, uninstalling,
         importing an OneTab list (matches the FAQPage JSON-LD word for word)
-privacy: three promises + local-only ledger table (no screenshot)
+privacy: three promises + local-only ledger table + a full-width transfer rule (no screenshot)
 footer: stow · local-first tab manager · source · questions · privacy · changelog · v0.1.0
 ```
 
@@ -225,9 +225,21 @@ fails if the question sets drift apart.
   "no cloud" without saying "so no sync, and here is your workaround" makes the visitor ask it
   themselves and assume the worst. Says nothing the FAQ (`Does Stow sync my tabs to another
   device?`) contradicts.
-- Ledger: `local only` · `Nothing in this table leaves your browser.`
+- Promise details: each promise carries two mono chips naming the mechanism, so the claim is
+  checkable rather than asserted — `No email, no password, no profile` / `Works offline, from the
+  first tab`; `IndexedDB in your own profile` / `Backups stay where you save them`; `Zero outbound
+  requests` / `No analytics events`.
+- Ledger: `local only` · `Nothing in this table leaves your browser.` The card sits flush with the
+  promise column (both are stretch items, so the footnote rides the bottom edge), carries a 2px
+  accent rule on its top border that reads as a tab, and prints the `No` column in `--success` so
+  the answer is scannable without reading the sentence.
+- Tradeoff row: `One device at a time.` spans both columns under the promises and the ledger,
+  numbered `04` like the others, and ends in an aria-hidden mono route — `this device → export.json
+  → that device` — that stacks vertically with the arrows rotated below 480px.
 - Footnote: `Uninstalling Stow removes its library. Export a JSON backup first if you want a copy.`
-- No screenshot: the four promises and the table carry the section.
+- No screenshot: the four promises, their chips, and the table carry the section. The layout had a
+  capture at 420px from the settings page; it showed a form, not a promise, and the promises say
+  more in less space.
 
 | Data | Where it is stored | Sent to Stow servers |
 | --- | --- | --- |
@@ -321,7 +333,8 @@ sync with them. The step images remain real captures.
   and figures use `--ink-2` for captions now, not `--ink-3`.
 - Hero, step, feature, and privacy layouts collapse at 1023, 767, and 639px. The hero demo
   switches to its 4:5 camera at 1024px (the site's compact breakpoint), max 480px wide. The privacy
-  grid becomes one column at 1023px; the ledger table becomes labelled rows below 640px.
+  grid becomes one column at 1023px and the tradeoff row drops its route into the second column;
+  the ledger table becomes labelled rows below 640px.
 - Reveals are opacity/translate only, 180ms, and removed under `prefers-reduced-motion`. Images
   below the fold are lazy-loaded.
 - Accessibility: one H1, semantic landmarks, skip link, descriptive alt text, visible focus, menu
