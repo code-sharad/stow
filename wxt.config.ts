@@ -40,6 +40,11 @@ const firefoxManifest = {
 export default defineConfig({
   srcDir: 'src',
   modules: ['@wxt-dev/module-react'],
+  zip: {
+    // Test coverage is not build input. Excluding it keeps the AMO sources
+    // archive to what a reviewer actually needs to reproduce the build.
+    excludeSources: ['coverage/**'],
+  },
   vite: () => ({
     plugins: [tailwindcss()],
   }),
