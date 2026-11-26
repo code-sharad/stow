@@ -61,7 +61,7 @@ const catalog: Record<string, string> = {
   emptyStackBody: 'Drag tabs here to keep them together.',
   nothingStowed: 'Nothing stowed yet',
   nothingStowedBody:
-    'Click the Stow icon in your toolbar to save this window’s tabs here and free up memory.',
+    'Click the Stow icon in your toolbar, then choose Stow this window to save its tabs here and free up memory.',
   noMatches: 'No tabs match “{query}”',
   noMatchesBody: 'Search covers titles, URLs, and list names.',
   clearSearch: 'Clear search',
@@ -90,7 +90,7 @@ const catalog: Record<string, string> = {
   importOneTab: 'Import from OneTab',
   welcomeTitle: 'Close the clutter. Keep the tabs.',
   welcomeBody:
-    'Click the Stow icon in your toolbar and this window’s tabs land here, so your browser gets its memory back. Everything stays on this device.',
+    'Click the Stow icon in your toolbar, choose Stow this window, and its tabs land here so your browser gets its memory back. Everything stays on this device.',
   themeSystem: 'System',
   themeLight: 'Light',
   themeDark: 'Dark',

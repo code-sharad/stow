@@ -514,14 +514,14 @@ Stow all tabs · Stow this tab · Stow other tabs · Stow tabs to the left · St
 ### 13.5 Empty states (heading in `--text-page`, one sentence, one action)
 | State | Heading | Body | Action |
 |---|---|---|---|
-| No stacks | Nothing stowed yet | Click the Stow icon in your toolbar to save this window's tabs here and free up memory. | Stow this window · Import from OneTab |
+| No stacks | Nothing stowed yet | Click the Stow icon in your toolbar, then choose Stow this window to save its tabs here and free up memory. | Stow this window · Import from OneTab |
 | No search results | No tabs match "{query}" | Search covers titles, URLs, and stack names. | Clear search |
 | Empty trash | Trash is empty | Deleted tabs stay here for {days} days. | none |
 | Empty stack | This stack is empty | Drag tabs here to keep them together. | none |
 | Nothing pinned | No pinned stacks | Pin a stack to keep it at the top. | none |
 
 ### 13.6 Onboarding copy
-Heading: "Close the clutter. Keep the tabs." · Body: "Click the Stow icon in your toolbar and this window's tabs land here, so your browser gets its memory back. Everything stays on this device." · Rows: "Pin Stow to your toolbar" / "Click it to stow the window" / "Find, search, and restore tabs here" · Buttons: "Stow this window" / "Import from OneTab".
+Heading: "Close the clutter. Keep the tabs." · Body: "Click the Stow icon in your toolbar, choose Stow this window, and its tabs land here so your browser gets its memory back. Everything stays on this device." · Rows: "Pin Stow to your toolbar" / "Open it and choose Stow this window" / "Find, search, and restore tabs here" · Buttons: "Stow this window" / "Import from OneTab".
 
 ## 14. Brand and assets
 

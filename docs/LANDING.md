@@ -114,7 +114,7 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
   crop that follows the action. The library keeps the real grid: rail 220px, topbar 60px, status
   26px, reading text x=346 through x=1154, stack heads 34px, rows 30px.
 - Story (`12s`, forwards — mess first, payoff last): forty crowded favicon tabs while the camera
-  pushes in and the counter climbs → Stow toolbar click (the default stows the whole window, no
+  pushes in and the counter climbs → Stow toolbar click (the instant-stow toolbar option, no
   popup) → the tabs drain into the icon, the counter falls to 0, `Stowed 40 tabs · 3 lists` → hard
   cut into the library, lists reveal → `flights` search → `2 matches in 2 lists` → Trip
   `Restore all` → `Restored 11 tabs · Trip` → the opening frame fades back in at 11–11.8s so the

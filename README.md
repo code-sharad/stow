@@ -5,9 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-1f6f4a)
 
-Too many tabs open? Click once. Stow saves every eligible tab in the window as a searchable
-**list**, closes the tabs, and gives the memory back. Restore one tab, or the whole list,
-whenever you need it.
+Too many tabs open? Open Stow from the toolbar and choose **Stow this window**. Stow saves every
+eligible tab in the window as a searchable **list**, closes the tabs, and gives the memory back.
+Restore one tab, or the whole list, whenever you need it.
 
 A local-first tab shelf for Chrome and Firefox. Everything lives in your browser profile. There
 is no account, server, telemetry, or network request.

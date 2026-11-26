@@ -49,6 +49,10 @@ describe('settings store', () => {
     expect(await getSettings()).toEqual(DEFAULT_SETTINGS);
   });
 
+  it('opens the popup on a toolbar click by default', async () => {
+    expect(await getSettings()).toMatchObject({ toolbarClick: 'popup' });
+  });
+
   it('saves a patch and mirrors appearance', async () => {
     const next = await saveSettings({ theme: 'dark', density: 'compact', trashRetentionDays: 7 });
     expect(next.theme).toBe('dark');

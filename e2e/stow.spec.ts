@@ -121,10 +121,14 @@ test('searches tabs and persists appearance settings', async () => {
   await page.close();
 });
 
-test('rebinds the toolbar popup as soon as the click setting changes', async () => {
+test('opens the popup by default and rebinds when the click setting changes', async () => {
   const page = await library();
   await page.goto(`chrome-extension://${extensionId}/library.html#/settings`);
   const toolbar = page.locator('#toolbar');
+
+  await expect
+    .poll(() => worker.evaluate(() => chrome.action.getPopup({})))
+    .toMatch(/\/popup\.html$/);
 
   await toolbar.selectOption('popup');
   await expect

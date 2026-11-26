@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const settingsSchema = z.object({
-  toolbarClick: z.enum(['stow-window', 'popup', 'library']).catch('stow-window'),
+  toolbarClick: z.enum(['stow-window', 'popup', 'library']).catch('popup'),
   afterStow: z.enum(['show-library', 'stay']).catch('show-library'),
   ignorePinnedTabs: z.boolean().catch(true),
   stowIncognito: z.boolean().catch(false),

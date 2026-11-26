@@ -31,8 +31,8 @@ recognise their own browser before they are shown a library:
   (a Google Flights result page and Chrome's new-tab page) are markup. The host ships a WebP poster
   as the no-JS / first-paint fallback, removed when the module mounts.
 - The library, tab strip, copy, colors, and geometry are rebuilt from the extension’s actual
-  components and tokens (`src/ui/components/*`, `src/ui/styles/*`). The default toolbar click stows
-  the whole window and opens the library, so the demo never shows the opt-in popup.
+  components and tokens (`src/ui/components/*`, `src/ui/styles/*`). The demo illustrates the
+  instant-stow toolbar option (`toolbarClick='stow-window'`) and does not show the popup.
 
 ## Embed
 

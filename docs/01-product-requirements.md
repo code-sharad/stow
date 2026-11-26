@@ -60,7 +60,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 
 | Capability | Stow v1 | Status | Notes |
 |---|---|---|---|
-| One-click: send all tabs in the window to a list | STOW-01 | **Parity** (P0) | Default toolbar action. |
+| One-click: send all tabs in the window to a list | STOW-01 | **Parity** (P0) | Primary action in the default popup. |
 | Send only this tab / all but this / left / right | STOW-02 | **Parity** (P0) | Context menu + shortcuts. |
 | Send all tabs in all windows | STOW-02 | **Parity** (P0) | |
 | Send highlighted (multi-selected) tabs | STOW-02 | **New** (P1) | |
@@ -87,7 +87,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 
 ## 6. Core user flows
 
-**F1: Stow the window.** User clicks the toolbar icon → eligible tabs are saved as a new Stack at the top of the Library → those tabs close → the Library is shown in that window → the badge shows the new total.
+**F1: Stow the window.** User clicks the toolbar icon, then **Stow this window** in the popup → eligible tabs are saved as a new Stack at the top of the Library → those tabs close → the Library is shown in that window → the badge shows the new total.
 
 **F2: Restore one.** In the Library the user clicks a saved tab → it opens in a new tab right next to the Library → it disappears from the list (unless the stack is locked or the setting says keep).
 
@@ -103,7 +103,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 
 ### 7.1 Stowing (STOW)
 
-- **STOW-01 (P0): One-click stow.** With default settings, clicking the toolbar icon stows all eligible tabs of the current **normal** window into a new Stack placed at the top of the Library (or several Stacks when STOW-07 applies).
+- **STOW-01 (P0): One-click stow.** By default, the popup's primary action stows all eligible tabs of the current **normal** window into a new Stack placed at the top of the Library (or several Stacks when STOW-07 applies). With `toolbarClick='stow-window'`, clicking the toolbar icon performs the same stow directly.
   *AC:* Window has 10 tabs: 2 browser-pinned, 1 `chrome://settings`, 1 Library tab, 6 ordinary. After the click: 6 saved, those 6 closed; the 4 others remain; window stays open; Library visible; badge = previous total + 6.
 - **STOW-02 (P0): Scopes.** Support: *this tab*, *all tabs in window*, *all other tabs*, *tabs to the left*, *tabs to the right*, *highlighted tabs* (P1), *all windows*. Reachable from: context menu (page and toolbar-icon contexts), keyboard commands, popup, command palette.
   *AC:* For each scope, a unit test against a faked tab set asserts the exact tab-id set selected.
@@ -200,7 +200,7 @@ Tab overload is a memory and attention problem. OneTab solved it with one idea: 
 
 ### 7.9 Popup (POP) (P1)
 
-When `toolbarClick='popup'`, or when the user opens it from the extension menu, the popup offers: Stow this window (with eligible-tab count), Stow this tab, Stow other tabs, Stow all windows, a search field (Enter opens Library with the query), the three most recent Stacks with one-click **Restore all**, and "Open library" with the total saved-tab count. Size: 360 px wide, ≤ 560 px tall.
+By default (`toolbarClick='popup'`), clicking the toolbar icon opens the popup. It offers: Stow this window (with eligible-tab count), Stow this tab, Stow other tabs, Stow all windows, a search field (Enter opens Library with the query), the three most recent Stacks with one-click **Restore all**, and "Open library" with the total saved-tab count. Size: 360 px wide, ≤ 560 px tall.
 
 ### 7.10 Keyboard and command palette (KBD) (P1)
 
@@ -242,7 +242,7 @@ All keys live in `chrome.storage.local` under `settings` (02 §7). Defaults are 
 
 | Key | Type / values | Default | Description |
 |---|---|---|---|
-| `toolbarClick` | `'stow-window' \| 'popup' \| 'library'` | `'stow-window'` | What clicking the toolbar icon does. |
+| `toolbarClick` | `'stow-window' \| 'popup' \| 'library'` | `'popup'` | What clicking the toolbar icon does. |
 | `afterStow` | `'show-library' \| 'stay'` | `'show-library'` | Whether the Library is brought into the window after stowing. |
 | `ignorePinnedTabs` | boolean | `true` | Leave browser-pinned tabs open. |
 | `stowIncognito` | boolean | `false` | Allow saving incognito tabs to disk (shows a warning). |
@@ -276,7 +276,7 @@ Stow stores your saved tabs only in your browser's local extension storage. It m
 | # | Question | Default chosen (change only via decision log) |
 |---|---|---|
 | 1 | Product name | **Stow** (placeholder). Verify trademark/store-name availability before release. |
-| 2 | Default toolbar action: popup or instant stow? | **Instant stow** (the product's core promise). The popup is reachable from the extension menu and via setting. |
+| 2 | Default toolbar action: popup or instant stow? | **Popup**, with instant stow as its primary action. Instant stow remains selectable via `toolbarClick='stow-window'`. |
 | 3 | Split native groups into Stacks by default? | **Yes**, with a clear setting and toast copy ("Stowed 14 tabs in 3 stacks"). |
 | 4 | Default dedupe? | **Global, newest wins**, always undoable. |
 | 5 | Incognito? | **Never persisted** by default. |
