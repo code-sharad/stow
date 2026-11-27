@@ -1,9 +1,15 @@
 # Stow: agent brief
 
+> **Historical document — do not use it to navigate the repository.** This was the
+> original build-from-zero brief. Its target layout and file names are out of date, and some
+> behavior has changed since v1. Current truth lives in [`../AGENTS.md`](../AGENTS.md),
+> [`agents/architecture.md`](agents/architecture.md), the code, and the tests. Use this file for
+> product intent only.
+
 > **Working name: "Stow".** A modern, local-first replacement for the OneTab browser extension.
 > The name is a placeholder. It lives in exactly one constant (`src/shared/brand.ts`) and in `_locales/*/messages.json`. Do not hardcode it anywhere else, so renaming is a one-line change.
 
-You are implementing this product end to end: scaffolding, core logic, UI, tests, CI, and release packaging. Read this file fully, then the other four documents in order.
+You are implementing this product end to end: scaffolding, core logic, UI, tests, CI, and release packaging. Read this file fully, then the other four documents in order. After a release, read `05-hardening-plan.md` for the post-audit remediation plan.
 
 ## 1. Document map and precedence
 
@@ -14,6 +20,7 @@ You are implementing this product end to end: scaffolding, core logic, UI, tests
 | 02 | `02-technical-design.md` | How it is built: stack, architecture, manifest, data model, algorithms, failure modes, security | Senior engineer |
 | 03 | `03-delivery-plan-and-qa.md` | Milestones, test strategy, acceptance scenarios, CI, release checklist, risks | Senior engineer |
 | 04 | `04-design-system-and-ui.md` | Visual language, tokens, layout, components, interaction, motion, a11y, copy | Senior design engineer |
+| 05 | `05-hardening-plan.md` | Post-audit remediation workstreams: data safety, lifecycle, browser parity, release engineering, docs | Tech lead |
 
 **Precedence when documents disagree:** behavior and data → 01, then 02. Anything visual (color, type, spacing, motion, copy tone) → 04. Anything about order of work → 03. If two documents conflict and you cannot resolve it by this rule, pick the safer option for user data, record it in `docs/DECISIONS.md`, and continue. Do not stall.
 

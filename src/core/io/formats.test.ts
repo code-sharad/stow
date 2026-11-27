@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest';
+import { DEFAULT_SETTINGS } from '../settings/schema';
 import {
   detectFormat,
+  parseFullBackup,
   parseImport,
   parseMarkdown,
   parseNetscapeHtml,
   parseOneTabText,
   parseStowJson,
+  serializeFullBackup,
   serializeMarkdown,
   serializeNetscapeHtml,
   serializeOneTabText,
@@ -58,6 +61,16 @@ describe('Markdown', () => {
     ]);
     expect(text).toContain('## A \\[bracket\\]');
     expect(text).toContain('- [x \\[y\\]](https://example.com/a_(b))');
+  });
+
+  it('round-trips escaped titles and balanced parentheses in URLs', () => {
+    const source = [
+      {
+        title: 'A [bracket] \\ backslash',
+        tabs: [{ url: 'https://example.com/a_(b)/c_(d)', title: 'x [y] (z) \\ w' }],
+      },
+    ];
+    expect(parseMarkdown(serializeMarkdown(source)).stacks).toEqual(source);
   });
 });
 
@@ -118,5 +131,68 @@ describe('detectFormat / parseImport', () => {
     expect(detectFormat('## Heading\n- [A](https://a.example)')).toBe('markdown');
     expect(detectFormat('https://a.example | A')).toBe('onetab');
     expect(parseImport('https://a.example | A').format).toBe('onetab');
+  });
+
+  it('detects a titled OneTab export as OneTab, not Markdown', () => {
+    const text = serializeOneTabText(
+      [{ title: 'Work', tabs: [{ url: 'https://a.example', title: 'A' }] }],
+      true,
+    );
+    expect(detectFormat(text)).toBe('onetab');
+    expect(parseImport(text).stacks[0]?.title).toBe('Work');
+  });
+
+  it('detects a Markdown document with a heading and no links as Markdown', () => {
+    expect(detectFormat('## Notes\n\nSome prose.')).toBe('markdown');
+  });
+
+  it('round-trips a full v2 backup through serialize and parse', () => {
+    const backup = {
+      app: 'stow' as const,
+      formatVersion: 2 as const,
+      exportedAt: '2026-01-01T00:00:00.000Z',
+      settings: { ...DEFAULT_SETTINGS },
+      stacks: [
+        {
+          title: 'One',
+          orderKey: 'a1',
+          pinned: true,
+          locked: true,
+          collapsed: true,
+          color: 'blue' as const,
+          createdAt: 1,
+          updatedAt: 2,
+          tabs: [
+            {
+              url: 'https://example.com/',
+              title: 'X',
+              orderKey: 'a1',
+              wasPinned: true,
+              createdAt: 1,
+              favicon: 'data:image/png;base64,AA==',
+            },
+          ],
+        },
+      ],
+    };
+    const parsed = parseImport(serializeFullBackup(backup));
+    expect(parsed.backup).toEqual(backup);
+    expect(parsed.format).toBe('json');
+  });
+
+  it('fails closed on unknown fields and future versions', () => {
+    const base = {
+      app: 'stow',
+      formatVersion: 2,
+      exportedAt: 'x',
+      settings: { ...DEFAULT_SETTINGS },
+      stacks: [],
+    };
+    expect(() => parseFullBackup(JSON.stringify({ ...base, unknown: true }))).toThrow(
+      'invalid-backup',
+    );
+    expect(() => parseFullBackup(JSON.stringify({ ...base, formatVersion: 3 }))).toThrow(
+      'future-version',
+    );
   });
 });

@@ -57,20 +57,13 @@ interface MenuState {
   tab?: SavedTab;
 }
 
-function Favicon({ url }: { url: string }): ReactNode {
+function Favicon({ tab }: { tab: SavedTab }): ReactNode {
   const [failed, setFailed] = useState(false);
-  if (failed) {
-    return (
-      <span className="favicon favicon-letter" aria-hidden="true">
-        {letterFor(url)}
-      </span>
-    );
-  }
-  const src = faviconUrl(url);
+  const src = failed ? null : (tab.favicon ?? faviconUrl(tab.url));
   if (!src) {
     return (
       <span className="favicon favicon-letter" aria-hidden="true">
-        {letterFor(url)}
+        {letterFor(tab.url)}
       </span>
     );
   }
@@ -311,7 +304,7 @@ function TabRow({
         label={`Select ${tab.title || tab.url}`}
         onChange={() => toggleSelected(tab.id, true)}
       />
-      <Favicon url={tab.url} />
+      <Favicon tab={tab} />
       <span className="tab-title" title={tab.title || tab.url}>
         {tab.title || tab.url}
       </span>

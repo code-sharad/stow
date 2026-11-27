@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { RestoreRequest, StowScope } from '../core/domain/types';
 import { focusOrCreate } from '../platform/windows';
-import { type RestoreResult, restore } from '../services/restore';
+import { type RestoreResult, restore, resumeRestore } from '../services/restore';
 import { eligibleCount, type StowResult, stow } from '../services/stow';
 
 export const stowScopeSchema = z.discriminatedUnion('kind', [
@@ -25,6 +25,7 @@ export const restoreRequestSchema = z.object({
 export const protocolSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('stow'), payload: z.object({ scope: stowScopeSchema }) }),
   z.object({ type: z.literal('restore'), payload: restoreRequestSchema }),
+  z.object({ type: z.literal('resumeRestore'), payload: z.object({ opId: z.string().min(1) }) }),
   z.object({ type: z.literal('openLibrary'), payload: z.object({ hash: z.string().optional() }) }),
   z.object({ type: z.literal('getEligibleCount'), payload: z.object({ scope: stowScopeSchema }) }),
   z.object({ type: z.literal('requestBackupPermission'), payload: z.object({}).optional() }),
@@ -35,6 +36,7 @@ export type ProtocolMessage = z.infer<typeof protocolSchema>;
 export interface Responses {
   stow: StowResult;
   restore: RestoreResult;
+  resumeRestore: RestoreResult;
   openLibrary: { ok: true };
   getEligibleCount: { count: number };
   requestBackupPermission: { granted: boolean };
@@ -57,6 +59,8 @@ export async function handleMessage(
       return stow(message.payload.scope as StowScope);
     case 'restore':
       return restore(message.payload as RestoreRequest);
+    case 'resumeRestore':
+      return resumeRestore(message.payload.opId);
     case 'openLibrary':
       await focusOrCreate({ hash: message.payload.hash });
       return { ok: true };

@@ -1,5 +1,8 @@
 # 04. Design system and UI
 
+> **Historical specification.** The visual layer is superseded; see the note below and
+> [`../AGENTS.md`](../AGENTS.md). Use current components and styles for implementation.
+
 > **Visual layer superseded 2026-11-22.** The implementation now uses the console system in
 > `docs/DECISIONS.md` ("Console interface derived from OpenCode"). Layout, interaction, content,
 > and accessibility requirements below still apply; Paper/Sheet colors, serif/sans type, card

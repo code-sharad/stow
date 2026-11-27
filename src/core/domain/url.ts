@@ -64,6 +64,22 @@ export function safeHref(raw: string): string | null {
   return isAllowedScheme(raw) ? raw : null;
 }
 
+/**
+ * Accept only an image URL the UI may put in an <img src>: an inline data URL or
+ * an https URL, length-capped. Anything else becomes undefined (letter tile).
+ */
+export function sanitizeFaviconUrl(raw: string | undefined | null): string | undefined {
+  if (!raw) return undefined;
+  const value = raw.trim();
+  if (value.length === 0 || value.length > LIMITS.favicon) return undefined;
+  if (/^data:image\/[a-z0-9.+-]+[;,]/i.test(value)) return value;
+  try {
+    return new URL(value).protocol === 'https:' ? value : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function urlKeyOf(tab: Pick<SavedTab, 'url'>): string {
   return normalizeUrlKey(tab.url);
 }

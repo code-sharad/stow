@@ -1,0 +1,4 @@
+# Keep release and persistence changes under owner review.
+/.github/workflows/ @code-sharad
+/src/core/db/ @code-sharad
+/src/core/settings/ @code-sharad

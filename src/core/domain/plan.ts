@@ -19,6 +19,7 @@ export interface PlannedTab {
   title: string;
   orderKey: string;
   wasPinned: boolean;
+  favicon?: string;
 }
 
 export interface PlannedStack {
@@ -79,6 +80,7 @@ export function buildStowPlan(input: BuildStowPlanInput): StowPlan {
       urlKey: normalizeUrlKey(tab.url, strip),
       title: tab.title.slice(0, LIMITS.title),
       wasPinned: tab.pinned,
+      favicon: tab.faviconUrl,
       groupKey,
     });
   }
@@ -126,6 +128,7 @@ export function buildStowPlan(input: BuildStowPlanInput): StowPlan {
         title: candidate.title,
         orderKey: tabKeys[index] ?? tabKeys[tabKeys.length - 1] ?? 'a0',
         wasPinned: candidate.wasPinned,
+        ...(candidate.favicon ? { favicon: candidate.favicon } : {}),
       })),
     };
   });

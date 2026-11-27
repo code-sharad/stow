@@ -1,6 +1,6 @@
 # Building Stow from source
 
-This file exists for add-on reviewers. It describes how `.output/stow-0.1.1-firefox.zip` was
+This file exists for add-on reviewers. It describes how `.output/stow-0.1.1-firefox.zip` is
 produced from the sources in this package, and nothing else.
 
 ## Requirements
@@ -24,7 +24,7 @@ pnpm zip:firefox
 | File | What it is |
 | --- | --- |
 | `.output/firefox-mv3/` | The unpacked extension, identical to the contents of the uploaded zip |
-| `.output/stow-0.1.1-firefox.zip` | The package that was uploaded to addons.mozilla.org |
+| `.output/stow-0.1.1-firefox.zip` | The package submitted to addons.mozilla.org |
 | `.output/stow-0.1.1-sources.zip` | This sources archive |
 
 To inspect what shipped without zipping, `pnpm build:firefox` produces the same tree in
@@ -35,7 +35,7 @@ To inspect what shipped without zipping, `pnpm build:firefox` produces the same 
 | Component | Version | Role |
 | --- | --- | --- |
 | WXT | 0.21.5 | Build orchestration, manifest generation, packaging |
-| Vite | 7 | Bundling and minification |
+| Vite | 8 | Bundling and minification |
 | React | 19 | Library and popup UI |
 | TypeScript | 5.9 | Sources in `src/` |
 
@@ -57,7 +57,7 @@ code, templates, or assets: the fonts and images referenced by the landing page 
 
 ```bash
 pnpm check:network   # fails if src/ contains fetch, XHR, WebSocket, or a remote URL
-pnpm test            # 70 unit tests
+pnpm test            # unit tests
 pnpm typecheck
 pnpm lint
 ```

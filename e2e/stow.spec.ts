@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import {
   type BrowserContext,
@@ -19,7 +20,7 @@ test.describe.configure({ mode: 'serial' });
 test.beforeAll(async () => {
   context = await chromium.launchPersistentContext(`/tmp/stow-e2e-${Date.now()}`, {
     headless: false,
-    executablePath: process.env.CI ? undefined : '/usr/bin/chromium',
+    executablePath: process.env.CHROMIUM_PATH ?? (process.env.CI ? undefined : '/usr/bin/chromium'),
     args: [
       `--disable-extensions-except=${extensionPath}`,
       `--load-extension=${extensionPath}`,
@@ -188,6 +189,56 @@ test('imports a JSON backup from Settings', async () => {
   await page.getByRole('button', { name: /^all tabs/i }).click();
   await expect(page.locator('.stack-head')).toHaveCount(1);
   await expect(page.locator('.tab-row')).toHaveCount(2);
+  await page.close();
+});
+
+test('exports a full backup that restores every list after a database reset', async () => {
+  const page = await library();
+  await makeTabs();
+  await stow(page);
+  await page.goto(`chrome-extension://${extensionId}/library.html#/settings`);
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: /export/i }).click();
+  const download = await downloadPromise;
+  const file = await download.path();
+  if (!file) throw new Error('export produced no file');
+  const payload = JSON.parse(await readFile(file, 'utf8')) as {
+    formatVersion: number;
+    settings?: unknown;
+    stacks: unknown[];
+  };
+  expect(payload.formatVersion).toBe(2);
+  expect(payload.settings).toBeTruthy();
+  expect(payload.stacks).toHaveLength(1);
+
+  await worker.evaluate(async () => {
+    await new Promise<void>((resolve, reject) => {
+      const open = indexedDB.open('stow');
+      open.onerror = () => reject(open.error);
+      open.onsuccess = () => {
+        const database = open.result;
+        const tx = database.transaction(['stacks', 'tabs', 'ops', 'meta'], 'readwrite');
+        for (const name of ['stacks', 'tabs', 'ops', 'meta']) tx.objectStore(name).clear();
+        tx.oncomplete = () => {
+          database.close();
+          resolve();
+        };
+        tx.onerror = () => reject(tx.error);
+      };
+    });
+  });
+  await page.reload();
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'backup.json',
+    mimeType: 'application/json',
+    buffer: await readFile(file),
+  });
+  await expect(page.getByText(/imported 3 tabs/i)).toBeVisible();
+  await page.goto(`chrome-extension://${extensionId}/library.html#/`);
+  await page.getByRole('button', { name: /all tabs/i }).click();
+  await expect(page.locator('.stack-head')).toHaveCount(1);
+  await expect(page.locator('.tab-row')).toHaveCount(3);
   await page.close();
 });
 

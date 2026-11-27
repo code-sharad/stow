@@ -1,8 +1,6 @@
-import { commitStow, getLockedStackIds, liveUrlIndex, log, verifyStow } from '../core/db/repo';
+import { commitFreshStow, log, verifyStow } from '../core/db/repo';
 import { classify } from '../core/domain/ignore';
-import { buildStowPlan } from '../core/domain/plan';
 import type { SkipCounts, StowScope } from '../core/domain/types';
-import { normalizeUrlKey } from '../core/domain/url';
 import { getSettings } from '../core/settings/store';
 import { describeGroups, removeInBatches, resolveScope } from '../platform/tabs';
 import { ensureSurvival, libraryUrl } from '../platform/windows';
@@ -48,26 +46,17 @@ async function stowNow(scope: StowScope): Promise<StowResult> {
   }
 
   const groups = settings.preserveBrowserGroups ? await describeGroups(eligible) : new Map();
-  const existing =
-    settings.dedupe === 'global'
-      ? await liveUrlIndex(
-          eligible.map((tab) => normalizeUrlKey(tab.url, settings.stripTrackingForDedupe)),
-        )
-      : new Map();
-  const locked = settings.dedupe === 'global' ? await getLockedStackIds() : new Set<string>();
 
-  const plan = buildStowPlan({
-    eligible,
-    groups,
-    settings,
-    existing,
-    lockedStackIds: locked,
-    now: Date.now(),
-  });
-
+  let plan: Awaited<ReturnType<typeof commitFreshStow>>['plan'];
   let committed = false;
   try {
-    await commitStow(plan);
+    const result = await commitFreshStow({
+      eligible,
+      groups,
+      settings,
+      now: Date.now(),
+    });
+    plan = result.plan;
     committed = true;
     await verifyStow(plan);
   } catch (error) {

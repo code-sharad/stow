@@ -1,11 +1,14 @@
 import { ArrowDownToLine, ShieldCheck } from 'lucide-react';
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { pendingRestoreOps } from '../../core/db/repo';
 import type { Id, Stack } from '../../core/domain/types';
+import { send } from '../../messaging/protocol';
 import { moveTabsToStack, stowScope } from '../actions';
 import { t } from '../i18n';
 import { useLibrary } from '../state/library';
 import { LibrarySearch } from '../state/search';
 import { useSettings } from '../state/settings';
+import { useToasts } from '../state/toasts';
 import { CommandPalette } from './CommandPalette';
 import { Button, Modal, ToastHost } from './controls';
 import { SettingsPage } from './SettingsPage';
@@ -72,6 +75,23 @@ export function LibraryApp(): ReactNode {
     void initSettings();
     void init();
   }, [init, initSettings]);
+
+  useEffect(() => {
+    void (async () => {
+      const ops = await pendingRestoreOps();
+      const first = ops[0];
+      if (!first) return;
+      useToasts.getState().push(t('resumeRestorePrompt'), {
+        action: {
+          label: t('resume'),
+          onClick: () => {
+            void send('resumeRestore', { opId: first.id });
+          },
+        },
+        timeout: 0,
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     if (route.name === 'welcome' && stacks.length > 0) {

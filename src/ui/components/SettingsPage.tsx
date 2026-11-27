@@ -101,6 +101,7 @@ export function SettingsPage(): ReactNode {
   const [sites, setSites] = useState<string | null>(null);
   const [usage, setUsage] = useState<string | null>(null);
   const [resetOpen, setResetOpen] = useState(false);
+  const [importedSettings, setImportedSettings] = useState<Settings | null>(null);
   useEffect(() => {
     void navigator.storage?.estimate?.().then((estimate) => {
       if (estimate.usage !== undefined) setUsage(formatBytes(estimate.usage));
@@ -113,10 +114,9 @@ export function SettingsPage(): ReactNode {
   };
 
   const exportAll = (): void => {
-    downloadJson(
-      `stow-library-${new Date().toISOString().slice(0, 10)}.json`,
-      buildExport(stacks, tabsByStack),
-    );
+    void buildExport(stacks, tabsByStack, settings).then((payload) => {
+      downloadJson(`stow-library-${new Date().toISOString().slice(0, 10)}.json`, payload);
+    });
   };
 
   return (
@@ -339,7 +339,8 @@ export function SettingsPage(): ReactNode {
                 const file = event.target.files?.[0];
                 if (file) {
                   void importFile(file)
-                    .then(() => {
+                    .then((outcome) => {
+                      if (outcome.settings) setImportedSettings(outcome.settings);
                       if (fileRef.current) fileRef.current.value = '';
                     })
                     .catch(() => push(t('importFailed'), { tone: 'error' }));
@@ -392,6 +393,16 @@ export function SettingsPage(): ReactNode {
         danger
         onConfirm={() => void resetLibraryData().then(() => push(t('libraryReset')))}
         onClose={() => setResetOpen(false)}
+      />
+      <ConfirmDialog
+        open={importedSettings !== null}
+        title={t('importSettingsTitle')}
+        body={t('importSettingsBody')}
+        confirmLabel={t('apply')}
+        onConfirm={() => {
+          if (importedSettings) void update(importedSettings);
+        }}
+        onClose={() => setImportedSettings(null)}
       />
     </div>
   );

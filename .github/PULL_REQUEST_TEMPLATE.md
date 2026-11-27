@@ -14,12 +14,11 @@
 
 <!-- Check what you actually ran. -->
 
-- [ ] `pnpm lint`
-- [ ] `pnpm typecheck`
-- [ ] `pnpm test`
-- [ ] `pnpm build`
-- [ ] `pnpm check:landing` (UI or landing changes)
-- [ ] `pnpm e2e` (UI or workflow changes)
+- [ ] `pnpm verify:fast`
+- [ ] `pnpm verify` (or explain why a step was not run)
+- [ ] `pnpm verify:e2e` (UI, tabs, or workflow changes)
+- [ ] `pnpm test:firefox` (platform, favicon, background, or Firefox changes)
+- [ ] `pnpm check:agent-docs` (agent docs or command/path changes)
 
 ## Screenshots
 
@@ -28,6 +27,6 @@
 ## Privacy and permissions
 
 <!-- Does this add a network call, a host permission, a new stored field, or expand what is saved?
-     Most changes should answer "none". -->
+     Does it change the backup format or import trust boundary? Most changes should answer "none". -->
 
 None.
