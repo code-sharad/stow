@@ -1,4 +1,5 @@
 import type { NativeGroup, RestoreRequest, StowScope, TabCandidate } from '../core/domain/types';
+import { sanitizeFaviconUrl } from '../core/domain/url';
 import { BATCH_CLOSE } from '../shared/constants';
 
 export interface TabsPort {
@@ -20,6 +21,7 @@ function toCandidate(tab: chrome.tabs.Tab): TabCandidate {
     pinned: Boolean(tab.pinned),
     incognito: Boolean(tab.incognito),
     groupId: tab.groupId ?? -1,
+    faviconUrl: sanitizeFaviconUrl(tab.favIconUrl),
     windowType: 'normal',
   };
   if (tab.pendingUrl && !tab.url) candidate.url = tab.pendingUrl;

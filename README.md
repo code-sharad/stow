@@ -38,11 +38,11 @@ for the short version.
 Stow is not in the Chrome Web Store yet. Install the current build from the
 [latest release](https://github.com/code-sharad/stow/releases/latest):
 
-1. Download `stow-0.1.0-chrome.zip` and unzip it.
+1. Download `stow-0.1.1-chrome.zip` and unzip it.
 2. Open `chrome://extensions` and enable Developer mode.
 3. Choose **Load unpacked** and select the unzipped folder.
 
-Requires Chrome 120+ or another Manifest V3 Chromium browser.
+Requires Chrome 123+ or another Manifest V3 Chromium browser.
 
 ### Firefox
 
@@ -50,7 +50,7 @@ Firefox is not in the add-on store yet either. Build the signed-ready package fr
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm zip:firefox     # writes .output/stow-0.1.0-firefox.zip
+pnpm zip:firefox     # writes .output/stow-0.1.1-firefox.zip
 ```
 
 Then open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select
@@ -90,10 +90,12 @@ pnpm e2e          # real Chromium + the built extension
 pnpm check:tokens
 pnpm check:network
 pnpm check:landing
+pnpm test:firefox  # real Firefox + the built extension (needs Firefox and geckodriver)
 ```
 
-The end-to-end suite launches Chromium with a temporary profile. Set `CHROMIUM_PATH` to use a
-different binary, or run under `xvfb-run` on a headless CI host.
+The end-to-end suites launch a temporary profile. Set `CHROMIUM_PATH` to use a different
+Chromium binary, or run under `xvfb-run` on a headless CI host. `pnpm test:firefox` needs Firefox
+on `PATH` and downloads geckodriver on first use.
 
 ## Landing page
 

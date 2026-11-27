@@ -101,3 +101,57 @@ Append-only. Newest at the bottom.
   permissive license for a small utility and lets forks and package maintainers carry it forward.
   The product invariants stay in `CONTRIBUTING.md` so forks inherit the expectations, not just the
   code.
+
+## 2026-11-26 — Backup v2 carries settings and list metadata; v1 stays importable
+
+- **Decision:** Manual export and scheduled backup share `buildFullBackup()`. The payload records
+  every live stack (`orderKey`, `pinned`, `locked`, `collapsed`, `color`, timestamps) and tab
+  (`orderKey`, `wasPinned`, `createdAt`, `favicon`) plus the settings object. Import validates the
+  whole document with strict zod schemas, refuses unknown fields and future versions, and applies
+  imported settings only after an explicit confirmation. Legacy `formatVersion: 1` files still
+  import as tabs-only.
+- **Alternatives:** Add fields to v1 in place; export only the library; silently apply imported
+  settings.
+- **Reason:** A backup that drops lock/pin state or settings is not a restore. A new version keeps
+  old importers honest and lets the importer tell the user when a file could not carry those fields.
+  Confirming settings prevents a stranger's backup from turning retention or scheduled downloads
+  into destructive defaults.
+
+## 2026-11-26 — Existing backup alarms survive boot
+
+- **Decision:** `syncBackupAlarm()` reads the stored schedule mode and returns without touching an
+  alarm that already matches it. It creates an alarm only when none exists or the user changed the
+  mode, and clears it when the mode becomes `off`.
+- **Alternatives:** Recreate the alarm on every service-worker boot; store the next run time and
+  schedule an exact delay.
+- **Reason:** MV3 workers restart constantly. Recreating the alarm on each boot pushes the next
+  backup further out forever, so a daily schedule can never fire.
+
+## 2026-11-26 — Restore progress is durable, and resume is keyed by op id
+
+- **Decision:** Before the first `chrome.tabs.create`, restore writes a `restore` operation with one
+  row per saved tab. Successful creates mark rows `opened`; successful removals mark them `removed`.
+  An unfinished operation is surfaced in the Library as a Resume toast, and resuming opens only
+  `pending` rows, then removes every row the operation had opened.
+- **Alternatives:** Retry by matching URLs; keep progress in memory; remove rows before opening.
+- **Reason:** The worker can die between create and remove, and URL matching guesses wrong when the
+  same URL is saved twice. An op-id ledger makes retry idempotent and preserves the product
+  invariant that a saved row disappears only after its browser tab exists.
+
+## 2026-11-26 — Dedupe decisions come from the commit transaction's snapshot
+
+- **Decision:** The stow path builds its plan inside the Dexie transaction that writes it
+  (`commitFreshStow`), reading the live URL index and locked-stack set from that snapshot.
+- **Alternatives:** Keep the pre-read plan and abort on a mismatch; lock the whole database during
+  plan construction.
+- **Reason:** A delete or move in the Library between planning and committing could otherwise trash
+  the wrong duplicate row or merge into a stack that no longer exists.
+
+## 2026-11-26 — Capture favicons at stow time instead of requesting them
+
+- **Decision:** Save `tabs.Tab.favIconUrl` as a validated `data:image/…` or `https:` string, capped
+  at 64 KiB, and prefer it when rendering. Use Chromium's `_favicon/` endpoint only when the
+  manifest grants the `favicon` permission; otherwise fall back to a letter tile.
+- **Alternatives:** Store page URLs and fetch icons later; add host permissions for favicons.
+- **Reason:** Firefox has no `_favicon/` endpoint, and fetching icons from sites would break the
+  no-network promise. Capturing the URL the browser already resolved keeps both platforms offline.

@@ -80,15 +80,18 @@ Stow is an independent project and is not affiliated with OneTab.
 | License | MIT | MIT |
 | Privacy policy | `https://github.com/code-sharad/stow/blob/main/docs/PRIVACY.md` | same |
 | Homepage | `https://stow-tabs.vercel.app/` | same |
-| Support | repository issues | same |
+| Support | `https://github.com/code-sharad/stow/issues` | same |
 
 ## Screenshots (5, 1280×800)
 
-1. The Library, three lists open, dark. Caption: **Every tab in the window, saved as a list.**
-2. Search with three results across two lists. Caption: **Type half a title. Find it.**
-3. The stow toast with Undo. Caption: **Nothing closes until it is saved.**
-4. Import from OneTab with the preview counts. Caption: **Your old list still works.**
-5. Settings → Data, showing local storage and optional backup. Caption: **Your data, in one place, on one machine.**
+Generated with `node scripts/store-screenshots.mjs` against the built extension; files are in
+`docs/store-screenshots/`. Re-run the script after UI changes so the listing matches the build.
+
+1. Welcome screen, dark. Caption: **Every tab in the window, saved as a list.**
+2. The Library with three lists, pinned and locked states visible. Caption: **Every tab in the window, saved as a list.**
+3. Search for `design` across lists. Caption: **Type half a title. Find it.**
+4. The stow toast after saving a window. Caption: **Nothing closes until it is saved.**
+5. Settings → Data and backup. Caption: **Your data, in one place, on one machine.**
 
 ## Do not write
 

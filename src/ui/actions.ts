@@ -3,6 +3,8 @@ import {
   createStackWithTabs,
   dedupeStack,
   emptyTrash,
+  importBackup,
+  importTabs,
   moveTabs,
   renameStack,
   reorderStack,
@@ -12,6 +14,9 @@ import {
   updateStack,
 } from '../core/db/repo';
 import type { Id, SavedTab, Stack, StowScope } from '../core/domain/types';
+import { buildFullBackup, type FullBackup, parseImport } from '../core/io/formats';
+import type { Settings } from '../core/settings/schema';
+import { getSettings } from '../core/settings/store';
 import { send } from '../messaging/protocol';
 import { LIMITS } from '../shared/constants';
 import { stackAsMarkdown, stackAsText, stackTitle } from './format';
@@ -198,22 +203,14 @@ export async function copyTabLink(tab: SavedTab): Promise<void> {
   push(t('copyLink'));
 }
 
-export interface ExportPayload {
-  version: 1;
-  exportedAt: string;
-  stacks: { title: string; createdAt: number; tabs: { title: string; url: string }[] }[];
-}
-
-export function buildExport(stacks: Stack[], tabsByStack: Record<Id, SavedTab[]>): ExportPayload {
-  return {
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    stacks: stacks.map((stack) => ({
-      title: stackTitle(stack),
-      createdAt: stack.createdAt,
-      tabs: (tabsByStack[stack.id] ?? []).map((tab) => ({ title: tab.title, url: tab.url })),
-    })),
-  };
+/** Manual export uses the same builder the scheduled backup does, so fields cannot drift. */
+export async function buildExport(
+  stacks: Stack[],
+  tabsByStack: Record<Id, SavedTab[]>,
+  settings: Settings,
+): Promise<FullBackup> {
+  const tabs = stacks.flatMap((stack) => tabsByStack[stack.id] ?? []);
+  return buildFullBackup(stacks, tabs, settings);
 }
 
 export function downloadJson(filename: string, payload: unknown): void {
@@ -226,36 +223,49 @@ export function downloadJson(filename: string, payload: unknown): void {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function exportStack(stack: Stack, tabs: SavedTab[]): void {
+export async function exportStack(stack: Stack, tabs: SavedTab[]): Promise<void> {
+  const settings = await getSettings();
   const slug =
     stackTitle(stack)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '') || 'stack';
-  downloadJson(`stow-${slug}.json`, {
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    stacks: [
-      {
-        title: stackTitle(stack),
-        createdAt: stack.createdAt,
-        tabs: tabs.map((tab) => ({ title: tab.title, url: tab.url })),
-      },
-    ],
-  } satisfies ExportPayload);
+  downloadJson(`stow-${slug}.json`, buildFullBackup([stack], tabs, settings));
 }
 
 export async function emptyAllTrash(): Promise<void> {
   apply(await emptyTrash());
 }
 
-export async function importFile(file: File): Promise<number> {
-  const [{ importTabs }, { parseImport }] = await Promise.all([
-    import('../core/db/repo'),
-    import('../core/io/formats'),
-  ]);
+export interface ImportOutcome {
+  imported: number;
+  skipped: number;
+  /** Settings from a full-fidelity backup; apply only after the user confirms. */
+  settings?: Settings;
+  /** True for a legacy JSON that could not carry settings or list fields. */
+  degraded: boolean;
+}
+
+export async function importFile(file: File): Promise<ImportOutcome> {
   if (file.size > LIMITS.importBytes) throw new Error('too-large');
   const parsed = parseImport(await file.text(), file.name);
+
+  if (parsed.backup) {
+    const result = await importBackup(parsed.backup);
+    apply(result.change);
+    push(
+      result.skipped.length > 0
+        ? t('importedSkipped', { n: result.importedTabs, k: result.skipped.length })
+        : t('imported', { n: result.importedTabs }),
+    );
+    return {
+      imported: result.importedTabs,
+      skipped: result.skipped.length,
+      settings: parsed.backup.settings,
+      degraded: false,
+    };
+  }
+
   const count = parsed.stacks.reduce((total, stack) => total + stack.tabs.length, 0);
   if (count === 0) throw new Error('empty-import');
   let imported = 0;
@@ -268,5 +278,7 @@ export async function importFile(file: File): Promise<number> {
       ? t('importedSkipped', { n: imported, k: parsed.skipped.length })
       : t('imported', { n: imported }),
   );
-  return imported;
+  const degraded = parsed.format === 'json';
+  if (degraded) push(t('importedLegacyNotice'));
+  return { imported, skipped: parsed.skipped.length, degraded };
 }

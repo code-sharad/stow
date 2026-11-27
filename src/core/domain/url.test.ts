@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { hostOf, isAllowedScheme, isOversizedUrl, normalizeUrlKey, safeHref } from './url';
+import { LIMITS } from '../../shared/constants';
+import {
+  hostOf,
+  isAllowedScheme,
+  isOversizedUrl,
+  normalizeUrlKey,
+  safeHref,
+  sanitizeFaviconUrl,
+} from './url';
 
 describe('normalizeUrlKey', () => {
   it('keeps the original URL untouched but normalizes comparison key', () => {
@@ -61,5 +69,27 @@ describe('scheme helpers', () => {
   it('extracts host labels', () => {
     expect(hostOf('https://www.example.com/a')).toBe('example.com');
     expect(hostOf('nonsense')).toBe('');
+  });
+});
+
+describe('sanitizeFaviconUrl', () => {
+  it('accepts https and data:image sources', () => {
+    expect(sanitizeFaviconUrl(' https://example.com/icon.png ')).toBe(
+      'https://example.com/icon.png',
+    );
+    expect(sanitizeFaviconUrl('data:image/png;base64,AAA')).toBe('data:image/png;base64,AAA');
+  });
+
+  it('rejects everything a page could use to run code', () => {
+    expect(sanitizeFaviconUrl('javascript:alert(1)')).toBeUndefined();
+    expect(sanitizeFaviconUrl('data:text/html,<script>')).toBeUndefined();
+    expect(sanitizeFaviconUrl('http://example.com/icon.png')).toBeUndefined();
+    expect(sanitizeFaviconUrl(undefined)).toBeUndefined();
+  });
+
+  it('drops icons beyond the stored size cap', () => {
+    expect(
+      sanitizeFaviconUrl(`data:image/png;base64,${'A'.repeat(LIMITS.favicon)}`),
+    ).toBeUndefined();
   });
 });

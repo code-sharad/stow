@@ -44,19 +44,21 @@ These are product invariants, not preferences:
 Run the same checks as CI before opening a pull request:
 
 ```bash
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm test:coverage
-pnpm build
-pnpm check:tokens
-pnpm check:network
-pnpm check:landing
-pnpm e2e
+pnpm verify
 ```
 
-`pnpm e2e` and `pnpm check:landing` launch Chromium. Set `CHROMIUM_PATH` if your browser is not at
-`/usr/bin/chromium`; on a headless Linux host, use `xvfb-run -a pnpm e2e`.
+`pnpm verify` runs the token and network guards, lint, type checking, coverage, the Chrome build,
+and the landing check in the same order as CI. It does not launch a browser.
+
+For changes that touch tabs, restore, or the UI, also run the browser suite:
+
+```bash
+pnpm verify:e2e
+```
+
+`pnpm verify:e2e` builds first, so it never tests stale `.output/chrome-mv3` files. It and
+`pnpm check:landing` launch Chromium. Set `CHROMIUM_PATH` if your browser is not at
+`/usr/bin/chromium`; on a headless Linux host, use `xvfb-run -a pnpm verify:e2e`.
 
 If you change the UI, update or add an axe assertion and include both light and dark checks. If
 you change behavior covered by an invariant, add a test that fails without your change.

@@ -16,6 +16,7 @@ export const LIMITS = {
   stackTitle: 200,
   importBytes: 100 * 1024 * 1024,
   importTabs: 200_000,
+  favicon: 65_536,
 } as const;
 
 export const ALLOWED_SCHEMES = new Set(['http:', 'https:', 'ftp:', 'file:']);

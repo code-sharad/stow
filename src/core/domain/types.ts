@@ -2,16 +2,19 @@
 
 export type Id = string; // ULID
 
-export type GroupColor =
-  | 'grey'
-  | 'blue'
-  | 'red'
-  | 'yellow'
-  | 'green'
-  | 'pink'
-  | 'purple'
-  | 'cyan'
-  | 'orange';
+export const GROUP_COLORS = [
+  'grey',
+  'blue',
+  'red',
+  'yellow',
+  'green',
+  'pink',
+  'purple',
+  'cyan',
+  'orange',
+] as const;
+
+export type GroupColor = (typeof GROUP_COLORS)[number];
 
 export interface Stack {
   id: Id;
@@ -36,6 +39,8 @@ export interface SavedTab {
   title: string;
   orderKey: string;
   wasPinned: boolean;
+  /** Captured icon URL (Firefox supplies a data URL); never rendered as HTML. */
+  favicon?: string;
   createdAt: number;
   deletedAt: number;
   deletedBy: Id | '';
@@ -45,6 +50,7 @@ export type OperationKind =
   | 'stow'
   | 'delete-tabs'
   | 'delete-stacks'
+  | 'restore'
   | 'restore-remove'
   | 'dedupe-merge'
   | 'merge-stacks'
@@ -52,12 +58,30 @@ export type OperationKind =
   | 'empty-trash'
   | 'purge';
 
+export type RestoreRowState = 'pending' | 'opened' | 'removed';
+
+export interface RestoreOpRow {
+  tabId: Id;
+  browserTabId?: number;
+  state: RestoreRowState;
+}
+
+export interface RestoreOpState {
+  stackIds: Id[];
+  rows: RestoreOpRow[];
+  remove: boolean;
+  target: 'current' | 'new';
+  background: boolean;
+  updatedAt: number;
+}
+
 export interface Operation {
   id: Id;
   kind: OperationKind;
   createdAt: number;
   counts: { tabs: number; stacks: number };
   undoneAt: number;
+  restore?: RestoreOpState;
 }
 
 export interface MetaRow {
@@ -86,6 +110,8 @@ export interface TabCandidate {
   incognito: boolean;
   /** -1 when not in a group. */
   groupId: number;
+  /** Browser-provided icon URL, if the browser exposes one. */
+  faviconUrl?: string;
   windowType: 'normal' | 'popup' | 'panel' | 'app' | 'devtools';
 }
 

@@ -210,6 +210,13 @@ const catalog: Record<string, string> = {
   importExport: 'Import and export',
   importExportHelp: 'Import OneTab exports, plain lists, markdown, or a Stow JSON backup.',
   importFailed: 'That file could not be imported.',
+  importedLegacyNotice: 'This older backup has no settings or list details. Tabs were imported.',
+  importSettingsTitle: 'Apply settings from this backup?',
+  importSettingsBody:
+    'The backup contains settings, including retention and scheduled backups. Tabs and lists are already imported. Apply the backup settings, or keep your current settings?',
+  apply: 'Apply',
+  resumeRestorePrompt: 'A restore was interrupted. Continue where it stopped?',
+  resume: 'Resume',
   imported: 'Imported {n} tabs.',
   importedSkipped: 'Imported {n} tabs. Skipped {k} unsafe or unreadable links.',
   resetLibrary: 'Reset the Library',

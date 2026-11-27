@@ -1,4 +1,4 @@
-import { getMeta, log, purgeExpired, setMeta } from '../core/db/repo';
+import { getMeta, log, pendingRestoreOps, purgeExpired, setMeta } from '../core/db/repo';
 import { db } from '../core/db/schema';
 import type { Settings } from '../core/settings/schema';
 import { getSettings, subscribeSettings } from '../core/settings/store';
@@ -35,6 +35,8 @@ async function boot(): Promise<void> {
     await refreshBadge();
     await chrome.alarms.create('stow-purge', { periodInMinutes: 1440 });
     await syncBackupAlarm((await getSettings()).autoBackup);
+    const pending = await pendingRestoreOps();
+    if (pending.length > 0) await log('warn', 'restore-pending', String(pending.length));
     void runPurgeIfDue();
   } catch (error) {
     await log('error', 'boot-failed', error instanceof Error ? error.name : 'unknown');

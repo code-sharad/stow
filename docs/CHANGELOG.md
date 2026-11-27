@@ -2,6 +2,37 @@
 
 ## Unreleased
 
+### Added
+
+- Full-fidelity backup format v2: exports and scheduled backups now carry settings, list pin/lock/
+  collapse/color state, tab order, pinned-tab state, timestamps, and captured favicons. Version 1
+  files still import as tabs-only. Imported settings apply only after confirmation.
+- Interrupted restores are recorded as durable operations and can be resumed from the Library; a
+  resume opens only the saved tabs that were not opened before the worker died.
+- Firefox builds capture favicons at stow time, since Firefox has no `_favicon/` endpoint.
+- A Firefox smoke suite (`pnpm test:firefox`) installs the built extension, stows real tabs,
+  checks captured icons, restores, applies settings, and fails on extension console errors. CI runs
+  it in a separate `firefox-smoke` job.
+- `pnpm screenshots` generates the five 1280×800 store screenshots from the built extension, and
+  `docs/RELEASE_RUNBOOK.md` records the release, store submission, rollback, and review-response
+  process.
+
+### Changed
+
+- Stow plans are computed inside the write transaction, so dedupe and locked-stack decisions cannot
+  be based on a stale read.
+- Existing backup alarms are preserved across service-worker boots; the alarm is recreated only
+  when the schedule setting changes.
+- CI builds and uploads both Chrome and Firefox MV3 bundles; `pnpm verify` now covers the release
+  guards, token/network checks, coverage, builds, landing checks, and E2E. The README, build notes,
+  privacy policy, and store listing now describe captured Firefox favicons and the real 0.1.1
+  download names.
+
+### Fixed
+
+- Markdown import now unescapes titles and parses URLs with balanced parentheses, so every Markdown
+  export Stow writes can be imported back without changing the URL.
+- A titled OneTab export is detected as OneTab instead of Markdown.
 ### Changed
 
 - Rebuilt the landing page's privacy section without its screenshot or its ledger. Only the three

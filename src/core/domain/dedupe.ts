@@ -6,6 +6,7 @@ export interface Candidate {
   urlKey: string;
   title: string;
   wasPinned: boolean;
+  favicon?: string;
   groupKey: string;
 }
 

@@ -1,8 +1,26 @@
 import { ulid } from 'ulid';
 import { LIMITS } from '../../shared/constants';
-import { keyBetween, keysAfter, keysBefore } from '../domain/order';
+import { keyBetween, keysAfter, keysBefore, keysBetween } from '../domain/order';
 import type { StowPlan } from '../domain/plan';
-import type { Id, Operation, OperationKind, SavedTab, Stack } from '../domain/types';
+import { buildStowPlan, type PlanSettings } from '../domain/plan';
+import type {
+  Id,
+  NativeGroup,
+  Operation,
+  OperationKind,
+  RestoreOpRow,
+  RestoreOpState,
+  SavedTab,
+  Stack,
+  TabCandidate,
+} from '../domain/types';
+import {
+  isAllowedScheme,
+  isOversizedUrl,
+  normalizeUrlKey,
+  sanitizeFaviconUrl,
+} from '../domain/url';
+import type { FullBackup, ImportIssue } from '../io/formats';
 import { type ChangeSet, publishChange } from './changes';
 import { db } from './schema';
 
@@ -102,88 +120,127 @@ async function createOp(
 
 /** Insert all planned rows, trash older duplicates, and record the operation in ONE transaction. */
 export async function commitStow(plan: StowPlan): Promise<ChangeSet> {
-  const change = await db().transaction(
+  const change = await db().transaction('rw', db().stacks, db().tabs, db().ops, db().meta, () =>
+    writeStowPlan(plan),
+  );
+  publishChange(change);
+  return change;
+}
+
+/**
+ * Build the plan from the transaction's own snapshot, so a concurrent delete can
+ * never make a merge target or a locked-stack check stale. This is the stow path.
+ */
+export async function commitFreshStow(input: {
+  eligible: TabCandidate[];
+  groups: Map<number, NativeGroup>;
+  settings: PlanSettings;
+  now: number;
+}): Promise<{ change: ChangeSet; plan: StowPlan }> {
+  const result = await db().transaction(
     'rw',
     db().stacks,
     db().tabs,
     db().ops,
     db().meta,
     async () => {
-      const existing = await liveStacks();
-      const firstUnpinned = existing.find((stack) => !stack.pinned);
-      const stackKeys = keysBefore(firstUnpinned?.orderKey ?? null, plan.stacks.length);
-      const op = await createOp('stow', {
-        tabs: plan.summary.savedTabs,
-        stacks: plan.stacks.length,
+      const existing =
+        input.settings.dedupe === 'global'
+          ? await liveUrlIndex(
+              input.eligible.map((tab) =>
+                normalizeUrlKey(tab.url, input.settings.stripTrackingForDedupe),
+              ),
+            )
+          : new Map<string, SavedTab[]>();
+      const locked = input.settings.dedupe === 'global' ? await lockedStackIds() : new Set<Id>();
+      const plan = buildStowPlan({
+        eligible: input.eligible,
+        groups: input.groups,
+        settings: input.settings,
+        existing,
+        lockedStackIds: locked,
+        now: input.now,
       });
-
-      const upsertedStacks: Stack[] = [];
-      const upsertedTabs: SavedTab[] = [];
-
-      plan.stacks.forEach((planned, index) => {
-        const stack: Stack = {
-          id: planned.id,
-          title: planned.title,
-          orderKey: stackKeys[index] ?? '',
-          pinned: false,
-          locked: false,
-          collapsed: false,
-          color: planned.color,
-          tabCount: planned.tabs.length,
-          createdAt: plan.now,
-          updatedAt: plan.now,
-          deletedAt: 0,
-          deletedBy: '',
-        };
-        upsertedStacks.push(stack);
-      });
-
-      for (const planned of plan.stacks) {
-        for (const tab of planned.tabs) {
-          upsertedTabs.push({
-            id: tab.id,
-            stackId: planned.id,
-            url: tab.url,
-            urlKey: tab.urlKey,
-            title: tab.title,
-            orderKey: tab.orderKey,
-            wasPinned: tab.wasPinned,
-            createdAt: plan.now,
-            deletedAt: 0,
-            deletedBy: '',
-          });
-        }
-      }
-
-      await db().stacks.bulkPut(upsertedStacks);
-      await db().tabs.bulkPut(upsertedTabs);
-
-      const affected = new Set<Id>();
-      for (const old of plan.trashExisting) {
-        if (old.deletedAt !== 0) continue;
-        await db().tabs.put({ ...old, deletedAt: plan.now, deletedBy: op.id });
-        affected.add(old.stackId);
-        upsertedTabs.push({ ...old, deletedAt: plan.now, deletedBy: op.id });
-      }
-      const recomputed = await recomputeCounts(affected);
-      for (const stack of recomputed) {
-        const at = upsertedStacks.findIndex((candidate) => candidate.id === stack.id);
-        if (at >= 0) upsertedStacks[at] = stack;
-        else upsertedStacks.push(stack);
-      }
-
-      const rev = await bumpRev();
-      return {
-        rev,
-        stacksUpserted: upsertedStacks,
-        stacksDeletedIds: [],
-        tabsUpserted: upsertedTabs,
-        tabsDeletedIds: [],
-      } satisfies ChangeSet;
+      return { change: await writeStowPlan(plan), plan };
     },
   );
-  publishChange(change);
-  return change;
+  publishChange(result.change);
+  return result;
+}
+
+async function writeStowPlan(plan: StowPlan): Promise<ChangeSet> {
+  const existing = await liveStacks();
+  const firstUnpinned = existing.find((stack) => !stack.pinned);
+  const stackKeys = keysBefore(firstUnpinned?.orderKey ?? null, plan.stacks.length);
+  const op = await createOp('stow', {
+    tabs: plan.summary.savedTabs,
+    stacks: plan.stacks.length,
+  });
+
+  const upsertedStacks: Stack[] = [];
+  const upsertedTabs: SavedTab[] = [];
+
+  plan.stacks.forEach((planned, index) => {
+    const stack: Stack = {
+      id: planned.id,
+      title: planned.title,
+      orderKey: stackKeys[index] ?? '',
+      pinned: false,
+      locked: false,
+      collapsed: false,
+      color: planned.color,
+      tabCount: planned.tabs.length,
+      createdAt: plan.now,
+      updatedAt: plan.now,
+      deletedAt: 0,
+      deletedBy: '',
+    };
+    upsertedStacks.push(stack);
+  });
+
+  for (const planned of plan.stacks) {
+    for (const tab of planned.tabs) {
+      upsertedTabs.push({
+        id: tab.id,
+        stackId: planned.id,
+        url: tab.url,
+        urlKey: tab.urlKey,
+        title: tab.title,
+        orderKey: tab.orderKey,
+        wasPinned: tab.wasPinned,
+        ...(tab.favicon ? { favicon: tab.favicon } : {}),
+        createdAt: plan.now,
+        deletedAt: 0,
+        deletedBy: '',
+      });
+    }
+  }
+
+  await db().stacks.bulkPut(upsertedStacks);
+  await db().tabs.bulkPut(upsertedTabs);
+
+  const affected = new Set<Id>();
+  for (const old of plan.trashExisting) {
+    if (old.deletedAt !== 0) continue;
+    await db().tabs.put({ ...old, deletedAt: plan.now, deletedBy: op.id });
+    affected.add(old.stackId);
+    upsertedTabs.push({ ...old, deletedAt: plan.now, deletedBy: op.id });
+  }
+  const recomputed = await recomputeCounts(affected);
+  for (const stack of recomputed) {
+    const at = upsertedStacks.findIndex((candidate) => candidate.id === stack.id);
+    if (at >= 0) upsertedStacks[at] = stack;
+    else upsertedStacks.push(stack);
+  }
+
+  const rev = await bumpRev();
+  return {
+    rev,
+    stacksUpserted: upsertedStacks,
+    stacksDeletedIds: [],
+    tabsUpserted: upsertedTabs,
+    tabsDeletedIds: [],
+  } satisfies ChangeSet;
 }
 
 /** Read back every written row; throw if anything is missing or mismatched (invariant 1). */
@@ -283,6 +340,75 @@ export async function loadForRestore(req: {
     .filter((stack): stack is Stack => Boolean(stack));
 
   return { tabs, stacks: usedStacks };
+}
+
+/**
+ * Durable record of a restore, written before any tab is opened. A crashed or
+ * suspended worker can resume from this instead of guessing by URL.
+ */
+export async function beginRestoreOp(input: {
+  stackIds: Id[];
+  tabIds: Id[];
+  remove: boolean;
+  target: 'current' | 'new';
+  background: boolean;
+}): Promise<Operation> {
+  const state: RestoreOpState = {
+    stackIds: input.stackIds,
+    rows: input.tabIds.map((tabId) => ({ tabId, state: 'pending' })),
+    remove: input.remove,
+    target: input.target,
+    background: input.background,
+    updatedAt: now(),
+  };
+  const op: Operation = {
+    id: ulid(),
+    kind: 'restore',
+    createdAt: now(),
+    counts: { tabs: input.tabIds.length, stacks: input.stackIds.length },
+    undoneAt: 0,
+    restore: state,
+  };
+  await db().ops.put(op);
+  return op;
+}
+
+export async function markRestoreRows(
+  opId: Id,
+  updates: readonly { tabId: Id; state: RestoreOpRow['state']; browserTabId?: number }[],
+): Promise<void> {
+  if (updates.length === 0) return;
+  await db().transaction('rw', db().ops, async () => {
+    const op = await db().ops.get(opId);
+    if (op?.kind !== 'restore' || !op.restore) return;
+    const byId = new Map(updates.map((update) => [update.tabId, update]));
+    const rows = op.restore.rows.map((row) => {
+      const update = byId.get(row.tabId);
+      if (!update) return row;
+      return {
+        ...row,
+        state: update.state,
+        ...(update.browserTabId !== undefined ? { browserTabId: update.browserTabId } : {}),
+      };
+    });
+    await db().ops.put({ ...op, restore: { ...op.restore, rows, updatedAt: now() } });
+  });
+}
+
+export async function getRestoreOp(opId: Id): Promise<Operation | undefined> {
+  const op = await db().ops.get(opId);
+  return op?.kind === 'restore' ? op : undefined;
+}
+
+/** Restores that still have at least one saved row not yet opened or removed. */
+export async function pendingRestoreOps(): Promise<Operation[]> {
+  const ops = await db().ops.where('createdAt').above(0).toArray();
+  return ops.filter(
+    (op) =>
+      op.kind === 'restore' &&
+      op.restore !== undefined &&
+      op.restore.rows.some((row) => row.state === 'pending'),
+  );
 }
 
 /** Soft-delete restored tabs AFTER their browser tabs opened (invariant 2). */
@@ -702,11 +828,7 @@ export async function moveTabs(
         : siblings.length;
       const before = siblings[at - 1];
       const after = siblings[at];
-      const newKeys = (await import('../domain/order')).keysBetween(
-        before?.orderKey ?? null,
-        after?.orderKey ?? null,
-        tabIds.length,
-      );
+      const newKeys = keysBetween(before?.orderKey ?? null, after?.orderKey ?? null, tabIds.length);
       const op = await createOp('merge-stacks', { tabs: tabIds.length, stacks: 0 });
       const upserted: SavedTab[] = [];
       const affected = new Set<Id>([targetStackId]);
@@ -765,7 +887,7 @@ export async function createStackWithTabs(tabIds: readonly Id[]): Promise<Mutati
       };
       const rows = await db().tabs.bulkGet([...tabIds]);
       const live = rows.filter((tab): tab is SavedTab => tab !== undefined && tab.deletedAt === 0);
-      const keys = (await import('../domain/order')).keysBetween(null, null, live.length);
+      const keys = keysBetween(null, null, live.length);
       const upserted = live.map((tab, index) => ({
         ...tab,
         stackId: stack.id,
@@ -797,7 +919,6 @@ export async function importTabs(
   title: string,
   items: readonly { url: string; title: string }[],
 ): Promise<ChangeSet> {
-  const { normalizeUrlKey, isAllowedScheme, isOversizedUrl } = await import('../domain/url');
   const clean = items.filter((item) => isAllowedScheme(item.url) && !isOversizedUrl(item.url));
   const result = await db().transaction(
     'rw',
@@ -890,6 +1011,104 @@ export async function dedupeStack(stackId: Id): Promise<MutationResult | null> {
   );
   if (result) publishChange(result.change);
   return result;
+}
+
+export interface BackupImportResult {
+  change: ChangeSet;
+  importedTabs: number;
+  importedStacks: number;
+  skipped: ImportIssue[];
+}
+
+/** Write a validated v2 backup with every stack and tab field preserved. */
+export async function importBackup(backup: FullBackup): Promise<BackupImportResult> {
+  const skipped: ImportIssue[] = [];
+  const result = await db().transaction(
+    'rw',
+    db().stacks,
+    db().tabs,
+    db().ops,
+    db().meta,
+    async () => {
+      const existing = await liveStacks();
+      const usedKeys = new Set(existing.map((stack) => stack.orderKey));
+      const stacks: Stack[] = [];
+      const tabs: SavedTab[] = [];
+
+      for (const source of backup.stacks) {
+        const id = ulid();
+        let orderKey = source.orderKey;
+        if (usedKeys.has(orderKey)) {
+          orderKey = keysAfter([...usedKeys].sort().at(-1) ?? null, 1)[0] ?? orderKey;
+        }
+        usedKeys.add(orderKey);
+
+        const stack: Stack = {
+          id,
+          title: source.title.slice(0, LIMITS.stackTitle),
+          orderKey,
+          pinned: source.pinned,
+          locked: source.locked,
+          collapsed: source.collapsed,
+          color: source.color,
+          tabCount: 0,
+          createdAt: source.createdAt,
+          updatedAt: source.updatedAt,
+          deletedAt: 0,
+          deletedBy: '',
+        };
+        stacks.push(stack);
+
+        for (const sourceTab of source.tabs) {
+          const reason = importableReason(sourceTab.url);
+          if (reason) {
+            skipped.push({ line: 0, text: sourceTab.url.slice(0, 300), reason });
+            continue;
+          }
+          const favicon = sanitizeFaviconUrl(sourceTab.favicon);
+          tabs.push({
+            id: ulid(),
+            stackId: id,
+            url: sourceTab.url,
+            urlKey: normalizeUrlKey(sourceTab.url),
+            title: sourceTab.title.slice(0, LIMITS.title),
+            orderKey: sourceTab.orderKey,
+            wasPinned: sourceTab.wasPinned,
+            ...(favicon ? { favicon } : {}),
+            createdAt: sourceTab.createdAt,
+            deletedAt: 0,
+            deletedBy: '',
+          });
+          stack.tabCount += 1;
+        }
+      }
+
+      await db().stacks.bulkPut(stacks);
+      await db().tabs.bulkPut(tabs);
+      await createOp('import', { tabs: tabs.length, stacks: stacks.length });
+      const rev = await bumpRev();
+      return {
+        rev,
+        stacksUpserted: stacks,
+        stacksDeletedIds: [],
+        tabsUpserted: tabs,
+        tabsDeletedIds: [],
+      } satisfies ChangeSet;
+    },
+  );
+  publishChange(result);
+  return {
+    change: result,
+    importedTabs: result.tabsUpserted.length,
+    importedStacks: result.stacksUpserted.length,
+    skipped,
+  };
+}
+
+function importableReason(url: string): ImportIssue['reason'] | null {
+  if (url.length > LIMITS.url) return 'oversized';
+  if (!isAllowedScheme(url)) return 'scheme';
+  return null;
 }
 
 export async function countLiveTabs(): Promise<number> {

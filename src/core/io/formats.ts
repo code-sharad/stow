@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { ALLOWED_SCHEMES, LIMITS } from '../../shared/constants';
+import { GROUP_COLORS, type GroupColor, type Id, type SavedTab, type Stack } from '../domain/types';
+import { type Settings, settingsSchema } from '../settings/schema';
 
 export interface ImportedTab {
   url: string;
@@ -106,24 +108,67 @@ export function parseMarkdown(text: string): ImportResult {
     const heading = /^#{1,6}\s+(.+)$/.exec(line);
     if (heading?.[1]) {
       current = {
-        title: cleanTitle(heading[1].replace(/\s+\(\d{4}-\d{2}-\d{2}\)$/, '')),
+        title: cleanTitle(unescapeMarkdown(heading[1]).replace(/\s+\(\d{4}-\d{2}-\d{2}\)$/, '')),
         tabs: [],
       };
       stacks.push(current);
       continue;
     }
-    const link = /^[-*]\s+\[([^\]]*)\]\((\S+?)\)\s*$/.exec(line);
-    if (!link?.[2]) continue;
+    const link = parseMarkdownLink(line);
+    if (!link) continue;
     current ??= { title: '', tabs: [] };
     if (!stacks.includes(current)) stacks.push(current);
-    const reason = accepted(link[2]);
+    const reason = accepted(link.url);
     if (reason) {
       skipped.push({ line: index + 1, text: line.slice(0, 300), reason });
       continue;
     }
-    current.tabs.push({ url: link[2], title: cleanTitle(link[1] ?? '') });
+    current.tabs.push({ url: link.url, title: cleanTitle(link.title) });
   }
   return { stacks: stacks.filter((stack) => stack.tabs.length > 0), skipped };
+}
+
+/** Reads `- [title](url)` with backslash escapes and balanced URL parentheses. */
+function parseMarkdownLink(line: string): { title: string; url: string } | null {
+  if (!/^[-*]\s+/.test(line)) return null;
+  const rest = line.replace(/^[-*]\s+/, '');
+  if (!rest.startsWith('[')) return null;
+
+  let title = '';
+  let index = 1;
+  for (; index < rest.length; index += 1) {
+    const char = rest[index];
+    if (char === '\\' && index + 1 < rest.length) {
+      title += rest[index + 1];
+      index += 1;
+      continue;
+    }
+    if (char === ']') break;
+    title += char;
+  }
+  if (rest[index] !== ']' || rest[index + 1] !== '(') return null;
+
+  let depth = 1;
+  let url = '';
+  for (let cursor = index + 2; cursor < rest.length; cursor += 1) {
+    const char = rest[cursor];
+    if (char === '\\' && cursor + 1 < rest.length) {
+      url += rest[cursor + 1];
+      cursor += 1;
+      continue;
+    }
+    if (char === '(') depth += 1;
+    if (char === ')') {
+      depth -= 1;
+      if (depth === 0) return url ? { title, url } : null;
+    }
+    url += char;
+  }
+  return null;
+}
+
+function unescapeMarkdown(value: string): string {
+  return value.replace(/\\([\\[\]()*_`])/g, '$1');
 }
 
 export function serializeMarkdown(stacks: readonly ImportedStack[], includeDates = false): string {
@@ -265,23 +310,215 @@ export function serializeStowJson(
   );
 }
 
+/** Full-fidelity backup (format v2). Carries every user-visible stack and tab field. */
+export interface FullBackupTab {
+  url: string;
+  title: string;
+  orderKey: string;
+  wasPinned: boolean;
+  createdAt: number;
+  favicon?: string;
+}
+
+export interface FullBackupStack {
+  title: string;
+  orderKey: string;
+  pinned: boolean;
+  locked: boolean;
+  collapsed: boolean;
+  color: GroupColor | null;
+  createdAt: number;
+  updatedAt: number;
+  tabs: FullBackupTab[];
+}
+
+export interface FullBackup {
+  app: 'stow';
+  formatVersion: 2;
+  exportedAt: string;
+  settings: Settings;
+  stacks: FullBackupStack[];
+}
+
+const backupTabSchema = z
+  .object({
+    url: z.string().max(LIMITS.url),
+    title: z.string().max(LIMITS.title).optional().default(''),
+    orderKey: z.string().min(1).max(100),
+    wasPinned: z.boolean().optional().default(false),
+    createdAt: z.number().int().nonnegative(),
+    favicon: z.string().max(LIMITS.favicon).optional(),
+  })
+  .strict();
+
+const backupStackSchema = z
+  .object({
+    title: z.string().max(LIMITS.stackTitle).optional().default(''),
+    orderKey: z.string().min(1).max(100),
+    pinned: z.boolean().optional().default(false),
+    locked: z.boolean().optional().default(false),
+    collapsed: z.boolean().optional().default(false),
+    color: z.enum(GROUP_COLORS).nullable().optional().default(null),
+    createdAt: z.number().int().nonnegative(),
+    updatedAt: z.number().int().nonnegative(),
+    tabs: z.array(backupTabSchema).max(LIMITS.importTabs),
+  })
+  .strict();
+
+const backupSchema = z
+  .object({
+    app: z.literal('stow'),
+    formatVersion: z.literal(2),
+    exportedAt: z.string(),
+    settings: settingsSchema.strict(),
+    stacks: z.array(backupStackSchema).max(100_000),
+  })
+  .strict();
+
+function sortStacksForExport(a: Stack, b: Stack): number {
+  if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+  return a.orderKey < b.orderKey ? -1 : a.orderKey > b.orderKey ? 1 : 0;
+}
+
+function sortTabsForExport(a: SavedTab, b: SavedTab): number {
+  return a.orderKey < b.orderKey ? -1 : a.orderKey > b.orderKey ? 1 : 0;
+}
+
+/** The one builder both the manual export and the scheduled backup use. */
+export function buildFullBackup(
+  stacks: readonly Stack[],
+  tabs: readonly SavedTab[],
+  settings: Settings,
+  exportedAt = Date.now(),
+): FullBackup {
+  const byStack = new Map<Id, SavedTab[]>();
+  for (const tab of tabs) {
+    if (tab.deletedAt !== 0) continue;
+    const list = byStack.get(tab.stackId) ?? [];
+    list.push(tab);
+    byStack.set(tab.stackId, list);
+  }
+  const ordered = stacks
+    .filter((stack) => stack.deletedAt === 0)
+    .slice()
+    .sort(sortStacksForExport);
+  return {
+    app: 'stow',
+    formatVersion: 2,
+    exportedAt: new Date(exportedAt).toISOString(),
+    settings: { ...settings },
+    stacks: ordered.map((stack) => ({
+      title: stack.title,
+      orderKey: stack.orderKey,
+      pinned: stack.pinned,
+      locked: stack.locked,
+      collapsed: stack.collapsed,
+      color: stack.color,
+      createdAt: stack.createdAt,
+      updatedAt: stack.updatedAt,
+      tabs: (byStack.get(stack.id) ?? [])
+        .slice()
+        .sort(sortTabsForExport)
+        .map((tab) => ({
+          url: tab.url,
+          title: tab.title,
+          orderKey: tab.orderKey,
+          wasPinned: tab.wasPinned,
+          createdAt: tab.createdAt,
+          ...(tab.favicon ? { favicon: tab.favicon } : {}),
+        })),
+    })),
+  };
+}
+
+export function serializeFullBackup(backup: FullBackup): string {
+  return JSON.stringify(backup, null, 2);
+}
+
+/** Validate a complete v2 document at the boundary; unknown fields fail closed. */
+export function parseFullBackup(text: string): FullBackup {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text);
+  } catch {
+    throw new Error('invalid-json');
+  }
+  const version = backupVersionOf(raw);
+  if (version > 2) throw new Error('future-version');
+  const parsed = backupSchema.safeParse(raw);
+  if (!parsed.success) throw new Error('invalid-backup');
+  return parsed.data;
+}
+
+function backupVersionOf(raw: unknown): number {
+  if (typeof raw !== 'object' || raw === null) return 1;
+  const record = raw as { formatVersion?: unknown; version?: unknown };
+  if (typeof record.formatVersion === 'number') return record.formatVersion;
+  if (typeof record.version === 'number') return record.version;
+  return 1;
+}
+
 export type ImportFormat = 'json' | 'html' | 'markdown' | 'onetab';
 
+const ONETAB_ROW = /^(?:https?|ftp|file):\/\/\S+(?:\s*\|\s*.*)?$/i;
+
+/** Content-based detection: compare how many rows each syntax would parse. */
 export function detectFormat(text: string, filename = ''): ImportFormat {
   const head = text.trimStart().slice(0, 200).toLowerCase();
   if (head.startsWith('{')) return 'json';
   if (head.startsWith('<!doctype netscape') || head.includes('<dl')) return 'html';
   if (/\.(json)$/i.test(filename)) return 'json';
   if (/\.(html?|htm)$/i.test(filename)) return 'html';
-  if (/^#{1,6}\s+/m.test(text)) return 'markdown';
+
+  let oneTabRows = 0;
+  let linkRows = 0;
+  let headingRows = 0;
+  for (const raw of text.slice(0, 200_000).split('\n')) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (ONETAB_ROW.test(line)) oneTabRows += 1;
+    if (/^[-*]\s+\[/.test(line)) linkRows += 1;
+    if (/^#{1,6}\s+/.test(line)) headingRows += 1;
+  }
+  if (oneTabRows > 0 && oneTabRows >= linkRows) return 'onetab';
+  if (linkRows > 0 || headingRows > 0) return 'markdown';
   return 'onetab';
 }
 
-export function parseImport(text: string, filename = ''): ImportResult & { format: ImportFormat } {
+export interface ParsedImport extends ImportResult {
+  format: ImportFormat;
+  /** Present when the file is a full-fidelity v2 backup. */
+  backup?: FullBackup;
+}
+
+export function parseImport(text: string, filename = ''): ParsedImport {
   const format = detectFormat(text, filename);
   switch (format) {
-    case 'json':
+    case 'json': {
+      let raw: unknown;
+      try {
+        raw = JSON.parse(text);
+      } catch {
+        throw new Error('invalid-json');
+      }
+      if (backupVersionOf(raw) >= 2) {
+        const backup = parseFullBackup(text);
+        const skipped: ImportIssue[] = [];
+        const stacks: ImportedStack[] = [];
+        for (const stack of backup.stacks) {
+          const tabs: ImportedTab[] = [];
+          for (const tab of stack.tabs) {
+            const reason = accepted(tab.url);
+            if (reason) skipped.push({ line: 0, text: tab.url.slice(0, 300), reason });
+            else tabs.push({ url: tab.url, title: tab.title });
+          }
+          if (tabs.length > 0)
+            stacks.push({ title: stack.title, createdAt: stack.createdAt, tabs });
+        }
+        return { stacks, skipped, format, backup };
+      }
       return { ...parseStowJson(text), format };
+    }
     case 'html':
       return { ...parseNetscapeHtml(text), format };
     case 'markdown':

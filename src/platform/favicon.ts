@@ -1,4 +1,5 @@
 export function faviconUrl(pageUrl: string, size = 32): string | null {
+  if (!chrome.runtime.getManifest().permissions?.includes('favicon')) return null;
   try {
     const url = new URL(chrome.runtime.getURL('/_favicon/'));
     url.searchParams.set('pageUrl', pageUrl);

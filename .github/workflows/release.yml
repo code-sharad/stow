@@ -8,10 +8,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
@@ -20,12 +24,31 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: pnpm test
-      - run: pnpm zip
-      - run: pnpm zip:firefox
+      - name: Check tag, package, and changelog agree
+        run: pnpm check:release-version
+      - name: Refuse to overwrite an existing release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "::error::Release $GITHUB_REF_NAME already exists; bump the version instead of replacing it."
+            exit 1
+          fi
+      - name: Full verification
+        run: pnpm verify
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Browser suite
+        run: xvfb-run -a pnpm verify:e2e
+      - name: Package Chrome
+        run: pnpm zip
+      - name: Package Firefox
+        run: pnpm zip:firefox
+      - name: Checksums
+        run: cd .output && sha256sum ./*.zip > SHA256SUMS.txt
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" .output/*.zip --generate-notes --title "$GITHUB_REF_NAME"
+        run: |
+          gh release create "$GITHUB_REF_NAME" .output/*.zip .output/SHA256SUMS.txt \
+            --title "$GITHUB_REF_NAME" \
+            --notes "Verification run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

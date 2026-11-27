@@ -26,10 +26,30 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test:coverage
       - run: pnpm build
+      - run: pnpm build:firefox
+      - run: pnpm check:firefox-manifest
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-mv3
           path: .output/chrome-mv3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firefox-mv3
+          path: .output/firefox-mv3
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm check:landing
       - run: xvfb-run -a pnpm e2e
+
+  firefox-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: firefox --version
+      - run: pnpm test:firefox
