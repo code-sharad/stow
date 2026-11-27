@@ -1,5 +1,9 @@
 # 01. Product requirements
 
+> **Historical specification.** It records the v1.0 product intent. Current architecture,
+> paths, and behavior are in [`../AGENTS.md`](../AGENTS.md) and
+> [`agents/architecture.md`](agents/architecture.md). When they disagree, code and tests win.
+
 **Status:** v1.0 scope, ready for implementation · **Owner:** Product/Engineering · **Audience:** implementing agent and reviewers
 
 Keywords **MUST / SHOULD / MAY** follow RFC 2119. Priorities: **P0** = release-blocking, **P1** = ships in v1.0 if at all feasible, **P2** = stretch / v1.1.

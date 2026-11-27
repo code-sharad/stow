@@ -1,5 +1,10 @@
 # Stow hardening and release plan
 
+> **Historical plan.** This was the remediation plan for the audit at `f1e901e`. It has been
+> implemented and extended; current behavior, paths, and test commands are in
+> [`../AGENTS.md`](../AGENTS.md) and [`agents/`](agents/). Use this file for rationale and scope
+> history only.
+
 Status: proposed, 2026-11-26. Source: read-only end-to-end audit of `f1e901e` (GitHub
 [code-sharad/stow](https://github.com/code-sharad/stow)), including a real Firefox 160.0.1 run.
 

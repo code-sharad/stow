@@ -1,5 +1,9 @@
 # 02. Technical design
 
+> **Historical specification.** It describes the original technical design, not the current
+> tree. Current modules and flows are in [`agents/architecture.md`](agents/architecture.md);
+> follow the code and tests when they disagree.
+
 **Status:** normative for v1.0 · **Audience:** implementing agent · **Companion docs:** 01 (what), 03 (plan/QA), 04 (UI)
 
 > Verify every platform/library API against **current** documentation before relying on it (00 §4). Where this document names an API, the *intent* is normative; exact signatures may have moved.

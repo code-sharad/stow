@@ -1,5 +1,9 @@
 # 03. Delivery plan and QA
 
+> **Historical plan.** It records the original delivery and QA plan. Current commands and test
+> layers are in [`agents/testing.md`](agents/testing.md); current paths are in
+> [`agents/architecture.md`](agents/architecture.md).
+
 **Audience:** implementing agent and reviewers · Requirement IDs refer to `01`, section numbers to `02`/`04`.
 
 Work in milestone order. A milestone is complete only when its **exit criteria** pass in CI and the milestone is tagged (`m0`, `m1`, …). Do not start the next milestone with a red build.

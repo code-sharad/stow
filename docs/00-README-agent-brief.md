@@ -1,5 +1,11 @@
 # Stow: agent brief
 
+> **Historical document — do not use it to navigate the repository.** This was the
+> original build-from-zero brief. Its target layout and file names are out of date, and some
+> behavior has changed since v1. Current truth lives in [`../AGENTS.md`](../AGENTS.md),
+> [`agents/architecture.md`](agents/architecture.md), the code, and the tests. Use this file for
+> product intent only.
+
 > **Working name: "Stow".** A modern, local-first replacement for the OneTab browser extension.
 > The name is a placeholder. It lives in exactly one constant (`src/shared/brand.ts`) and in `_locales/*/messages.json`. Do not hardcode it anywhere else, so renaming is a one-line change.
 
