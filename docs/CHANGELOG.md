@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Changed
+
+- The landing page dropped its second accent and its all-caps labels. Orange is now the only accent
+  in the chrome; the violet survives as the text-selection colour. Dark surfaces are warm graphite
+  instead of neutral grey, headings are weight 500, small labels are sentence case at normal
+  tracking, and the hero carries one trust line instead of a badge and two meta rows.
+- The landing page's `Privacy` and `Why switch` sections were removed, along with their `#privacy`
+  and `#switch` anchors, their nav and footer links, and the `.privacy-*` styles. The page is now
+  hero, benefits, how, features, questions, closing. The header nav points at `questions` in their
+  place.
+
 ## 0.1.2 — 2026-11-28
 
 ### Added
