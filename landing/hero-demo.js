@@ -463,7 +463,7 @@ function libraryHTML() {
 /* ---------- HUD: the tab count and one caption per beat ---------- */
 
 const CAPTIONS = [
-  { text: '40 tabs open. 3 you’re using.', from: 0.06, to: 2.15 },
+  { text: "40 tabs open. 3 you're using.", from: 0.06, to: 2.15 },
   { text: 'One click. Clean window.', from: 3.45, to: 4.95 },
   { text: 'Nothing lost.', from: 5.1, to: 6.95 },
   { text: 'Find anything.', from: 7, to: 9.35 },
