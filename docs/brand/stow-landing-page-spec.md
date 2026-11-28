@@ -75,17 +75,19 @@ permission manifest.
 
 ### Conversion path
 
-`Problem → Product promise → Real UI → Feature proof → Privacy proof → Install`
+`Problem → Product promise → Real UI → Feature proof → Answers → Install`
 
 ------------------------------------------------------------------------
 
 ## 3. Information architecture
 
-Use one page with a compact sticky header and six content areas.
+Use one page with a compact sticky header and a short run of content areas. This section records the
+original plan; the page as shipped is described in `docs/LANDING.md`, and where the two disagree
+that document and the shipped markup win.
 
 ``` text
 ┌──────────────────────────────────────────────────────────────────┐
-│ STOW                         FEATURES  PRIVACY       INSTALL      │
+│ STOW                  HOW IT WORKS  FEATURES  QUESTIONS  INSTALL  │
 ├──────────────────────────────────────────────────────────────────┤
 │ HERO                                                             │
 │ Close the tabs. Keep the work.       Product receipt / summary   │
@@ -101,13 +103,13 @@ Use one page with a compact sticky header and six content areas.
 │ FEATURES                                                         │
 │ Capture · Search · Organize · Restore · Import/Export · Keyboard │
 ├──────────────────────────────────────────────────────────────────┤
-│ PRIVACY                                                          │
-│ Local-first explanation + data storage table                     │
+│ QUESTIONS                                                        │
+│ The six answers a person asks before moving their tabs           │
 ├──────────────────────────────────────────────────────────────────┤
 │ INSTALL                                                          │
 │ Browser-specific installation path and requirements              │
 ├──────────────────────────────────────────────────────────────────┤
-│ FOOTER: source · privacy · changelog · version                   │
+│ FOOTER: source · questions · changelog · version                 │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
@@ -118,13 +120,14 @@ Use one page with a compact sticky header and six content areas.
 3.  Actual product screenshot
 4.  How it works
 5.  Feature grid
-6.  Privacy and data handling
-7.  Installation
+6.  Questions and answers
+7.  Closing call to action
 8.  Footer
 
-The existing "parts" and "ledger" structure can be retained, but "How it
-works" should make the basic workflow understandable before visitors
-encounter detailed feature tiles.
+"How it works" comes before the feature tiles so the basic workflow is
+understandable before the detail. The privacy section and the
+OneTab/Workona/Toby comparison section were removed; see
+`docs/LANDING.md` for why.
 
 ------------------------------------------------------------------------
 
@@ -216,8 +219,10 @@ Real product UI is a core trust asset.
 2.  **Quick capture:** Show the browser toolbar icon and Stow popup.
 3.  **Search:** Show a query and matching saved tabs.
 4.  **Restore:** Show restoring a stack or selected tabs.
-5.  **Privacy:** Show the local-only status or settings relevant to
-    privacy, if present.
+
+Four stills carry the page. A fifth "privacy" still was planned and is no
+longer used; the trust line and the questions section carry those facts in
+text instead.
 
 ### Screenshot rules
 
@@ -326,40 +331,21 @@ macOS-only symbols as if they apply to Windows and Linux.
 
 ## 9. Privacy section
 
-### Heading
+**Status: removed from the page.** The `Privacy` section (`Your tabs stay on your device.`, three
+numbered promises plus a one-device transfer card) and its `Why switch` companion were cut; see
+`docs/LANDING.md` ("Cut: why switch and privacy") for the reasoning and what replaced them.
 
-**Your tabs stay on your device.**
+The constraints below still bind any future privacy content, wherever it lives:
 
-### Body
-
-> Stow is designed to keep your browsing library local to your browser
-> profile. It does not need an account or a Stow-hosted server to save
-> and restore your tabs.
-
-The final published wording must be checked against the current code,
-browser APIs, permissions, and any optional backup behavior.
-
-### Data table
-
-Use a real semantic table:
-
-  Data                    Where it is stored                      Sent to Stow servers
-  ----------------------- --------------------------------------- ----------------------
-  Saved tabs and stacks   Browser extension storage               No
-  Preferences             Browser-local storage                   No
-  Optional backup files   User-selected local download location   No
-
-Update storage labels to match the implementation exactly. If favicons
-or other browser-managed data are involved, explain them accurately.
-
-### Privacy design
-
--   No stock shield illustration.
--   No vague "military-grade" claims.
--   Use a clear data-flow table.
--   Show a compact `LOCAL ONLY` label.
--   Explain what happens when the extension is uninstalled and how users
-    can export a backup.
+-   State only what the code does: which storage holds which data, what is sent where (nothing),
+    and what happens on uninstall.
+-   Every claim must be checkable against `src/core/db/`, the manifest, and the privacy policy.
+    The hero trust line and the FAQ's sync and uninstall answers are the current carriers of
+    these facts.
+-   No stock shield illustration, no vague security vocabulary, no badges that assert a status
+    the build does not prove.
+-   If uninstall behavior is mentioned, it must match the extension: uninstalling removes
+    extension storage, so the export path has to be named in the same breath.
 
 ------------------------------------------------------------------------
 
@@ -424,44 +410,48 @@ fabricated usage metrics.
 
   Token            Dark        Light
   ---------------- ----------- -----------
-  Canvas           `#0C0C0C`   `#F3F1EC`
-  Sheet            `#202020`   `#E9E6DF`
-  Raised           `#252225`   `#F7F5F0`
-  Border           `#333033`   `#CFC9BE`
-  Strong border    `#47434A`   `#B4ADA0`
-  Primary text     `#EEEEEE`   `#1E1D1B`
-  Secondary text   `#B8B8B8`   `#46433E`
-  Muted text       `#8A8A8A`   `#5C5851`
-  Accent           `#A5A0B6`   `#5B566E`
+  Canvas           `#121110`   `#F3F1EC`
+  Sheet            `#1A1816`   `#E9E6DF`
+  Raised           `#211E1B`   `#F7F5F0`
+  Border           `#332F2B`   `#CFC9BE`
+  Strong border    `#4A453D`   `#B4ADA0`
+  Primary text     `#F0EEEA`   `#1E1D1B`
+  Secondary text   `#BAB6AE`   `#46433E`
+  Muted text       `#9D988D`   `#55514B`
+  Orange (CTA)     `#E0A06A`   `#A15C25`
+  Selection        `#B3AEC4`   `#524D64`
   Link             `#5C9CF5`   `#2F5F9E`
   Success          `#7FC7A4`   `#2F6B4F`
 
-Use the existing Stow palette. Orange belongs to the product icon and
-may be used sparingly in product imagery; do not introduce it as a
-competing site-wide accent.
+The dark ramp is warm graphite, not neutral grey, so both themes sit in the same world: a desk at
+dusk, graphite ink on warm paper. Orange is the only accent in the chrome — the CTA and the 1 px
+dash on section eyebrows. The violet pair survives as the `::selection` colour and nothing else;
+decorative violet on bullets, step numbers, indices, card edges and hover washes was removed. Muted
+text stays at or above 4.5:1 on canvas, sheet and raised in both themes.
 
 ### Typography
 
 -   UI and headings: Inter variable.
--   Metadata, labels, version numbers, commands, and shortcuts: system
-    monospace.
--   H1: `clamp(42px, 6vw, 68px)`, weight 600, line-height around 0.98,
-    tracking `-0.045em`.
--   H2: `clamp(28px, 3.5vw, 40px)`, weight 600.
+-   Metadata, labels, nav, version numbers, commands, and shortcuts: system monospace.
+-   H1: `clamp(42px, 6vw, 68px)`, weight 500, line-height around 0.98, tracking `-0.045em`.
+-   H2: `clamp(28px, 3.5vw, 40px)`, weight 500.
+-   H3 and feature titles: weight 500.
 -   Body: 16--17 px, line-height 1.6--1.7.
--   Small labels: 10--11 px monospace, uppercase, letter spacing
-    `0.12em`.
+-   Small labels: 10--12 px monospace, sentence case, no uppercase transform and no wide
+tracking. Hierarchy comes from size and colour, not weight. Only the wordmark uses 600.
 
 ### Shape and borders
 
--   Prefer square corners or small 2--4 px radii.
--   Use 1 px borders to structure sections.
+-   Square corners throughout; no radii.
+-   Use 1 px borders to structure sections, including the top edge of a card that marks a group —
+    never a 2 px accent rule.
 -   Avoid large soft shadows.
--   Use accent borders only for active states and primary emphasis.
+-   Use the accent for the CTA and the eyebrow dash only; hover and active states step the surface
+    and the border, they do not tint them.
 
 ### Spacing
 
--   8 px base spacing unit.
+-   4 px grid for every margin, padding, gap and fixed height.
 -   Main content maximum width: 1120 px.
 -   Desktop outer padding: 32 px.
 -   Tablet outer padding: 28 px.

@@ -13,12 +13,12 @@
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Sharad Bhadait" />
-    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="assets/icon.png" sizes="128x128" />
     <link rel="preload" href="assets/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=13" />
     <link rel="stylesheet" href="hero-demo.css?v=4" />
 
     <meta property="og:type" content="website" />
@@ -151,7 +151,7 @@
         <nav class="site-nav" aria-label="Sections">
           <a class="nav-link" href="#how">how it works</a>
           <a class="nav-link" href="#features">features</a>
-          <a class="nav-link" href="#privacy">privacy</a>
+          <a class="nav-link" href="#questions">questions</a>
         </nav>
 
         <div class="head-actions">
@@ -177,7 +177,7 @@
       <nav class="no-js-nav" aria-label="Sections">
         <a href="#how">how it works</a>
         <a href="#features">features</a>
-        <a href="#privacy">privacy</a>
+        <a href="#questions">questions</a>
       </nav>
     </noscript>
 
@@ -185,7 +185,7 @@
       <nav aria-label="Mobile sections">
         <a href="#how"><span aria-hidden="true">01</span>how it works</a>
         <a href="#features"><span aria-hidden="true">02</span>features</a>
-        <a href="#privacy"><span aria-hidden="true">03</span>privacy</a>
+        <a href="#questions"><span aria-hidden="true">03</span>questions</a>
       </nav>
       <a
         class="btn btn-primary nav-cta"
@@ -198,7 +198,6 @@
     <main id="main" tabindex="-1">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy reveal">
-          <p class="eyebrow">Free · private tab manager</p>
           <h1 id="hero-title">Close every tab.<br />Keep every page.</h1>
           <p class="hero-lede">
             Forty tabs open, three you're using. Stow is a free, open-source browser extension
@@ -220,11 +219,7 @@
             <span>No account</span><span class="dot" aria-hidden="true">·</span>
             <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
             <span>No tracking</span><span class="dot" aria-hidden="true">·</span>
-            <span>No subscription</span>
-          </p>
-          <p class="compat">
-            Open source <span aria-hidden="true">·</span> Also on Firefox
-            <span aria-hidden="true">·</span> Works offline
+            <span>Works offline</span>
           </p>
         </div>
 
@@ -564,160 +559,6 @@
         </div>
       </section>
 
-      <section class="section" id="switch" aria-labelledby="switch-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">Why switch</p>
-          <h2 id="switch-title">Already using a tab manager? Here is what Stow does differently.</h2>
-          <p class="section-lede">
-            Three things decide whether a tab manager holds up: how fast a save is, where the
-            lists live, and what it costs. Stow answers all three with one choice, which is to
-            keep everything in your browser.
-          </p>
-        </div>
-
-        <div class="privacy-grid">
-          <div class="privacy-promises reveal">
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">01</span>
-              <div class="privacy-promise__body">
-                <h3>Too slow with a real window of tabs.</h3>
-                <p>
-                  Workona and Toby sync your lists through their own service, so every save has
-                  to reach it first. Stow writes straight to your browser's own local database, so
-                  saving a full window is one local write, with no upload to wait on.
-                </p>
-                <ul class="privacy-detail">
-                  <li>Local IndexedDB, no service in between</li>
-                  <li>No dashboard to load before your tabs</li>
-                </ul>
-              </div>
-            </article>
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">02</span>
-              <div class="privacy-promise__body">
-                <h3>Where the lists live.</h3>
-                <p>
-                  Stow keeps the library in one local database inside your browser profile. No
-                  upload, no sync service, no account. A backup is a JSON file you export and hold
-                  yourself.
-                </p>
-                <ul class="privacy-detail">
-                  <li>Lists survive browser restarts</li>
-                  <li>Export a JSON backup you own any time</li>
-                </ul>
-              </div>
-            </article>
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">03</span>
-              <div class="privacy-promise__body">
-                <h3>What it costs.</h3>
-                <p>
-                  Stow is MIT-licensed and free, with no paid tier to move to later. Its only copy
-                  of your library lives in your browser, so there is nothing to bill.
-                </p>
-                <ul class="privacy-detail">
-                  <li>No plans, no trials, no upsell</li>
-                  <li>Source code is public on GitHub</li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <article class="privacy-move reveal">
-            <div class="privacy-move__head">
-              <span class="privacy-move__index" aria-hidden="true">04</span>
-              <h3>Moving your lists is one import.</h3>
-            </div>
-            <p>
-              Coming from OneTab, Workona, or Toby? Stow reads OneTab exports directly. Any tab
-              manager that exports bookmarks HTML or a plain list of links imports through the
-              same screen. Tab groups in your open windows stay groups in Stow.
-            </p>
-            <ul class="privacy-move__path" aria-hidden="true">
-              <li>OneTab export</li>
-              <li class="privacy-move__arrow" aria-hidden="true">→</li>
-              <li>Bookmarks HTML or links</li>
-              <li class="privacy-move__arrow" aria-hidden="true">→</li>
-              <li>Stow</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-      <section class="section" id="privacy" aria-labelledby="privacy-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">Privacy</p>
-          <h2 id="privacy-title">Your tabs stay on your device.</h2>
-          <p class="section-lede">
-            Stow keeps your library inside your browser. There is no Stow account, no cloud
-            sync, and no analytics. What it stores never leaves this device.
-          </p>
-        </div>
-
-        <div class="privacy-grid">
-          <div class="privacy-promises reveal">
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">01</span>
-              <div class="privacy-promise__body">
-                <h3>No account.</h3>
-                <p>
-                  There is nothing to sign up for. Install Stow, save a window, and your library
-                  is there.
-                </p>
-                <ul class="privacy-detail">
-                  <li>No email, no password, no profile</li>
-                  <li>Works offline, from the first tab</li>
-                </ul>
-              </div>
-            </article>
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">02</span>
-              <div class="privacy-promise__body">
-                <h3>No cloud.</h3>
-                <p>
-                  Lists live in your browser's own storage, not on a Stow server. Backups are
-                  files you choose to export.
-                </p>
-                <ul class="privacy-detail">
-                  <li>IndexedDB in your own profile</li>
-                  <li>Backups stay where you save them</li>
-                </ul>
-              </div>
-            </article>
-            <article class="privacy-promise">
-              <span class="privacy-promise__index" aria-hidden="true">03</span>
-              <div class="privacy-promise__body">
-                <h3>No tracking.</h3>
-                <p>
-                  No analytics, no telemetry. The extension contains no network code, so there is
-                  nothing to send.
-                </p>
-                <ul class="privacy-detail">
-                  <li>Zero outbound requests</li>
-                  <li>No analytics events</li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <article class="privacy-move reveal">
-            <div class="privacy-move__head">
-              <span class="privacy-move__index" aria-hidden="true">04</span>
-              <h3>One device at a time.</h3>
-            </div>
-            <p>
-              Stow does not sync between devices. That is what keeps the library local. Moving to
-              another computer? Export a JSON backup and import it there.
-            </p>
-            <p class="privacy-move__path" aria-hidden="true">
-              <span>this device</span>
-              <span class="privacy-move__arrow">→</span>
-              <span>export.json</span>
-              <span class="privacy-move__arrow">→</span>
-              <span>that device</span>
-            </p>
-          </article>
-        </div>
-      </section>
       <section class="section section--tight closing" aria-labelledby="closing-title">
         <div class="closing-inner reveal">
           <h2 id="closing-title">Start with the window you have open.</h2>
@@ -737,7 +578,7 @@
             <span>No account</span><span class="dot" aria-hidden="true">·</span>
             <span>No cloud</span><span class="dot" aria-hidden="true">·</span>
             <span>No tracking</span><span class="dot" aria-hidden="true">·</span>
-            <span>No subscription</span>
+            <span>Works offline</span>
           </p>
         </div>
       </section>
@@ -755,7 +596,6 @@
         <nav class="foot-nav" aria-label="Project">
           <a href="https://github.com/code-sharad/stow">source</a>
           <a href="#questions">questions</a>
-          <a href="#privacy">privacy</a>
           <a href="https://github.com/code-sharad/stow/blob/main/docs/CHANGELOG.md">changelog</a>
         </nav>
         <p class="foot-meta">v0.1.0 · © <span id="year">2026</span> Stow</p>

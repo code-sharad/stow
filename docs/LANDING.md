@@ -18,9 +18,9 @@ One page, one decision: add Stow from the browser's extension store.
 ## Page flow
 
 ```text
-header: stow · how it works · features · privacy · [Add to Chrome / Firefox]
+header: stow · how it works · features · questions · [Add to Chrome / Firefox]
 hero:   Close every tab. / Keep every page.
-        centered copy · store CTA + view source · trust line · compatibility
+        centered copy · store CTA + view source · one trust line
         full-width live 12s hero demo (real UI, no video, one caption)
 benefits: three columns — only the tabs you're using / a lighter browser / nothing lost
         (outcome strip between the demo and how-it-works)
@@ -29,20 +29,15 @@ how:    three rows — Stow / Find / Restore, each with a real UI capture
 features: six-cell grid — Capture / Search / Organize / Restore / Import-export / Keyboard
 questions: six-question list — Stow vs Chrome, saving all tabs, tab groups, sync, uninstalling,
         importing an OneTab list (matches the FAQPage JSON-LD word for word)
-switch: four cards of the complaints that move people off OneTab, Workona, and Toby — slow
-        saves, lost lists, subscriptions, moving your shelf (reuses the privacy grid styles)
-privacy: three promises + a transfer card, no ledger (no screenshot)
-footer: stow · local-first tab manager · source · questions · privacy · changelog · v0.1.0
+footer: stow · local-first tab manager · source · questions · changelog · v0.1.0
 ```
 
-The ordering is deliberate: the questions section sits between features and privacy because
-people who are evaluating a tab manager ask exactly these things, and the answers are the
-factual core the page is competing on. It is a definition list, not a FAQ accordion: nothing is
-hidden behind a click, so the text is in the initial HTML for readers and crawlers alike.
-The why-switch section sits after the questions and before privacy because it is the closer
-for a visitor who already uses OneTab, Workona, or Toby: the FAQ answers whether Stow works
-for them, and this section answers why it is worth the move — right before the privacy
-section restates the mechanism every card points at.
+The ordering is deliberate: the questions section sits between features and the closing call to
+action because people who are evaluating a tab manager ask exactly these things, and the answers
+are the factual core the page is competing on. It is a definition list, not a FAQ accordion:
+nothing is hidden behind a click, so the text is in the initial HTML for readers and crawlers
+alike. The closing section follows it, since the last question is answered and the only thing left
+to say is how to start.
 
 ## Copy deck
 
@@ -51,7 +46,7 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 ### Header
 
 - Brand: `stow`
-- Desktop nav: `how it works`, `features`, `privacy`
+- Desktop nav: `how it works`, `features`, `questions`
 - CTA: `Add to Chrome` / `Add to Firefox` — browser-aware; the store link is in the header,
   hero, and mobile panel. The extension is not listed yet, so `main.js` points at the Chrome
   Web Store and Firefox Add-ons search results until the two published listing URLs are set.
@@ -59,18 +54,18 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 
 ### Hero
 
-- Kicker: `Free · private tab manager` — a centered badge above the H1 (hero only; no dash;
-  section eyebrows keep their left-aligned orange dash). It replaced `A local-first tab manager`
-  because "local-first" is developer vocabulary and the two facts a visitor actually wants are
-  that it costs nothing and that it stays private.
-- Title tag: `Stow — a local-first Chrome tab manager` — the keyword title stays; the H1 carries
-  the promise. Do not put the slogan back in the title (the SEO audit explains why).
+- Kicker: none. The hero used to carry a `Free · private tab manager` badge above the H1; it was
+  cut because a boxed all-caps label above the headline is decoration and the promise below says
+  the same thing. Section eyebrows keep their left-aligned orange dash; the hero has none.
+- Title tag: `Stow: a free, local-first Chrome tab manager` — the keyword title stays, plus `free`,
+  which is the one fact the search result can carry that the H1 does not. Do not put the slogan
+  back in the title (the SEO audit explains why).
 - H1: `Close every tab.` / `Keep every page.` — the promise, not the demo, and concrete on both
   halves: "every" removes the fear of losing a tab, "page" names what you keep. The lede says how.
   Both lines are 16 characters, so the centered hero stays balanced.
-- Lede: `Forty tabs open, three you're actually using. Stow is a browser extension that saves
-  your whole window as one searchable list, closes the tabs, and brings back any page when you
-  need it.` — it stops at the promise. `one page, a selection, or all of them` was cut because
+- Lede: `Forty tabs open, three you're using. Stow is a free, open-source browser extension that
+  saves your whole window as one searchable list, closes the tabs, and brings back any page when
+  you need it.` — it stops at the promise. `one page, a selection, or all of them` was cut because
   step 03 says it again two screens down.
 - Why the lede opens on the pain: the visitor arrives with too many tabs, not with curiosity about
   a browser extension. Name the situation first, then the product category, then the mechanic,
@@ -82,16 +77,12 @@ Keep labels lowercase and prose in sentence case. Use **list**, not "stack", in 
 - Secondary: `See how it works ↓` — links to `#how`. It used to be `View source ↗`, which competed
   with the install button for a decision nobody makes on a landing page; the source link lives in
   the footer nav instead.
-- Trust line: `No account · No cloud · No tracking · No subscription` — the fourth clause
-  answers subscription fatigue reached in user research: OneTab moved to a subscription and
-  pricing complaints about Workona and Toby are the runner-up reason, after slowness, people
-  give for leaving them. The extension is MIT-licensed and free, so the claim costs the page
-  nothing new.
-- Compatibility: `Free · Open source · Also on Firefox · Works offline` — the version numbers moved
-  out of the small print (the FAQ still states `Chrome 120+` and `Firefox 140+`), because a Firefox
-  visitor reading a button that says "Add to Chrome" needs to know the extension is for them, and
-  `Also on Firefox` is the shortest way to say it. `main.js` also rewrites the button label to
-  `Add to Firefox` when it detects Firefox.
+- Trust line: `No account · No cloud · No tracking · Works offline` — one row, not two. It used to
+  be a four-clause line plus a compatibility line under it, eight small claims in a stack where the
+  lede already says `free, open-source`. `No subscription` became `Works offline`, which is the
+  claim nothing else on the page makes and the one Firefox users check first. The version numbers
+  stay in the FAQ (`Chrome 120+`, `Firefox 140+`), and `main.js` still rewrites the header button to
+  `Add to Firefox` when it detects Firefox, so a Firefox visitor is not reading a Chrome-only page.
 
 ### Benefits strip
 
@@ -218,85 +209,41 @@ Every answer states only what the extension already does. The same six answers a
 `FAQPage` JSON-LD in `landing/index.html`, so a copy edit has to change both; `pnpm check:landing`
 fails if the question sets drift apart.
 
-### Why switch
+### Cut: why switch and privacy
 
-- Eyebrow: `Why switch`
-- H2: `Already using a tab manager? Here is why people move.`
-- Lede: `OneTab, Workona, and Toby users keep reporting the same problems: slow saves,
-  lists that vanish, subscriptions that appear. Stow answers each one by staying local.`
-- Sits between questions and privacy. It exists because landing research found the reachable
-  audience is mostly refugees from OneTab, Workona, and Toby, and the four complaints they
-  give match properties Stow already has. It is complaint-driven copy, so the landing spec's
-  non-goal (no comparison tables, no testimonials, no pricing) holds: no feature table, no
-  star ratings, no prices. The full fair-comparison page remains the SEO roadmap's P1 item.
-- Cards (reuses the privacy promise styles, numbered 01-03 + a card):
-  1. `Too slow with a real window of tabs.` — Workona and Toby run a workspace layer over your
-     tabs; Stow writes straight to the browser's own IndexedDB.
-  2. `Tabs get lost along the way.` — OneTab lists vanish after browser updates and Workona
-     sync has lost tabs mid-work; Stow keeps everything in one local database with a JSON
-     backup you own.
-  3. `Subscriptions appeared.` — free tools turned on pricing; Stow is MIT-licensed, so there is
-     no meter to run.
-- Migration card (04): `Moving your shelf is one import.` Reads OneTab exports natively, and
-  any tab manager that can export bookmarks HTML or a plain links list moves over in the same
-  import screen. Copy deliberately does NOT promise Workona or Toby importers — the import
-  formats are `json`, `html`, `markdown`, `onetab` (`src/core/io/formats.ts:268`) — because the
-  honest path for a Workona/Toby user is their bookmarks export or a links list.
-- Route strip: `OneTab export → Bookmarks HTML or links → Stow` — here the hops are formats,
-  naming tools already covered by the cards above.
+The page carried two more sections here — `Why switch` (`Already using a tab manager? Here is why
+people move.`, three complaint cards plus a migration card) and `Privacy` (`Your tabs stay on your
+device.`, three promises plus a one-device transfer card). Both are gone, along with their
+`.privacy-*` styles, their nav and footer links, and the `#switch`/`#privacy` anchors.
 
-### Privacy
+- Why switch repeated the questions section three times over: each card named a complaint the FAQ
+  already answers (`Does Stow sync my tabs to another device?`, `Can I import tabs I saved with
+  OneTab?`, the uninstall answer) and then argued it at length. The migration card documented
+  import formats the features grid already lists.
+- Privacy argued the same three facts the hero trust line states — no account, no cloud, no
+  tracking — in the longest block on the page. The mechanism detail (`IndexedDB in your own
+  profile`, `Zero outbound requests`) now has no home on the page; the FAQ's sync answer and the
+  privacy policy remain the places a skeptical visitor can check it.
+- Both sections shared one component (`.privacy-grid`: a stacked list of numbered promises beside
+a sheet card), which made the page read as the same block twice in a row.
 
-- Eyebrow: `Privacy`
-- H2: `Your tabs stay on your device.`
-- Lede: `Stow keeps your library inside your browser. There is no Stow account, no cloud sync,
-  and no analytics. What it stores never leaves this device.` The page once said "the ledger
-  below" — wrong and jargon — then "the table of what it stores is the whole story" while the
-  table sat to the *right* of the promises. The table is gone; the sentence now states the fact
-  instead of pointing at proof.
-- Promises: `No account.` — `There is nothing to sign up for. Install Stow, save a window, and
-  your library is there.`; `No cloud.` — `Lists live in your browser's own storage, not on a
-  Stow server. Backups are files you choose to export.`; `No tracking.` — `No analytics, no
-  telemetry. The extension contains no network code, so there is nothing to send.`
-- Tradeoff: `One device at a time.` — `Stow does not sync between devices, and that is the price
-  of keeping everything local. Moving to another computer? Export a JSON backup and import it
-  there.` This is the fourth promise and the answer to the question the other three raise. Saying
-  "no cloud" without saying "so no sync, and here is your workaround" makes the visitor ask it
-  themselves and assume the worst. Says nothing the FAQ (`Does Stow sync my tabs to another
-  device?`) contradicts.
-- Promise details: each promise carries two mono chips naming the mechanism, so the claim is
-  checkable rather than asserted — `No email, no password, no profile` / `Works offline, from the
-  first tab`; `IndexedDB in your own profile` / `Backups stay where you save them`; `Zero outbound
-  requests` / `No analytics events`.
-- No ledger: the "What Stow stores" table, its `local only` pill, and its uninstall footnote are
-  gone. Four near-identical rows that all answered `No` restated the three promises in table
-  form; the chips underneath each promise already name where the data lives, so the table argued
-  nothing new. The FAQ keeps the uninstall answer (`What happens to my lists if I uninstall
-  Stow?`), so the promise a visitor came to check is still answered on the page.
-- Transfer card: `One device at a time.` moves into the right column as the fourth numbered item,
-  styled as the sheet card — 2px accent rule on its top edge, `--sheet` fill — so the grid still
-  reads as three promises and a card rather than three promises and a gap. Copy unchanged:
-  `Stow does not sync between devices, and that is the price of keeping everything local. Moving
-  to another computer? Export a JSON backup and import it there.` Under the copy sits an
-  aria-hidden mono route — `this device → export.json → that device` — boxed hops that lose their
-  boxes below 480px to stay on one line.
-- No screenshot: the promises and the transfer card carry the section.
+The page now runs hero → benefits → how → features → questions → closing.
 
 #### Closing call to action
 
-- Section after privacy, before the footer: `.section.section--tight.closing`.
+- Section after the questions, before the footer: `.section.section--tight.closing`.
 - H2: `Start with the window you have open.`
 - Body: `Install Stow, save the window, and the tabs come back whenever you want them. Free, open
   source, and it works offline.`
 - One button (`data-store-link`, so Firefox gets its own label), then the trust line again.
-  The closing trust line carries the same four clauses as the hero's, `No subscription` included.
+  The closing trust line carries the same four clauses as the hero's.
 - Why it exists: the review's last note was that a hesitant visitor reaching the bottom of the
   page had no button and no reason to scroll back up. It repeats the hero's promise and nothing
   else — no new claims.
 
 ## Footer
 
-`stow` · `free, private tab manager` · `source` · `questions` · `privacy` · `changelog` · `v0.1.0 · © 2026 Stow`
+`stow` · `free, private tab manager` · `source` · `questions` · `changelog` · `v0.1.0 · © 2026 Stow`
 
 ## Screenshots
 
@@ -366,10 +313,8 @@ sync with them. The step images remain real captures.
   `#5c5851` to `#55514b` on light, because the 9-11px mono labels, shortcut rows, and capability
   lists were the dimmest text on the page and the review called them unreadable on black. Steps
   and figures use `--ink-2` for captions now, not `--ink-3`.
-- Hero, step, feature, and privacy layouts collapse at 1023, 767, and 639px. The hero demo
-  switches to its 4:5 camera at 1024px (the site's compact breakpoint), max 480px wide. The privacy
-  grid becomes one column at 1023px (stacked promises, then the transfer card). The transfer route
-  keeps one line at every width; below 640px it sets 9px type and the route loses its boxes.
+- Hero, step, and feature layouts collapse at 1023, 767, and 639px. The hero demo
+  switches to its 4:5 camera at 1024px (the site's compact breakpoint), max 480px wide.
 - Reveals are opacity/translate only, 180ms, and removed under `prefers-reduced-motion`. Images
   below the fold are lazy-loaded.
 - Accessibility: one H1, semantic landmarks, skip link, descriptive alt text, visible focus, menu
