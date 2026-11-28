@@ -120,6 +120,7 @@ After the store listing updates:
 | --- | --- | --- | --- | --- |
 | 0.1.1 | Chrome Web Store | — | — | — |
 | 0.1.1 | Firefox AMO | — | — | — |
+| 0.1.2 | Firefox AMO | — | — | Prepared for submission |
 
 Update this table in the release PR; it is the only place that records live submission
 state.

@@ -36,7 +36,8 @@ const version = pkg.version ?? '';
 if (!version) fail('package.json has no version');
 
 const changelog = readFileSync(path.join(root, 'docs/CHANGELOG.md'), 'utf8');
-const hasHeading = changelog.split('\n').some((line) => line.trim() === `## ${version}`);
+const versionHeading = new RegExp(`^##\\s+${version.replaceAll('.', '\\.')}(?:\\s|$)`);
+const hasHeading = changelog.split('\n').some((line) => versionHeading.test(line.trim()));
 
 if (tag !== version || !hasHeading) {
   fail(

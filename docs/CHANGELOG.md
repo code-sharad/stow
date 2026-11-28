@@ -2,9 +2,7 @@
 
 ## Unreleased
 
-## 0.1.2
-
-Released 2026-11-28.
+## 0.1.2 — 2026-11-28
 
 ### Added
 
@@ -29,7 +27,7 @@ Released 2026-11-28.
   when the schedule setting changes.
 - CI builds and uploads both Chrome and Firefox MV3 bundles; `pnpm verify` now covers the release
   guards, token/network checks, coverage, builds, landing checks, and E2E. The README, build notes,
-  privacy policy, and store listing now describe captured Firefox favicons and the real 0.1.2
+  privacy policy, and store listing now describe captured Firefox favicons and the current
   download names.
 
 ### Fixed
