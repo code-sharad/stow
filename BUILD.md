@@ -1,6 +1,6 @@
 # Building Stow from source
 
-This file exists for add-on reviewers. It describes how `.output/stow-0.1.1-firefox.zip` is
+This file exists for add-on reviewers. It describes how `.output/stow-0.1.2-firefox.zip` is
 produced from the sources in this package, and nothing else.
 
 ## Requirements
@@ -24,8 +24,8 @@ pnpm zip:firefox
 | File | What it is |
 | --- | --- |
 | `.output/firefox-mv3/` | The unpacked extension, identical to the contents of the uploaded zip |
-| `.output/stow-0.1.1-firefox.zip` | The package submitted to addons.mozilla.org |
-| `.output/stow-0.1.1-sources.zip` | This sources archive |
+| `.output/stow-0.1.2-firefox.zip` | The package submitted to addons.mozilla.org |
+| `.output/stow-0.1.2-sources.zip` | This sources archive |
 
 To inspect what shipped without zipping, `pnpm build:firefox` produces the same tree in
 `.output/firefox-mv3`.
