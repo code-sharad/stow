@@ -120,11 +120,11 @@ try {
       if (!metrics.h1.startsWith('Close every tab.'))
         failures.push(`${width}/${scheme}: missing h1`);
       if (metrics.h1Count !== 1) failures.push(`${width}/${scheme}: h1 count ${metrics.h1Count}`);
-      if (metrics.title !== 'Stow — a local-first Chrome tab manager')
+      if (metrics.title !== 'Stow: a free, local-first Chrome tab manager')
         failures.push(`${width}/${scheme}: title mismatch`);
       if (
         metrics.description !==
-        'Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking.'
+        'Stow is a free, local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking.'
       )
         failures.push(`${width}/${scheme}: description mismatch`);
       if (metrics.canonical !== canonical) failures.push(`${width}/${scheme}: canonical mismatch`);
@@ -254,7 +254,7 @@ try {
       };
     });
 
-    if (seo.title !== 'Stow — a local-first Chrome tab manager')
+    if (seo.title !== 'Stow: a free, local-first Chrome tab manager')
       failures.push(`seo: title ${seo.title}`);
     if (seo.title.length > 60) failures.push(`seo: title ${seo.title.length} chars`);
     if (!seo.title.toLowerCase().includes('tab manager')) failures.push('seo: title keywords');

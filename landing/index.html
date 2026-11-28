@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>Stow — a local-first Chrome tab manager</title>
+    <title>Stow: a free, local-first Chrome tab manager</title>
     <link rel="canonical" href="https://stow-tabs.vercel.app/" />
     <link rel="sitemap" type="application/xml" href="sitemap.xml" />
     <meta
       name="description"
-      content="Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
+      content="Stow is a free, local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Sharad Bhadait" />
@@ -24,10 +24,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stow" />
     <meta property="og:url" content="https://stow-tabs.vercel.app/" />
-    <meta property="og:title" content="Stow — Close every tab. Keep every page." />
+    <meta property="og:title" content="Stow: Close every tab. Keep every page." />
     <meta
       property="og:description"
-      content="Forty tabs open, three you're using. Save the window as a searchable list, close the tabs, and restore any page later."
+      content="Stow is a free browser extension. Forty tabs open, three you're using. Save the window as a searchable list, close the tabs, and restore any page later."
     />
     <meta property="og:image" content="https://stow-tabs.vercel.app/assets/og.png" />
     <meta property="og:image:type" content="image/png" />
@@ -36,18 +36,18 @@
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image:alt"
-      content="Stow — Close every tab. Keep every page. A local-first tab manager for Chrome."
+      content="Stow: Close every tab. Keep every page. A local-first tab manager for Chrome."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Stow — Close every tab. Keep every page." />
+    <meta name="twitter:title" content="Stow: Close every tab. Keep every page." />
     <meta
       name="twitter:description"
-      content="Forty tabs open, three you're using. Save the window as a searchable list, close the tabs, and restore any page later."
+      content="Stow is a free browser extension. Forty tabs open, three you're using. Save the window as a searchable list, close the tabs, and restore any page later."
     />
     <meta name="twitter:image" content="https://stow-tabs.vercel.app/assets/og.png" />
     <meta
       name="twitter:image:alt"
-      content="Stow — Close every tab. Keep every page. A local-first tab manager for Chrome."
+      content="Stow: Close every tab. Keep every page. A local-first tab manager for Chrome."
     />
 
     <script type="application/ld+json">
@@ -68,7 +68,7 @@
         "screenshot": "https://stow-tabs.vercel.app/assets/library-dark.webp",
         "sameAs": ["https://github.com/code-sharad/stow"],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "description": "Stow is a local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
+        "description": "Stow is a free, local-first Chrome tab manager: save open tabs as searchable lists, close the clutter, and restore them later. No account, no cloud, no tracking."
       }
     </script>
 
@@ -82,7 +82,7 @@
             "name": "Is Stow a Chrome extension?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Stow is a browser extension for Chrome 120+ and Firefox 140+, and it works offline. It adds no account, no cloud sync, and no analytics to your browser."
+              "text": "Yes. Stow is a free browser extension for Chrome 120+ and Firefox 140+, and it works offline. It has no account, no cloud sync, and no analytics."
             }
           },
           {
@@ -98,7 +98,7 @@
             "name": "How is Stow different from Chrome tab groups?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Tab groups organize tabs that are still open. Stow closes them: each list lives in the library, survives restarts, and restores a single tab, a selection, or the whole list."
+              "text": "Tab groups organize tabs that are still open. Stow closes them. Each list lives in the library, survives restarts, and restores a single tab, a selection, or the whole list."
             }
           },
           {
@@ -122,7 +122,7 @@
             "name": "Can I import tabs I saved with OneTab?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON backups, so an existing shelf can move over in one step."
+              "text": "Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON backups, so your existing lists can move over in one step."
             }
           }
         ]
@@ -201,9 +201,9 @@
           <p class="eyebrow">Free · private tab manager</p>
           <h1 id="hero-title">Close every tab.<br />Keep every page.</h1>
           <p class="hero-lede">
-            Forty tabs open, three you're actually using. Stow is a browser extension that saves
-            your whole window as one searchable list, closes the tabs, and brings back any page
-            when you need it.
+            Forty tabs open, three you're using. Stow is a free, open-source browser extension
+            that saves your whole window as one searchable list, closes the tabs, and brings back
+            any page when you need it.
           </p>
           <div class="hero-actions">
             <a
@@ -223,8 +223,7 @@
             <span>No subscription</span>
           </p>
           <p class="compat">
-            Free <span aria-hidden="true">·</span> Open source
-            <span aria-hidden="true">·</span> Also on Firefox
+            Open source <span aria-hidden="true">·</span> Also on Firefox
             <span aria-hidden="true">·</span> Works offline
           </p>
         </div>
@@ -251,7 +250,7 @@
               />
             </picture>
             <p class="hero-demo__notice">
-              Serve this page over HTTP to play the live demo — Chrome blocks modules from
+              Serve this page over HTTP to play the live demo. Chrome blocks modules from
               <code>file://</code>.
             </p>
           </div>
@@ -267,21 +266,22 @@
           <div class="benefit reveal">
             <dt>Only the tabs you're using.</dt>
             <dd>
-              The window you work in stops competing with the tabs you saved to read later.
+              The window you work in gets a tab strip of its own, without the thirty you saved
+              for later.
             </dd>
           </div>
           <div class="benefit reveal">
             <dt>A lighter browser.</dt>
             <dd>
-              Stow closes the tab instead of hiding it, so the pages you put away free up your
-              computer's memory (RAM).
+              Stow closes the tab instead of hiding it, so the pages you put away no longer take
+              up memory (RAM).
             </dd>
           </div>
           <div class="benefit reveal">
             <dt>Nothing lost.</dt>
             <dd>
-              Every tab is saved with its title, URL, and favicon before it closes. Bring it back
-              in a click.
+              Stow saves each tab's title, URL, and favicon before closing it. Bring it back in a
+              click.
             </dd>
           </div>
         </dl>
@@ -292,8 +292,8 @@
           <p class="eyebrow">How it works</p>
           <h2 id="how-title">A calmer browser in three steps.</h2>
           <p class="section-lede">
-            Put the window away, search for the page when you need it, and never scroll a tab
-            strip looking for something you saved.
+            Put the window away, search for the page when you need it, and stop scrolling the tab
+            strip for something you saved.
           </p>
         </div>
 
@@ -303,8 +303,8 @@
             <div class="step-copy">
               <h3>Save every tab in the window.</h3>
               <p>
-                Every eligible tab is saved into Stow as one list, and the window closes. Pinned
-                tabs stay exactly where you put them.
+                Stow saves every eligible tab as one list, then closes the window. Pinned tabs stay
+                where you put them.
               </p>
               <p class="step-shortcut">
                 <kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd> <span>save window</span>
@@ -359,7 +359,7 @@
                     height="520"
                     loading="lazy"
                     decoding="async"
-                    alt="Searching Stow for “web” and finding four matching tabs across the Docs and Build lists."
+                    alt="Searching Stow for web and finding four matching tabs across the Docs and Build lists."
                   />
                 </picture>
               </div>
@@ -410,10 +410,9 @@
       <section class="section" id="features" aria-labelledby="features-title">
         <div class="section-head reveal">
           <p class="eyebrow">Features</p>
-          <h2 id="features-title">The parts you only miss once you rely on it.</h2>
+          <h2 id="features-title">Six features that keep a library usable.</h2>
           <p class="section-lede">
-            Saving, searching, and restoring are above. These are the six things that keep a
-            library trustworthy after the first week.
+            Saving, searching, and restoring are above. These six matter after the first week.
           </p>
         </div>
 
@@ -451,8 +450,8 @@
             <p class="feature-label">Undo</p>
             <h3>Nothing is deleted on the first click.</h3>
             <p>
-              Closing a tab in the library moves it to Trash, not out of existence. Every action
-              is also reversible from the undo control.
+              Deleting a tab in the library moves it to Trash. Every action is also reversible
+              from the undo control.
             </p>
             <ul class="cap-list">
               <li>Deleted tabs wait in Trash</li>
@@ -494,8 +493,8 @@
             <p class="feature-label">Keyboard</p>
             <h3>Keep your hands on the keys.</h3>
             <p>
-              The library is built to be driven from the keyboard, from the first capture to the
-              final restore.
+              You can drive the whole library from the keyboard, from the first save to the last
+              restore.
             </p>
             <dl class="shortcut-list">
               <div><dt><kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd></dt><dd>open library</dd></div>
@@ -520,8 +519,8 @@
           <div class="faq-item reveal">
             <h3>Is Stow a Chrome extension?</h3>
             <p>
-              Yes. Stow is a browser extension for Chrome 120+ and Firefox 140+, and it works
-              offline. It adds no account, no cloud sync, and no analytics to your browser.
+              Yes. Stow is a free browser extension for Chrome 120+ and Firefox 140+, and it works
+              offline. It has no account, no cloud sync, and no analytics.
             </p>
           </div>
           <div class="faq-item reveal">
@@ -536,7 +535,7 @@
           <div class="faq-item reveal">
             <h3>How is Stow different from Chrome tab groups?</h3>
             <p>
-              Tab groups organize tabs that are still open. Stow closes them: each list lives in
+              Tab groups organize tabs that are still open. Stow closes them. Each list lives in
               the library, survives restarts, and restores a single tab, a selection, or the
               whole list.
             </p>
@@ -559,7 +558,7 @@
             <h3>Can I import tabs I saved with OneTab?</h3>
             <p>
               Yes. Stow imports OneTab exports, bookmarks HTML, Markdown lists, and its own JSON
-              backups, so an existing shelf can move over in one step.
+              backups, so your existing lists can move over in one step.
             </p>
           </div>
         </div>
@@ -568,10 +567,11 @@
       <section class="section" id="switch" aria-labelledby="switch-title">
         <div class="section-head reveal">
           <p class="eyebrow">Why switch</p>
-          <h2 id="switch-title">Already using a tab manager? Here is why people move.</h2>
+          <h2 id="switch-title">Already using a tab manager? Here is what Stow does differently.</h2>
           <p class="section-lede">
-            OneTab, Workona, and Toby users keep reporting the same problems: slow saves, lists
-            that vanish, subscriptions that appear. Stow answers each one by staying local.
+            Three things decide whether a tab manager holds up: how fast a save is, where the
+            lists live, and what it costs. Stow answers all three with one choice, which is to
+            keep everything in your browser.
           </p>
         </div>
 
@@ -582,9 +582,9 @@
               <div class="privacy-promise__body">
                 <h3>Too slow with a real window of tabs.</h3>
                 <p>
-                  Workona and Toby run a workspace on top of your tabs, and each save crosses that
-                  layer. Stow writes straight to your browser's own local database, so saving a
-                  full window is one local write.
+                  Workona and Toby sync your lists through their own service, so every save has
+                  to reach it first. Stow writes straight to your browser's own local database, so
+                  saving a full window is one local write, with no upload to wait on.
                 </p>
                 <ul class="privacy-detail">
                   <li>Local IndexedDB, no service in between</li>
@@ -595,15 +595,14 @@
             <article class="privacy-promise">
               <span class="privacy-promise__index" aria-hidden="true">02</span>
               <div class="privacy-promise__body">
-                <h3>Tabs get lost along the way.</h3>
+                <h3>Where the lists live.</h3>
                 <p>
-                  OneTab users keep reporting saved lists that vanish after browser updates, and
-                  Workona users have watched sync lose their tabs mid-work. Stow keeps your
-                  library in one local database, and every backup is a JSON file you hold
+                  Stow keeps the library in one local database inside your browser profile. No
+                  upload, no sync service, no account. A backup is a JSON file you export and hold
                   yourself.
                 </p>
                 <ul class="privacy-detail">
-                  <li>Every list stays in one local database</li>
+                  <li>Lists survive browser restarts</li>
                   <li>Export a JSON backup you own any time</li>
                 </ul>
               </div>
@@ -611,11 +610,10 @@
             <article class="privacy-promise">
               <span class="privacy-promise__index" aria-hidden="true">03</span>
               <div class="privacy-promise__body">
-                <h3>Subscriptions appeared.</h3>
+                <h3>What it costs.</h3>
                 <p>
-                  Free tools took outside money and turned on pricing. Stow is MIT-licensed and
-                  free. Its only copy of your library lives in your browser, so there is no meter
-                  to run and no upgrade to sell.
+                  Stow is MIT-licensed and free, with no paid tier to move to later. Its only copy
+                  of your library lives in your browser, so there is nothing to bill.
                 </p>
                 <ul class="privacy-detail">
                   <li>No plans, no trials, no upsell</li>
@@ -628,12 +626,12 @@
           <article class="privacy-move reveal">
             <div class="privacy-move__head">
               <span class="privacy-move__index" aria-hidden="true">04</span>
-              <h3>Moving your shelf is one import.</h3>
+              <h3>Moving your lists is one import.</h3>
             </div>
             <p>
-              Coming from OneTab, Workona, or Toby? Stow reads OneTab exports natively, and every
-              tab manager that can export bookmarks HTML or a plain links list moves over in the
-              same import screen. Groups from your open windows stay groups in Stow.
+              Coming from OneTab, Workona, or Toby? Stow reads OneTab exports directly. Any tab
+              manager that exports bookmarks HTML or a plain list of links imports through the
+              same screen. Tab groups in your open windows stay groups in Stow.
             </p>
             <ul class="privacy-move__path" aria-hidden="true">
               <li>OneTab export</li>
@@ -707,8 +705,8 @@
               <h3>One device at a time.</h3>
             </div>
             <p>
-              Stow does not sync between devices, and that is the price of keeping everything
-              local. Moving to another computer? Export a JSON backup and import it there.
+              Stow does not sync between devices. That is what keeps the library local. Moving to
+              another computer? Export a JSON backup and import it there.
             </p>
             <p class="privacy-move__path" aria-hidden="true">
               <span>this device</span>
@@ -724,8 +722,8 @@
         <div class="closing-inner reveal">
           <h2 id="closing-title">Start with the window you have open.</h2>
           <p>
-            Install Stow, save the window, and the tabs come back whenever you want them. Free,
-            open source, and it works offline.
+            Install Stow, save the window, and the tabs come back whenever you want them. Stow is
+            free and open source, and it works offline.
           </p>
           <div class="hero-actions">
             <a
