@@ -38,7 +38,7 @@ for the short version.
 Stow is not in the Chrome Web Store yet. Install the current build from the
 [latest release](https://github.com/code-sharad/stow/releases/latest):
 
-1. Download `stow-0.1.1-chrome.zip` and unzip it.
+1. Download `stow-0.1.2-chrome.zip` and unzip it.
 2. Open `chrome://extensions` and enable Developer mode.
 3. Choose **Load unpacked** and select the unzipped folder.
 
@@ -50,7 +50,7 @@ Firefox is not in the add-on store yet either. Build the signed-ready package fr
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm zip:firefox     # writes .output/stow-0.1.1-firefox.zip
+pnpm zip:firefox     # writes .output/stow-0.1.2-firefox.zip
 ```
 
 Then open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select
